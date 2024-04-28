@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { api } from "~/trpc/server";
+import { notFound } from 'next/navigation';
 
 export const generateMetadata = async ({
   params,
@@ -19,6 +20,8 @@ export default async function Page({
   params: { userScreenName: string };
 }) {
   const user = await api.user.getByScreenName(params.userScreenName);
+
+  if (user === null) return notFound();
 
   return (
     <>
