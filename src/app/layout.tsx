@@ -23,10 +23,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <body className={`font-sans ${inter.variable}`}>
         <Header />
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <main className="container mx-auto px-4">
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+        </main>
       </body>
     </html>
   );
