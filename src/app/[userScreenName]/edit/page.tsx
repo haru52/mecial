@@ -8,7 +8,8 @@ export default async function Page({
 }: {
   params: { userScreenName: string };
 }) {
-  const user = await api.user.getByScreenName(params.userScreenName);
+  const rawUser = await api.user.getByScreenName(params.userScreenName);
+  const user = rawUser as User;
   if (user === null) return notFound();
 
   return (
