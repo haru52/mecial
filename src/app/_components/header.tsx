@@ -4,7 +4,7 @@ import { api } from "~/trpc/server";
 
 export async function Header() {
   const session = await getServerAuthSession();
-  const user = await api.user.getById(session?.user.id as string);
+  const user = await api.user.getById(session!.user!.id as string);
 
   return (
     <div className="navbar bg-base-100">
