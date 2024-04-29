@@ -6,8 +6,11 @@ export const Post = z.object({
   content: z.string(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  // createdBy: z.object(User).optional(),
   createdById: z.string().uuid().optional(),
+});
+
+export const PostWithUser = Post.extend({
+  createdBy: User,
 });
 
 export const CreatePost = Post.omit({
@@ -17,9 +20,9 @@ export const CreatePost = Post.omit({
 });
 
 export const UpdatePost = Post.omit({
-  id: true,
   createdAt: true,
   updatedAt: true,
 });
 
 export type Post = z.infer<typeof Post>;
+export type PostWithUser = z.infer<typeof PostWithUser>;

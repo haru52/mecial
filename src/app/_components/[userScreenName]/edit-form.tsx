@@ -3,9 +3,14 @@
 import { useRouter } from "next/navigation";
 import type { User } from "~/entities/user";
 import { api } from "~/trpc/react";
+import { useState } from "react";
 
 export function EditForm({ user }: { user: User }) {
   const router = useRouter();
+  const [name, setName] = useState(user.name);
+  const [screenName, setScreenName] = useState(user.screenName);
+  const [email, setEmail] = useState(user.email);
+  const [image, setImage] = useState(user.image);
   const { mutate, error } = api.user.update.useMutation({
     onSuccess: () => {
       router.refresh();
@@ -16,10 +21,11 @@ export function EditForm({ user }: { user: User }) {
       onSubmit={(e) => {
         e.preventDefault();
         mutate({
-          name: e.currentTarget[0].value,
-          screenName: e.currentTarget[1].value,
-          email: e.currentTarget[2].value,
-          image: e.currentTarget[3].value,
+          id: user.id,
+          name,
+          screenName,
+          email,
+          image,
         });
       }}
     >
@@ -31,7 +37,8 @@ export function EditForm({ user }: { user: User }) {
           type="text"
           placeholder="山田 太郎"
           className="input input-bordered w-full max-w-xs"
-          defaultValue={user.name ?? ""}
+          value={name ?? ""}
+          onChange={(e) => setName(e.target.value)}
         />
         {error?.data?.zodError?.fieldErrors.name && (
           <div className="text-red-500">
@@ -47,15 +54,14 @@ export function EditForm({ user }: { user: User }) {
           type="text"
           placeholder="taroyamada"
           className="input input-bordered w-full max-w-xs"
-          defaultValue={user.screenName ?? ""}
+          value={screenName ?? ""}
+          onChange={(e) => setScreenName(e.target.value)}
         />
-        {
-          error?.data?.zodError?.fieldErrors.screenName && (
-            <div className="text-red-500">
-              {error.data.zodError.fieldErrors.screenName}
-            </div>
-          )
-        }
+        {error?.data?.zodError?.fieldErrors.screenName && (
+          <div className="text-red-500">
+            {error.data.zodError.fieldErrors.screenName}
+          </div>
+        )}
       </label>
       <label className="form-control w-full max-w-xs">
         <div className="label">
@@ -65,7 +71,8 @@ export function EditForm({ user }: { user: User }) {
           type="text"
           placeholder="taroyamada@example.com"
           className="input input-bordered w-full max-w-xs"
-          defaultValue={user.email ?? ""}
+          value={email ?? ""}
+          onChange={(e) => setEmail(e.target.value)}
         />
         {error?.data?.zodError?.fieldErrors.email && (
           <div className="text-red-500">
@@ -81,7 +88,8 @@ export function EditForm({ user }: { user: User }) {
           type="text"
           placeholder="https://example.com/taroyamada.jpg"
           className="input input-bordered w-full max-w-xs"
-          defaultValue={user.image ?? ""}
+          value={image ?? ""}
+          onChange={(e) => setImage(e.target.value)}
         />
         {error?.data?.zodError?.fieldErrors.image && (
           <div className="text-red-500">

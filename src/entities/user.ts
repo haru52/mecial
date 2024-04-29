@@ -28,20 +28,24 @@ export const User = z.object({
       message: "画像URLの形式が正しくありません",
     })
     .nullable(),
-  posts: z.array(Post).optional(),
   createdAt: z.date(),
   updatedAt: z.date(),
 });
 
+export const UserWithPosts = User.extend({
+  posts: z.array(Post),
+});
+
 export const UpdateUser = User.required({
+  id: true,
   screenName: true,
   name: true,
   email: true,
 }).omit({
-  id: true,
   emailVerified: true,
   createdAt: true,
   updatedAt: true,
 });
 
 export type User = z.infer<typeof User>;
+export type UserWithPosts = z.infer<typeof UserWithPosts>;

@@ -18,7 +18,7 @@ export const userRouter = createTRPCRouter({
           email: input.email,
           image: input.image,
         },
-        where: { id: ctx.session.user.id },
+        where: { id: input.id },
       });
     }),
 
