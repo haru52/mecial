@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { api } from "~/trpc/server";
 import { notFound } from 'next/navigation';
+import { CreatePost } from "~/app/_components/create-post";
 
 export const generateMetadata = async ({
   params,
@@ -30,6 +32,10 @@ export default async function Page({
         <li>ID：@{user?.screenName}</li>
         <li>メールアドレス：{user?.email}</li>
       </ul>
+      <Link href={`${user.screenName}/edit`}>Edit</Link>
+      <br />
+      <Link href={`${user.screenName}/posts`}>Posts</Link>
+      <CreatePost />
     </>
   );
 }
