@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { getServerAuthSession } from "~/server/auth";
+import { api } from "~/trpc/server";
 
 export async function Header() {
   const session = await getServerAuthSession();
+  const user = await api.user.getById(session?.user.id as string);
 
   return (
     <div className="navbar bg-base-100">
@@ -17,7 +19,7 @@ export async function Header() {
               <li><a>Socials</a></li>
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">Mecial</a>
+          <Link href="/" className="btn btn-ghost text-xl">Mecial</Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
@@ -38,8 +40,8 @@ export async function Header() {
                   </div>
                 </div>
                 <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                  <li><a>Profile</a></li>
-                  <li><a>Settings</a></li>
+                  <li><Link href={`/${user?.screenName}`}>Profile</Link></li>
+                  <li><Link href={`/${user?.screenName}/edit`}>Settings</Link></li>
                   <li><Link href="/api/auth/signout">Sign out</Link></li>
                 </ul>
               </div>
