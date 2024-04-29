@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { User } from "~/entities/user";
+import { UpdateUser } from "~/entities/user";
 
 import {
   createTRPCRouter,
@@ -9,7 +9,7 @@ import {
 
 export const userRouter = createTRPCRouter({
   update: protectedProcedure
-    .input(User)
+    .input(UpdateUser)
     .mutation(async ({ ctx, input }) => {
       return ctx.db.user.update({
         data: {

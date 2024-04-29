@@ -49,6 +49,13 @@ export function EditForm({ user }: { user: User }) {
           className="input input-bordered w-full max-w-xs"
           defaultValue={user.screenName ?? ""}
         />
+        {
+          error?.data?.zodError?.fieldErrors.screenName && (
+            <div className="text-red-500">
+              {error.data.zodError.fieldErrors.screenName}
+            </div>
+          )
+        }
       </label>
       <label className="form-control w-full max-w-xs">
         <div className="label">
@@ -76,6 +83,11 @@ export function EditForm({ user }: { user: User }) {
           className="input input-bordered w-full max-w-xs"
           defaultValue={user.image ?? ""}
         />
+        {error?.data?.zodError?.fieldErrors.image && (
+          <div className="text-red-500">
+            {error.data.zodError.fieldErrors.image}
+          </div>
+        )}
       </label>
       <div className="form-control mt-7 w-full max-w-xs">
         <input
