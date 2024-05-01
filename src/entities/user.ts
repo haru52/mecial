@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { Post } from "./post";
 
 export const User = z.object({
   id: z.string().uuid(),
@@ -32,20 +31,10 @@ export const User = z.object({
   updatedAt: z.date(),
 });
 
-export const UserWithPosts = User.extend({
-  posts: z.array(Post),
-});
-
-export const UpdateUser = User.required({
-  id: true,
-  screenName: true,
-  name: true,
-  email: true,
-}).omit({
+export const UpdateUser = User.omit({
   emailVerified: true,
   createdAt: true,
   updatedAt: true,
 });
 
 export type User = z.infer<typeof User>;
-export type UserWithPosts = z.infer<typeof UserWithPosts>;

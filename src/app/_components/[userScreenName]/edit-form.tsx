@@ -68,7 +68,7 @@ export function EditForm({ user }: { user: User }) {
           <span className="label-text">メールアドレス</span>
         </div>
         <input
-          type="text"
+          type="email"
           placeholder="taroyamada@example.com"
           className="input input-bordered w-full max-w-xs"
           value={email ?? ""}

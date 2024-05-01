@@ -1,6 +1,7 @@
-import { api } from "~/trpc/server";
 import { notFound } from "next/navigation";
+import { Posts } from "~/app/_components/posts/posts";
 import type { Post } from "~/entities/post";
+import { api } from "~/trpc/server";
 
 export default async function Page({
   params,
@@ -15,19 +16,7 @@ export default async function Page({
   return (
     <>
       <h1>{user.name} のポスト</h1>
-      {posts.length > 1 ? (
-        <ul>
-          <>
-            {posts.map((post) => (
-              <li key={post.id}>
-                <p>{post.content}</p>
-              </li>
-            ))}
-          </>
-        </ul>
-      ) : (
-        <p>まだポストがありません</p>
-      )}
+      <Posts user={user} posts={posts} />
     </>
   );
 }
