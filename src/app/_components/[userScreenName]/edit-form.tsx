@@ -59,7 +59,11 @@ export function EditForm({ user }: { user: User }) {
         />
         {error?.data?.zodError?.fieldErrors.screenName && (
           <div className="text-red-500">
-            {error.data.zodError.fieldErrors.screenName}
+            <ul>
+              {error.data.zodError.fieldErrors.screenName.map((message) => (
+                <li key={message}>{message}</li>
+              ))}
+            </ul>
           </div>
         )}
       </label>

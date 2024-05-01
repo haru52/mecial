@@ -1,5 +1,4 @@
 import { z } from "zod";
-
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -7,14 +6,6 @@ import {
 } from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
-
   create: protectedProcedure
     .input(z.object({ content: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
@@ -29,23 +20,12 @@ export const postRouter = createTRPCRouter({
       });
     }),
 
-  getLatest: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.post.findFirst({
-      orderBy: { createdAt: "desc" },
-      where: { createdBy: { id: ctx.session.user.id } },
-    });
-  }),
-
-  getAllByUserId: publicProcedure
-  .input(z.string().uuid())
-  .query(({ctx, input}) => {
-    return ctx.db.post.findMany({
-      orderBy: { createdAt: "desc" },
-      where: { createdBy: { id: input } },
-    })
-  }),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
+  getAllByCreatedById: publicProcedure
+    .input(z.string().uuid())
+    .query(({ ctx, input }) => {
+      return ctx.db.post.findMany({
+        orderBy: { createdAt: "desc" },
+        where: { createdBy: { id: input } },
+      });
+    }),
 });
