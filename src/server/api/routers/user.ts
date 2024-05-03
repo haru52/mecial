@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { TRPCError } from "@trpc/server";
 import { UpdateUser } from "~/entities/user";
 
 import {
@@ -11,6 +12,9 @@ export const userRouter = createTRPCRouter({
   update: protectedProcedure
     .input(UpdateUser)
     .mutation(async ({ ctx, input }) => {
+      if (input.id !== ctx.session.user.id) {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      }
       return ctx.db.user.update({
         data: {
           screenName: input.screenName,
