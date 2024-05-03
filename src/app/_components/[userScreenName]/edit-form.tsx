@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import type { User } from "~/entities/user";
 import { api } from "~/trpc/react";
 import { useState } from "react";
+import { InputErrorMessages } from "~/app/_components/input-error-messages";
+import clsx from "clsx";
 
 export function EditForm({ user }: { user: User }) {
   const router = useRouter();
@@ -16,6 +18,10 @@ export function EditForm({ user }: { user: User }) {
       router.refresh();
     },
   });
+  const nameErrors = error?.data?.zodError?.fieldErrors.name;
+  const screenNameErrors = error?.data?.zodError?.fieldErrors.screenName;
+  const emailErrors = error?.data?.zodError?.fieldErrors.email;
+  const imageErrors = error?.data?.zodError?.fieldErrors.image;
   return (
     <form
       onSubmit={(e) => {
@@ -36,15 +42,11 @@ export function EditForm({ user }: { user: User }) {
         <input
           type="text"
           placeholder="山田 太郎"
-          className="input input-bordered w-full max-w-xs"
+          className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": nameErrors !== undefined })}`}
           value={name ?? ""}
           onChange={(e) => setName(e.target.value)}
         />
-        {error?.data?.zodError?.fieldErrors.name && (
-          <div className="text-red-500">
-            {error.data.zodError.fieldErrors.name}
-          </div>
-        )}
+        <InputErrorMessages errMsgs={nameErrors} />
       </label>
       <label className="form-control w-full max-w-xs">
         <div className="label">
@@ -53,19 +55,11 @@ export function EditForm({ user }: { user: User }) {
         <input
           type="text"
           placeholder="taroyamada"
-          className="input input-bordered w-full max-w-xs"
+          className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": screenNameErrors !== undefined })}`}
           value={screenName ?? ""}
           onChange={(e) => setScreenName(e.target.value)}
         />
-        {error?.data?.zodError?.fieldErrors.screenName && (
-          <div className="text-red-500">
-            <ul>
-              {error.data.zodError.fieldErrors.screenName.map((message) => (
-                <li key={message}>{message}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+        <InputErrorMessages errMsgs={screenNameErrors} />
       </label>
       <label className="form-control w-full max-w-xs">
         <div className="label">
@@ -74,15 +68,11 @@ export function EditForm({ user }: { user: User }) {
         <input
           type="email"
           placeholder="taroyamada@example.com"
-          className="input input-bordered w-full max-w-xs"
+          className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": emailErrors !== undefined })}`}
           value={email ?? ""}
           onChange={(e) => setEmail(e.target.value)}
         />
-        {error?.data?.zodError?.fieldErrors.email && (
-          <div className="text-red-500">
-            {error.data.zodError.fieldErrors.email}
-          </div>
-        )}
+        <InputErrorMessages errMsgs={emailErrors} />
       </label>
       <label className="form-control w-full max-w-xs">
         <div className="label">
@@ -91,15 +81,11 @@ export function EditForm({ user }: { user: User }) {
         <input
           type="text"
           placeholder="https://example.com/taroyamada.jpg"
-          className="input input-bordered w-full max-w-xs"
+          className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": emailErrors !== undefined })}`}
           value={image ?? ""}
           onChange={(e) => setImage(e.target.value)}
         />
-        {error?.data?.zodError?.fieldErrors.image && (
-          <div className="text-red-500">
-            {error.data.zodError.fieldErrors.image}
-          </div>
-        )}
+        <InputErrorMessages errMsgs={imageErrors} />
       </label>
       <div className="form-control mt-7 w-full max-w-xs">
         <input
