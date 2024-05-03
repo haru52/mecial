@@ -45,6 +45,7 @@ export function EditForm({ user }: { user: User }) {
           className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": nameErrors !== undefined })}`}
           value={name ?? ""}
           onChange={(e) => setName(e.target.value)}
+          required
         />
         <InputErrorMessages errMsgs={nameErrors} />
       </label>
@@ -58,6 +59,7 @@ export function EditForm({ user }: { user: User }) {
           className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": screenNameErrors !== undefined })}`}
           value={screenName ?? ""}
           onChange={(e) => setScreenName(e.target.value)}
+          required
         />
         <InputErrorMessages errMsgs={screenNameErrors} />
       </label>
@@ -71,6 +73,7 @@ export function EditForm({ user }: { user: User }) {
           className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": emailErrors !== undefined })}`}
           value={email ?? ""}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
         <InputErrorMessages errMsgs={emailErrors} />
       </label>
@@ -84,6 +87,7 @@ export function EditForm({ user }: { user: User }) {
           className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": emailErrors !== undefined })}`}
           value={image ?? ""}
           onChange={(e) => setImage(e.target.value)}
+          required
         />
         <InputErrorMessages errMsgs={imageErrors} />
       </label>
