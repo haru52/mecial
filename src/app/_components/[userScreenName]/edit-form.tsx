@@ -15,7 +15,7 @@ export function EditForm({ user }: { user: User }) {
   const [image, setImage] = useState(user.image);
   const { mutate, error } = api.user.update.useMutation({
     onSuccess: () => {
-      router.refresh();
+      router.push(`/${screenName}`);
     },
   });
   const nameErrors = error?.data?.zodError?.fieldErrors.name;
@@ -35,10 +35,8 @@ export function EditForm({ user }: { user: User }) {
         });
       }}
     >
-      <label className="form-control w-full max-w-xs">
-        <div className="label">
-          <span className="label-text">名前</span>
-        </div>
+      <label className="form-control w-full max-w-xs mx-auto">
+        <span className="label">名前</span>
         <input
           type="text"
           placeholder="山田 太郎"
@@ -49,10 +47,8 @@ export function EditForm({ user }: { user: User }) {
         />
         <InputErrorMessages errMsgs={nameErrors} />
       </label>
-      <label className="form-control w-full max-w-xs">
-        <div className="label">
-          <span className="label-text">ID</span>
-        </div>
+      <label className="form-control w-full max-w-xs mx-auto">
+        <span className="label">ID</span>
         <input
           type="text"
           placeholder="taroyamada"
@@ -63,10 +59,8 @@ export function EditForm({ user }: { user: User }) {
         />
         <InputErrorMessages errMsgs={screenNameErrors} />
       </label>
-      <label className="form-control w-full max-w-xs">
-        <div className="label">
-          <span className="label-text">メールアドレス</span>
-        </div>
+      <label className="form-control w-full max-w-xs mx-auto">
+        <span className="label">メールアドレス</span>
         <input
           type="email"
           placeholder="taroyamada@example.com"
@@ -77,10 +71,8 @@ export function EditForm({ user }: { user: User }) {
         />
         <InputErrorMessages errMsgs={emailErrors} />
       </label>
-      <label className="form-control w-full max-w-xs">
-        <div className="label">
-          <span className="label-text">アイコン画像URL</span>
-        </div>
+      <label className="form-control w-full max-w-xs mx-auto">
+        <span className="label">アイコン画像URL</span>
         <input
           type="text"
           placeholder="https://example.com/taroyamada.jpg"
@@ -91,7 +83,7 @@ export function EditForm({ user }: { user: User }) {
         />
         <InputErrorMessages errMsgs={imageErrors} />
       </label>
-      <div className="form-control mt-7 w-full max-w-xs">
+      <div className="form-control mt-7 w-full max-w-xs mx-auto">
         <input
           type="submit"
           value="保存"

@@ -14,7 +14,7 @@ export default async function Page({
 
   return (
     <>
-      <h1>{user.name}のプロフィールを編集</h1>
+      <h1 className="text-center">{user.name} のプロフィールを編集</h1>
       <EditForm user={user} />
     </>
   );
