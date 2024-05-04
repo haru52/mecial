@@ -35,7 +35,7 @@ export async function Header() {
                 <Link href="/users">ユーザー</Link>
               </li>
               <li>
-                <a>ソーシャル</a>
+                <Link href="/socials">ソーシャル</Link>
               </li>
             </ul>
           </div>
@@ -49,7 +49,7 @@ export async function Header() {
               <Link href="/users">ユーザー</Link>
             </li>
             <li>
-              <a>ソーシャル</a>
+              <Link href="/socials">ソーシャル</Link>
             </li>
           </ul>
         </div>
