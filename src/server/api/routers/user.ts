@@ -15,6 +15,16 @@ export const userRouter = createTRPCRouter({
       if (input.id !== ctx.session.user.id) {
         throw new TRPCError({ code: "UNAUTHORIZED" });
       }
+      if (input.screenName == null) {
+        throw new TRPCError({ code: "INVALID_ARGUMENT" });
+      }
+      const existUser = await ctx.db.user.findUnique({
+        where: { screenName: input.screenName ?? '' },
+      });
+      const exist = existUser !== null;
+      if (exist) {
+        throw new Error("このIDは既に使われています");
+      }
       return ctx.db.user.update({
         data: {
           screenName: input.screenName,
@@ -70,4 +80,21 @@ export const userRouter = createTRPCRouter({
     });
   }),
 
+  checkIfScreenNameExists: protectedProcedure
+    .input(
+      z
+        .string({ invalid_type_error: "文字列を入力してください" })
+        .min(1, { message: "IDを入力してください" })
+        .regex(/^[a-zA-Z][a-zA-Z0-9_]*$/, {
+          message:
+            "半角英数字とアンダースコア（_）のみ使用できます。また、先頭は半角英字にする必要があります",
+        }),
+    )
+    .query(async ({ ctx, input }) => {
+      const user = await ctx.db.user.findUnique({
+        where: { screenName: input },
+      });
+      console.log("!!user", !!user);
+      return !!user;
+    }),
 });

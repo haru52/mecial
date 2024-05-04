@@ -26,7 +26,6 @@ export const UpdateUser = User.omit({
   createdAt: true,
   updatedAt: true,
 }).partial({
-  screenName: true,
   name: true,
   email: true,
   image: true,

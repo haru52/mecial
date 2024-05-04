@@ -1,24 +1,30 @@
 "use client";
 
+import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import { api } from "~/trpc/react";
 import { useState } from "react";
 import { InputErrorMessages } from "~/app/_components/input-error-messages";
-import clsx from "clsx";
+import { api } from "~/trpc/react";
 
-export function SignupForm({userId}: {userId: string}) {
+export function SignupForm({ userId }: { userId: string }) {
   const router = useRouter();
-  const [screenName, setScreenName] = useState('');
+  const [screenName, setScreenName] = useState("");
   const { mutate, error } = api.user.update.useMutation({
     onSuccess: () => {
       router.push(`/`);
+      router.refresh();
     },
   });
-  const screenNameErrors = error?.data?.zodError?.fieldErrors.screenName;
+  const screenNameErrors: string[] = [];
+  if (error?.data?.zodError?.fieldErrors.screenName !== undefined) {
+    screenNameErrors.push(...error.data.zodError.fieldErrors.screenName);
+  }
+  if (error !== null && error?.data?.zodError == null)
+    screenNameErrors.push(error.message);
 
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
         mutate({
           id: userId,
@@ -41,7 +47,7 @@ export function SignupForm({userId}: {userId: string}) {
       <div className="form-control mx-auto mt-7 w-full max-w-xs">
         <input
           type="submit"
-          value="保存"
+          value="サインアップ"
           className="btn btn-primary btn-block"
         />
       </div>
