@@ -14,16 +14,62 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model Social {
+    id          Int      @id @default(autoincrement())
+    screenName  String   @unique
+    name        String
+    description String?
+    url         String?
+    avatars     Avatar[]
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    createdBy   User   @relation(fields: [createdById], references: [id])
+    createdById String
+
+    @@index([screenName])
+}
+
+model Avatar {
+    id         String    @id @default(uuid())
+    isPrivate  Boolean   @default(true)
+    posts      Post[]
+    followedBy Follows[] @relation("followedBy")
+    following  Follows[] @relation("following")
+    createdAt  DateTime  @default(now())
+    updatedAt  DateTime  @updatedAt
+
+    user     User   @relation(fields: [userId], references: [id])
+    userId   String
+    social   Social @relation(fields: [socialId], references: [id])
+    socialId Int
+
+    @@unique([socialId, userId])
+}
+
 model Post {
     id        Int      @id @default(autoincrement())
     content   String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    createdBy   User   @relation(fields: [createdById], references: [id])
+    createdBy   Avatar @relation(fields: [createdById], references: [id])
     createdById String
 
     @@index([content])
+}
+
+model Follows {
+    id           Int      @id @default(autoincrement())
+    followedBy   Avatar   @relation("followedBy", fields: [followedById], references: [id])
+    followedById String
+    following    Avatar   @relation("following", fields: [followingId], references: [id])
+    followingId  String
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt @default(now())
+
+    @@unique([followingId, followedById])
+    @@index([followingId, followedById])
 }
 
 // Necessary for Next auth
@@ -60,9 +106,11 @@ model User {
     email         String?   @unique
     emailVerified DateTime?
     image         String?
+    url           String?
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
+    socials       Social[]
+    avatars       Avatar[]
     createdAt     DateTime  @default(now())
     updatedAt     DateTime  @updatedAt @default(now())
 
