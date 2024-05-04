@@ -1,9 +1,10 @@
 import { getServerAuthSession } from "~/server/auth";
-import { User } from "~/entities/user";
-import { Posts as PostsEntity } from "~/entities/post";
+import type { User } from "~/entities/user";
+import type { Post as PostEntity } from "~/entities/post";
 import { api } from "~/trpc/server";
 import { Posts } from "./_components/posts/posts";
 import Link from "next/link";
+import { redirect } from 'next/navigation'
 
 export default async function Home() {
   const session = await getServerAuthSession();
@@ -11,7 +12,8 @@ export default async function Home() {
     session === null
       ? undefined
       : await api.user.getByIdWithPosts(session.user.id);
-  const posts = user?.posts === null ? [] : (user?.posts as PostsEntity[]);
+  if (user?.screenName === null) redirect('/signup'); // 初回ログイン（サインアップ）
+  const posts = user?.posts === null ? [] : (user?.posts as PostEntity[]);
 
   return (
     <>

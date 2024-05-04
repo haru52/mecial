@@ -25,6 +25,11 @@ export const UpdateUser = User.omit({
   emailVerified: true,
   createdAt: true,
   updatedAt: true,
+}).partial({
+  screenName: true,
+  name: true,
+  email: true,
+  image: true,
 });
 
 export type User = z.infer<typeof User>;
