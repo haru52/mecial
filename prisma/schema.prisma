@@ -15,16 +15,18 @@ datasource db {
 }
 
 model Social {
-    id          Int      @id @default(autoincrement())
-    screenName  String   @unique
-    name        String
-    description String?
-    url         String?
-    avatars     Avatar[]
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
+    id           Int      @id @default(autoincrement())
+    screenName   String   @unique
+    name         String
+    image        String?
+    description  String?
+    url          String?
+    avatars      Avatar[]
+    currentUsers User[]   @relation("currentSocial")
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
 
-    createdBy   User   @relation(fields: [createdById], references: [id])
+    createdBy   User   @relation("createdSocial", fields: [createdById], references: [id])
     createdById String
 
     @@index([screenName])
@@ -100,19 +102,22 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(uuid())
-    screenName    String?   @unique
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    url           String?
-    accounts      Account[]
-    sessions      Session[]
-    socials       Social[]
-    avatars       Avatar[]
-    createdAt     DateTime  @default(now())
-    updatedAt     DateTime  @updatedAt @default(now())
+    id             String    @id @default(uuid())
+    screenName     String?   @unique
+    name           String?
+    email          String?   @unique
+    emailVerified  DateTime?
+    image          String?
+    url            String?
+    accounts       Account[]
+    sessions       Session[]
+    createdSocials Social[]  @relation("createdSocial")
+    avatars        Avatar[]
+    createdAt      DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt @default(now())
+
+    currentSocial   Social? @relation("currentSocial", fields: [currentSocialId], references: [id])
+    currentSocialId Int?
 
     @@index([screenName])
 }
