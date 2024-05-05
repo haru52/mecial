@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { User, Foo } from "./user";
 
 export const Post = z.object({
   id: z.coerce.number(),
