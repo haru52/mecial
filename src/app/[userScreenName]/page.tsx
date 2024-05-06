@@ -44,7 +44,7 @@ export default async function Page({
         </>
       )}
       <Link href={`${user.screenName}/posts`}>Posts</Link>
-      {avatar !== null && (
+      {(avatar !== null && user.currentSocialId !== null) && (
         <>
       <CreatePost avatarId={avatar.id} />
       <SelectSocial socials={socials} currentSocialId={user.currentSocialId} />
