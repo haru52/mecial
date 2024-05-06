@@ -1,6 +1,6 @@
 import { getServerAuthSession } from "~/server/auth";
 import type { User } from "~/entities/user";
-import type { Post as PostEntity } from "~/entities/post";
+import type { Post as PostEntity, PostWithCreatedByUser } from "~/entities/post";
 import { api } from "~/trpc/server";
 import { Posts } from "./_components/posts/posts";
 import Link from "next/link";
@@ -11,12 +11,19 @@ export default async function Home() {
   const user = session === null ? null : await api.user.getMe();
   if (user?.screenName === null) redirect('/signup'); // 初回ログイン（サインアップ）
   const avatar = user?.currentSocialId == null ? null : await api.avatar.getMyAvatarBySocialIdWithPosts(user.currentSocialId);
-  const posts = avatar?.posts === null ? [] : (avatar?.posts as PostEntity[]);
+  if (avatar?.id != null) {
+  }
+  const postsWithCreatedByUser = await (async () => {
+    if (avatar?.id == null) return [];
+    const follows = await api.follows.getFollowingByAvatarId(avatar.id);
+    const followingIds = follows.map((f) => f.followingId);
+    return await api.post.getAllByCreatedByIdsWithCreatedByUser([...followingIds, avatar.id]);
+  })();
 
   return (
     <>
       {session !== null ? (
-        <Posts user={user as User} posts={posts} />
+        <Posts posts={postsWithCreatedByUser as unknown as PostWithCreatedByUser[]} />
       ) : (
         <div
           className="hero min-h-screen"

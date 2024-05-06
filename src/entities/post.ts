@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { AvatarWithUser } from "./avatar";
+import { User } from "./user";
 
 export const Post = z.object({
   id: z.coerce.number(),
@@ -20,3 +22,7 @@ export const UpdatePost = Post.omit({
 });
 
 export type Post = z.infer<typeof Post>;
+
+export type PostWithCreatedByUser = Post & {
+  createdBy: AvatarWithUser;
+};

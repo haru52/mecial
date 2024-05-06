@@ -28,6 +28,8 @@ export default async function Page({
   const avatar = await api.avatar.getCurrentMyAvatar();
   const avatarsWithSocial = await api.avatar.getMyAvatarsWithSocial();
   const socials = avatarsWithSocial.map((avatar) => avatar.social);
+  const followingCount = avatar == null ? 0 : await api.follows.getFollowingCountByAvatarId(avatar.id);
+  const followersCount = avatar == null ? 0 : await api.follows.getFollowersCountByAvatarId(avatar.id);
 
   if (user === null) return notFound();
 
@@ -36,6 +38,8 @@ export default async function Page({
       <h1>{user?.name}</h1>
       <ul>
         <li>ID：@{user?.screenName}</li>
+        <li>{followingCount} フォロー中</li>
+        <li>{followersCount} フォロワー</li>
       </ul>
       {session?.user.id === user.id && (
         <>
