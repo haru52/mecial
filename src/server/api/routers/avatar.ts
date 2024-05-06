@@ -38,9 +38,11 @@ export const avatarRouter = createTRPCRouter({
           socialId: input,
           userId: ctx.session.user.id,
         },
-        include: { posts: {
-          orderBy: { createdAt: "desc" },
-        } },
+        include: {
+          posts: {
+            orderBy: { createdAt: "desc" },
+          },
+        },
       });
     }),
 
@@ -63,6 +65,34 @@ export const avatarRouter = createTRPCRouter({
     return ctx.db.avatar.findMany({
       where: { userId: ctx.session.user.id },
       include: { social: true },
+    });
+  }),
+
+  // https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/self-relations#many-to-many-self-relations
+  // https://github.com/prisma/prisma/discussions/12310
+  // https://zenn.dev/ninjin_umigame/articles/89c8100bf6234a
+
+  getFollowingsByUserId: publicProcedure.input(z.string().uuid()).query(async ({ ctx, input }) => {
+    return ctx.db.avatar.findMany({
+      where: { 
+        followedBy: {
+          some: {
+            followedById: input
+          }
+        }
+      }
+    });
+  }),
+
+  getFollowersByUserId: publicProcedure.input(z.string().uuid()).query(async ({ ctx, input }) => {
+    return ctx.db.avatar.findMany({
+      where: { 
+        following: {
+          some: {
+            followingId: input
+          }
+        }
+      }
     });
   }),
 
