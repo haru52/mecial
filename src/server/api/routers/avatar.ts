@@ -30,11 +30,24 @@ export const avatarRouter = createTRPCRouter({
       });
     }),
 
+  getMyAvatarBySocialIdWithPosts: protectedProcedure
+    .input(z.number())
+    .query(async ({ ctx, input }) => {
+      return ctx.db.avatar.findFirst({
+        where: {
+          socialId: input,
+          userId: ctx.session.user.id,
+        },
+        include: { posts: {
+          orderBy: { createdAt: "desc" },
+        } },
+      });
+    }),
+
   getCurrentMyAvatar: protectedProcedure.query(async ({ ctx }) => {
     const user = await ctx.db.user.findUnique({
       where: { id: ctx.session.user.id },
     });
-    console.dir(user);
     if (user === null) return null;
     const currentSocialId = user.currentSocialId;
     if (currentSocialId === null) return null;

@@ -45,6 +45,12 @@ export const userRouter = createTRPCRouter({
     });
   }),
 
+  getMe: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.user.findFirst({
+      where: { id: ctx.session.user.id },
+    });
+  }),
+
   getByIdWithAvatars: publicProcedure
     .input(z.string().uuid())
     .query(({ ctx, input }) => {

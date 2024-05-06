@@ -8,16 +8,14 @@ import { redirect } from 'next/navigation'
 
 export default async function Home() {
   const session = await getServerAuthSession();
-  const user =
-    session === null
-      ? undefined
-      : await api.user.getByIdWithPosts(session.user.id);
+  const user = session === null ? null : await api.user.getMe();
   if (user?.screenName === null) redirect('/signup'); // 初回ログイン（サインアップ）
-  const posts = user?.posts === null ? [] : (user?.posts as PostEntity[]);
+  const avatar = user?.currentSocialId == null ? null : await api.avatar.getMyAvatarBySocialIdWithPosts(user.currentSocialId);
+  const posts = avatar?.posts === null ? [] : (avatar?.posts as PostEntity[]);
 
   return (
     <>
-      {session ? (
+      {session !== null ? (
         <Posts user={user as User} posts={posts} />
       ) : (
         <div

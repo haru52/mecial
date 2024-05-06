@@ -3,15 +3,11 @@ import { Posts } from "~/app/_components/posts/posts";
 import type { Post } from "~/entities/post";
 import { api } from "~/trpc/server";
 
-export default async function Page({
-  params,
-}: {
-  params: { userScreenName: string; id: string };
-}) {
-  const user = await api.user.getByScreenNameWithPosts(params.userScreenName);
-  if (user === null || user.posts === undefined) return notFound();
-  console.dir(user.posts);
-  const posts = user.posts as Post[];
+export default async function Page() {
+  const user = await api.user.getMe();
+  const avatar = user?.currentSocialId == null ? null : await api.avatar.getMyAvatarBySocialIdWithPosts(user?.currentSocialId);
+  if (user === null || avatar?.posts === undefined) return notFound();
+  const posts = avatar.posts as Post[];
 
   return (
     <>
