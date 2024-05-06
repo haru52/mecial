@@ -1,9 +1,9 @@
 import { api } from "~/trpc/server";
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
 import { JoinSocialButton } from "~/app/_components/socials/[screenName]/join-social-button";
 import { LeaveSocialButton } from "~/app/_components/socials/[screenName]/leave-social-button";
 import { notFound } from "next/navigation";
+import { getServerAuthSession } from "~/server/auth";
 
 export const generateMetadata = async ({
   params,
@@ -21,7 +21,12 @@ export default async function Page({
 }) {
   const social = await api.social.getByScreenName(params.screenName);
   if (social === null) notFound();
+  const session = await getServerAuthSession();
+  if (session === null) return notFound();
+  const user = await api.user.getByIdWithAvatars(session.user.id);
+  if (user === null) return notFound();
   const avatar = await api.avatar.getMyAvatarBySocialId(social.id);
+  const avatars = user.avatars;
   return (
     <>
       <h1>{social.name}</h1>
@@ -37,9 +42,9 @@ export default async function Page({
         )}
       </ul>
       {avatar === null ? (
-        <JoinSocialButton social={social} />
+        <JoinSocialButton social={social} currentSocialId={user.currentSocialId} />
       ) : (
-        <LeaveSocialButton avatarId={avatar.id} />
+        <LeaveSocialButton avatarId={avatar.id} avatarsLength={avatars.length} />
       )}
     </>
   );

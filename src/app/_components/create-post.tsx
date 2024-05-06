@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import { api } from "~/trpc/react";
 
-export function CreatePost() {
+export function CreatePost({ avatarId }: { avatarId: string }) {
   const router = useRouter();
   const [content, setContent] = useState("");
 
@@ -20,7 +20,7 @@ export function CreatePost() {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        createPost.mutate({ content: content });
+        createPost.mutate({ content: content, createdById: avatarId });
       }}
       className="flex flex-col gap-2"
     >

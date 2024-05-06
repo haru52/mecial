@@ -9,20 +9,24 @@ export const User = z.object({
     .string()
     .email({ message: "メールアドレスの形式で入力してください" })
     .nullable(),
-  emailVerified: z.date().nullable(),
   image: z.string().url({ message: "URLの形式で入力してください" }).nullable(),
+  url: z.string().url({ message: "URLの形式で入力してください" }).nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
+  currentSocialId: z.number().nullable(),
 });
 
 export const UpdateUser = User.omit({
-  emailVerified: true,
+  id: true,
   createdAt: true,
   updatedAt: true,
 }).partial({
+  screenName: true,
   name: true,
   email: true,
   image: true,
+  url: true,
+  currentSocialId: true,
 });
 
 export type User = z.infer<typeof User>;

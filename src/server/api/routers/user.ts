@@ -12,27 +12,30 @@ export const userRouter = createTRPCRouter({
   update: protectedProcedure
     .input(UpdateUser)
     .mutation(async ({ ctx, input }) => {
-      if (input.id !== ctx.session.user.id) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
-      }
-      if (input.screenName == null) {
-        throw new TRPCError({ code: "INVALID_ARGUMENT" });
-      }
       const existUser = await ctx.db.user.findUnique({
-        where: { screenName: input.screenName ?? '' },
+        where: { screenName: input.screenName ?? "" },
       });
       const exist = existUser !== null;
       if (exist) {
         throw new Error("このIDは既に使われています");
       }
+      const defaultData = {
+        screenName: input.screenName,
+        name: input.name,
+        email: input.email,
+        image: input.image,
+      };
+      const data = (() => {
+        if (input.currentSocialId === undefined) return defaultData;
+        if (input.currentSocialId === null) return { ...defaultData, currentSocialId: null };
+        return {
+          ...defaultData,
+          currentSocial: { connect: { id: input.currentSocialId } },
+        };
+      })();
       return ctx.db.user.update({
-        data: {
-          screenName: input.screenName,
-          name: input.name,
-          email: input.email,
-          image: input.image,
-        },
-        where: { id: input.id },
+        data,
+        where: { id: ctx.session.user.id },
       });
     }),
 
@@ -41,6 +44,17 @@ export const userRouter = createTRPCRouter({
       where: { id: input },
     });
   }),
+
+  getByIdWithAvatars: publicProcedure
+    .input(z.string().uuid())
+    .query(({ ctx, input }) => {
+      return ctx.db.user.findFirst({
+        where: { id: input },
+        include: {
+          avatars: true,
+        },
+      });
+    }),
 
   getByIdWithPosts: publicProcedure
     .input(z.string().uuid())

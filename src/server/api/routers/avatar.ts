@@ -30,6 +30,29 @@ export const avatarRouter = createTRPCRouter({
       });
     }),
 
+  getCurrentMyAvatar: protectedProcedure.query(async ({ ctx }) => {
+    const user = await ctx.db.user.findUnique({
+      where: { id: ctx.session.user.id },
+    });
+    console.dir(user);
+    if (user === null) return null;
+    const currentSocialId = user.currentSocialId;
+    if (currentSocialId === null) return null;
+    return ctx.db.avatar.findFirst({
+      where: {
+        socialId: currentSocialId,
+        userId: ctx.session.user.id,
+      },
+    });
+  }),
+
+  getMyAvatarsWithSocial: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.db.avatar.findMany({
+      where: { userId: ctx.session.user.id },
+      include: { social: true },
+    });
+  }),
+
   delete: protectedProcedure
     .input(z.string().uuid())
     .mutation(async ({ ctx, input }) => {

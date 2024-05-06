@@ -4,6 +4,7 @@ import { api } from "~/trpc/server";
 import { notFound } from "next/navigation";
 import { CreatePost } from "~/app/_components/create-post";
 import { getServerAuthSession } from "~/server/auth";
+import { SelectSocial } from "../_components/[userScreenName]/select-social";
 
 export const generateMetadata = async ({
   params,
@@ -24,6 +25,9 @@ export default async function Page({
 }) {
   const user = await api.user.getByScreenName(params.userScreenName);
   const session = await getServerAuthSession();
+  const avatar = await api.avatar.getCurrentMyAvatar();
+  const avatarsWithSocial = await api.avatar.getMyAvatarsWithSocial();
+  const socials = avatarsWithSocial.map((avatar) => avatar.social);
 
   if (user === null) return notFound();
 
@@ -33,9 +37,19 @@ export default async function Page({
       <ul>
         <li>ID：@{user?.screenName}</li>
       </ul>
-      {session?.user.id === user.id && <><Link href={`${user.screenName}/edit`}>Edit</Link><br /></>}
+      {session?.user.id === user.id && (
+        <>
+          <Link href={`${user.screenName}/edit`}>Edit</Link>
+          <br />
+        </>
+      )}
       <Link href={`${user.screenName}/posts`}>Posts</Link>
-      <CreatePost />
+      {avatar !== null && (
+        <>
+      <CreatePost avatarId={avatar.id} />
+      <SelectSocial socials={socials} currentSocialId={user.currentSocialId} />
+      </>
+    )}
     </>
   );
 }

@@ -4,15 +4,25 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+import { CreatePost } from "~/entities/post";
 
 export const postRouter = createTRPCRouter({
   create: protectedProcedure
-    .input(z.object({ content: z.string().min(1) }))
+    .input(CreatePost)
     .mutation(async ({ ctx, input }) => {
+      const avatar = await ctx.db.avatar.findUnique({
+        where: { id: input.createdById },
+      });
+      if (avatar === null) {
+        throw new Error("Avatar not found");
+      }
+      if (avatar.userId !== ctx.session.user.id) {
+        throw new Error("User not authorized");
+      }
       return ctx.db.post.create({
         data: {
           content: input.content,
-          createdBy: { connect: { id: ctx.session.user.id } },
+          createdBy: { connect: { id: input.createdById } },
         },
       });
     }),

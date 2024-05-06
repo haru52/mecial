@@ -27,7 +27,6 @@ export function SignupForm({ userId }: { userId: string }) {
       onSubmit={async (e) => {
         e.preventDefault();
         mutate({
-          id: userId,
           screenName,
         });
       }}

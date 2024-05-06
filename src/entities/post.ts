@@ -2,10 +2,10 @@ import { z } from "zod";
 
 export const Post = z.object({
   id: z.coerce.number(),
-  content: z.string(),
+  content: z.string().min(1),
   createdAt: z.date(),
   updatedAt: z.date(),
-  createdById: z.string().uuid().optional(),
+  createdById: z.string().uuid(),
 });
 
 export const CreatePost = Post.omit({

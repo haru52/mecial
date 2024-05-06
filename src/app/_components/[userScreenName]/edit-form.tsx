@@ -27,7 +27,6 @@ export function EditForm({ user }: { user: User }) {
       onSubmit={(e) => {
         e.preventDefault();
         mutate({
-          id: user.id,
           name,
           screenName,
           email,
