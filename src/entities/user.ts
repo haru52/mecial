@@ -30,3 +30,4 @@ export const UpdateUser = User.omit({
 });
 
 export type User = z.infer<typeof User>;
+export type UpdateUser = z.infer<typeof UpdateUser>;

@@ -1,12 +1,16 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { UpdateUser } from "~/entities/user";
+import { UserRepository } from "~/server/repositories/user-repository";
+import { PrismaUserRepository } from "~/server/repositories/prisma/prisma-user-repository";
 
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+
+const repo: UserRepository = new PrismaUserRepository();
 
 export const userRouter = createTRPCRouter({
   update: protectedProcedure
@@ -27,7 +31,8 @@ export const userRouter = createTRPCRouter({
       };
       const data = (() => {
         if (input.currentSocialId === undefined) return defaultData;
-        if (input.currentSocialId === null) return { ...defaultData, currentSocialId: null };
+        if (input.currentSocialId === null)
+          return { ...defaultData, currentSocialId: null };
         return {
           ...defaultData,
           currentSocial: { connect: { id: input.currentSocialId } },
@@ -117,4 +122,8 @@ export const userRouter = createTRPCRouter({
       console.log("!!user", !!user);
       return !!user;
     }),
+
+  delete: protectedProcedure.mutation(async ({ ctx }) => {
+    await repo.delete(ctx.session.user.id);
+  }),
 });

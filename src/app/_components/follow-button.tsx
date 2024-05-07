@@ -1,0 +1,19 @@
+"use client";
+
+import { api } from "~/trpc/react";
+
+export function FollowButton({ avatarId }: { avatarId: string }) {
+  const { mutate } = api.follows.follow.useMutation();
+
+  return (
+    <button
+      className="btn btn-primary"
+      onClick={(e) => {
+        e.preventDefault();
+        mutate(avatarId);
+      }}
+    >
+      フォロー
+    </button>
+  );
+}

@@ -1,7 +1,27 @@
+import { connect } from "http2";
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 
 export const followsRouter = createTRPCRouter({
+  follow: protectedProcedure.input(z.string().uuid()).mutation(async ({ ctx, input }) => {
+    const user = await ctx.db.user.findUnique({
+      where: { id: ctx.session.user.id },
+    });
+    if (user === null) throw new Error("ユーザーが見つかりません");
+    if (user.id === input) throw new Error("自分自身をフォローすることはできません");
+    if (user.currentSocialId === null) throw new Error("どのソーシャルにも属していません");
+    const avatar = await ctx.db.avatar.findFirst({
+      where: { socialId: user.currentSocialId },
+    });
+    if (avatar === null) throw new Error("アバターが見つかりません");
+    return ctx.db.follows.create({
+      data: {
+        followedBy: { connect: { id: avatar.id } },
+        following: {connect: {id: input}},
+      },
+    });
+  }),
+
   getFollowingByAvatarId: publicProcedure
     .input(z.string().uuid())
     .query(async ({ ctx, input }) => {

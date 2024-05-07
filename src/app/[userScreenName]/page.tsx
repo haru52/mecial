@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { CreatePost } from "~/app/_components/create-post";
 import { getServerAuthSession } from "~/server/auth";
 import { SelectSocial } from "../_components/[userScreenName]/select-social";
+import { FollowButton } from "../_components/follow-button";
 
 export const generateMetadata = async ({
   params,
@@ -32,10 +33,11 @@ export default async function Page({
   const followersCount = avatar == null ? 0 : await api.follows.getFollowersCountByAvatarId(avatar.id);
 
   if (user === null) return notFound();
-
+  if (avatar === null) return notFound();
   return (
     <>
       <h1>{user?.name}</h1>
+      <FollowButton avatarId={avatar.id} />
       <ul>
         <li>ID：@{user?.screenName}</li>
         <li>{followingCount} フォロー中</li>
