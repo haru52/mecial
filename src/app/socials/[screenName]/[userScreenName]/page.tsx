@@ -42,12 +42,13 @@ export default async function Page({
 }) {
   const session = await getServerAuthSession();
   if (session === null) redirect("/");
-  const loginUser = await api.user.getByIdWithAvatars(session.user.id);
-  if (loginUser === null) redirect("/");
   const social = await getSocial(params.screenName);
   if (social === null) return redirect("/");
-  const loginAvatar = await api.avatar.getMyAvatarBySocialId(social.id);
-  if (loginAvatar === null) redirect("/");
+  const loginAvatar = await api.avatar.getBySocialIdAndUserIdWithUser({
+    socialId: social.id,
+    userId: session.user.id,
+  });
+  if (loginAvatar === null) return redirect("/");
 
   const avatar = await getAvatarWithUser(social.id, params.userScreenName);
   if (avatar === null) notFound();
@@ -61,7 +62,7 @@ export default async function Page({
         height={100}
         alt={avatar.user.name ?? ""}
       />
-      {loginAvatar.id !== avatar.id && (
+      {loginAvatar.user.currentSocialId === social.id && loginAvatar.id !== avatar.id && (
         <FollowButton avatarId={avatar.id} />
       )}
     </>

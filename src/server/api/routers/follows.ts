@@ -1,26 +1,58 @@
 import { connect } from "http2";
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
 export const followsRouter = createTRPCRouter({
-  follow: protectedProcedure.input(z.string().uuid()).mutation(async ({ ctx, input }) => {
-    const user = await ctx.db.user.findUnique({
-      where: { id: ctx.session.user.id },
-    });
-    if (user === null) throw new Error("ユーザーが見つかりません");
-    if (user.id === input) throw new Error("自分自身をフォローすることはできません");
-    if (user.currentSocialId === null) throw new Error("どのソーシャルにも属していません");
-    const avatar = await ctx.db.avatar.findFirst({
-      where: { socialId: user.currentSocialId },
-    });
-    if (avatar === null) throw new Error("アバターが見つかりません");
-    return ctx.db.follows.create({
-      data: {
-        followedBy: { connect: { id: avatar.id } },
-        following: {connect: {id: input}},
-      },
-    });
-  }),
+  follow: protectedProcedure
+    .input(z.string().uuid())
+    .mutation(async ({ ctx, input }) => {
+      const user = await ctx.db.user.findUnique({
+        where: { id: ctx.session.user.id },
+        include: {
+          avatars: {
+            select: {
+              id: true,
+              socialId: true,
+            },
+          },
+        },
+      });
+      if (user === null) throw new Error("ログインユーザーが見つかりません");
+      if (user.avatars.length === 0) {
+        throw new Error("ログインアバターが見つかりません");
+      }
+      const followedAvatar = await ctx.db.avatar.findUnique({
+        where: { id: input },
+      });
+      if (followedAvatar === null) {
+        throw new Error("フォローされるアバターが見つかりません");
+      }
+      const followingAvatar = user.avatars.find(
+        (avatar) => avatar.socialId === followedAvatar.socialId,
+      );
+      if (followingAvatar === undefined)
+        throw new Error("フォローするアバターが見つかりません");
+      if (
+        !user.avatars.some(
+          (avatar) => avatar.socialId === followedAvatar.socialId,
+        )
+      ) {
+        throw new Error("フォローするアバターが見つかりません");
+      }
+      if (followedAvatar.userId === ctx.session.user.id) {
+        throw new Error("自分自身をフォローすることはできません");
+      }
+      return ctx.db.follows.create({
+        data: {
+          followedBy: { connect: { id: followingAvatar.id } },
+          following: { connect: { id: input } },
+        },
+      });
+    }),
 
   getFollowingByAvatarId: publicProcedure
     .input(z.string().uuid())
