@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ScreenName } from "~/zod/zodSchemas";
+import { ScreenName, Url } from "~/zod/zodSchemas";
 
 export const User = z.object({
   id: z.string().uuid(),
@@ -9,8 +9,8 @@ export const User = z.object({
     .string()
     .email({ message: "メールアドレスの形式で入力してください" })
     .nullable(),
-  image: z.string().url({ message: "URLの形式で入力してください" }).nullable(),
-  url: z.string().url({ message: "URLの形式で入力してください" }).nullable(),
+  image: Url.nullable(),
+  url: Url.nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
   currentSocialId: z.number().nullable(),
@@ -30,4 +30,3 @@ export const UpdateUser = User.omit({
 });
 
 export type User = z.infer<typeof User>;
-export type UpdateUser = z.infer<typeof UpdateUser>;

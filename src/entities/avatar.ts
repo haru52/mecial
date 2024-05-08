@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { User } from "./user";
+import type { User } from "./user";
 
 export const Avatar = z.object({
-  id: z.number(),
+  id: z.string().uuid(),
   isPrivate: z.boolean(),
   createdAt: z.date(),
   updatedAt: z.date(),
@@ -15,6 +15,15 @@ export const CreateAvatar = Avatar.omit({
   isPrivate: true,
   createdAt: true,
   updatedAt: true,
+});
+
+export const UpdateAvatar = Avatar.omit({
+  createdAt: true,
+  updatedAt: true,
+}).partial({
+  isPrivate: true,
+  userId: true,
+  socialId: true,
 });
 
 export type Avatar = z.infer<typeof Avatar>;

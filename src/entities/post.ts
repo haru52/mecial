@@ -1,9 +1,8 @@
 import { z } from "zod";
-import { AvatarWithUser } from "./avatar";
-import { User } from "./user";
+import type { AvatarWithUser } from "./avatar";
 
 export const Post = z.object({
-  id: z.coerce.number(),
+  id: z.number(),
   content: z.string().min(1),
   createdAt: z.date(),
   updatedAt: z.date(),
