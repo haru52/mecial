@@ -1,16 +1,12 @@
 import { z } from "zod";
-import { TRPCError } from "@trpc/server";
 import { UpdateUser } from "~/entities/user";
-import { UserRepository } from "~/server/repositories/user-repository";
-import { PrismaUserRepository } from "~/server/repositories/prisma/prisma-user-repository";
+import { ScreenName } from "~/zod/zodSchemas";
 
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
-
-const repo: UserRepository = new PrismaUserRepository();
 
 export const userRouter = createTRPCRouter({
   update: protectedProcedure
@@ -106,24 +102,17 @@ export const userRouter = createTRPCRouter({
   }),
 
   checkIfScreenNameExists: protectedProcedure
-    .input(
-      z
-        .string({ invalid_type_error: "文字列を入力してください" })
-        .min(1, { message: "IDを入力してください" })
-        .regex(/^[a-zA-Z][a-zA-Z0-9_]*$/, {
-          message:
-            "半角英数字とアンダースコア（_）のみ使用できます。また、先頭は半角英字にする必要があります",
-        }),
-    )
+    .input(ScreenName)
     .query(async ({ ctx, input }) => {
       const user = await ctx.db.user.findUnique({
         where: { screenName: input },
       });
-      console.log("!!user", !!user);
       return !!user;
     }),
 
-  delete: protectedProcedure.mutation(async ({ ctx }) => {
-    await repo.delete(ctx.session.user.id);
+  delete: protectedProcedure.mutation(({ ctx }) => {
+    return ctx.db.user.delete({
+      where: { id: ctx.session.user.id },
+    });
   }),
 });
