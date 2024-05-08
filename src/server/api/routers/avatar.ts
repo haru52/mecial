@@ -68,33 +68,57 @@ export const avatarRouter = createTRPCRouter({
     });
   }),
 
+  getById: publicProcedure.input(z.string().uuid()).query(({ ctx, input }) => {
+    return ctx.db.avatar.findUnique({
+      where: { id: input },
+    });
+  }),
+
+  getBySocialIdAndUserIdWithUser: publicProcedure
+    .input(z.object({ socialId: z.number(), userId: z.string().uuid() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.avatar.findFirst({
+        where: {
+          socialId: input.socialId,
+          userId: input.userId,
+        },
+        include: {
+          user: true,
+        },
+      });
+    }),
+
   // https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/self-relations#many-to-many-self-relations
   // https://github.com/prisma/prisma/discussions/12310
   // https://zenn.dev/ninjin_umigame/articles/89c8100bf6234a
 
-  getFollowingsByUserId: publicProcedure.input(z.string().uuid()).query(async ({ ctx, input }) => {
-    return ctx.db.avatar.findMany({
-      where: { 
-        followedBy: {
-          some: {
-            followedById: input
-          }
-        }
-      }
-    });
-  }),
+  getFollowingsByUserId: publicProcedure
+    .input(z.string().uuid())
+    .query(async ({ ctx, input }) => {
+      return ctx.db.avatar.findMany({
+        where: {
+          followedBy: {
+            some: {
+              followedById: input,
+            },
+          },
+        },
+      });
+    }),
 
-  getFollowersByUserId: publicProcedure.input(z.string().uuid()).query(async ({ ctx, input }) => {
-    return ctx.db.avatar.findMany({
-      where: { 
-        following: {
-          some: {
-            followingId: input
-          }
-        }
-      }
-    });
-  }),
+  getFollowersByUserId: publicProcedure
+    .input(z.string().uuid())
+    .query(async ({ ctx, input }) => {
+      return ctx.db.avatar.findMany({
+        where: {
+          following: {
+            some: {
+              followingId: input,
+            },
+          },
+        },
+      });
+    }),
 
   delete: protectedProcedure
     .input(z.string().uuid())
