@@ -26,8 +26,8 @@ model Social {
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt
 
-    createdBy   User   @relation("createdSocial", fields: [createdById], references: [id])
-    createdById String
+    createdBy   User?   @relation("createdSocial", fields: [createdById], references: [id], onDelete: SetNull)
+    createdById String?
 
     @@index([screenName])
 }
@@ -41,9 +41,9 @@ model Avatar {
     createdAt  DateTime  @default(now())
     updatedAt  DateTime  @updatedAt
 
-    user     User   @relation(fields: [userId], references: [id])
+    user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId   String
-    social   Social @relation(fields: [socialId], references: [id])
+    social   Social @relation(fields: [socialId], references: [id], onDelete: Cascade)
     socialId Int
 
     @@unique([socialId, userId])
@@ -55,7 +55,7 @@ model Post {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    createdBy   Avatar @relation(fields: [createdById], references: [id])
+    createdBy   Avatar @relation(fields: [createdById], references: [id], onDelete: Cascade)
     createdById String
 
     @@index([content])
@@ -63,9 +63,9 @@ model Post {
 
 model Follows {
     id           Int      @id @default(autoincrement())
-    followedBy   Avatar   @relation("followedBy", fields: [followedById], references: [id])
+    followedBy   Avatar   @relation("followedBy", fields: [followedById], references: [id], onDelete: Cascade)
     followedById String
-    following    Avatar   @relation("following", fields: [followingId], references: [id])
+    following    Avatar   @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
     followingId  String
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt @default(now())
@@ -116,7 +116,7 @@ model User {
     createdAt      DateTime  @default(now())
     updatedAt      DateTime  @updatedAt @default(now())
 
-    currentSocial   Social? @relation("currentSocial", fields: [currentSocialId], references: [id])
+    currentSocial   Social? @relation("currentSocial", fields: [currentSocialId], references: [id], onDelete: SetNull)
     currentSocialId Int?
 
     @@index([screenName])
