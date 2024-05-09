@@ -26,12 +26,12 @@ export default async function Page({
   if (session === null) redirect(loginPath);
   const loginUser = await api.user.getByIdWithAvatars(session.user.id);
   if (loginUser === null) redirect(loginPath);
-  const loginUserIsInSocial = loginUser.avatars.some((avatar) => avatar.socialId === social.id);
+  const loginAvatar = loginUser.avatars.find((avatar) => avatar.socialId === social.id);
   const avatars = social.avatars;
   return (
     <>
       <h1>{social.name} アバター</h1>
-      <Avatars avatars={avatars} />
+      <Avatars avatars={avatars} loginAvatarId={loginAvatar?.id} />
     </>
   );
 }

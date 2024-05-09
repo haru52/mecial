@@ -45,7 +45,7 @@ export default async function Page({
         <li><Link href={`/socials/${params.screenName}/avatars`}>{avatars.length} 人のアバター</Link></li>
       </ul>
       {avatar === null ? (
-        <JoinSocialButton social={social} currentSocialId={user.currentSocialId} />
+        <JoinSocialButton social={social} user={user} />
       ) : (
         <LeaveSocialButton avatarId={avatar.id} avatarsLength={loginUserAvatars.length} />
       )}

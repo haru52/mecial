@@ -3,15 +3,15 @@
 import { Social } from "~/entities/social";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
+import type { User } from "~/entities/user";
 
 export function JoinSocialButton({
   social,
-  currentSocialId,
+  user,
 }: {
   social: Social;
-  currentSocialId: number | null;
+  user: User;
 }) {
-  console.debug( {currentSocialId});
   const router = useRouter();
   const { mutate } = api.avatar.create.useMutation();
   const { mutate: userUpdateMutate } = api.user.update.useMutation();
@@ -22,9 +22,10 @@ export function JoinSocialButton({
       onClick={(e) => {
         e.preventDefault();
         mutate({
+          userId: user.id,
           socialId: social.id,
         });
-        if (currentSocialId === null) {
+        if (user.currentSocialId === null) {
           userUpdateMutate({
             currentSocialId: social.id,
           });

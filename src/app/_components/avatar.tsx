@@ -1,18 +1,37 @@
 import type { AvatarWithUser } from "~/entities/avatar";
-import { DEFAULT_ICON_PATH } from "~/consts";
+import { defaultIconPath } from "~/consts";
 import Image from "next/image";
 import Link from "next/link";
+import { FollowButton } from "./follow-button";
+import { UnfollowButton } from "./unfollow-button";
+import { api } from "~/trpc/server";
 
-export function Avatar({ avatar }: { avatar: AvatarWithUser }) {
+export async function Avatar({
+  avatar,
+  loginAvatarId,
+}: {
+  avatar: AvatarWithUser;
+  loginAvatarId?: string;
+}) {
+  const loginAvatarIsInSocial = loginAvatarId !== undefined;
+  const isFollowing = loginAvatarIsInSocial
+    ? await api.follows.isFollowing({
+        followedById: loginAvatarId,
+        followingId: avatar.id,
+      })
+    : false;
   return (
-    <Link href={`/socials/main/${avatar.user.screenName}`} className="no-underline">
+    <Link
+      href={`/socials/main/${avatar.user.screenName}`}
+      className="no-underline inline-block"
+    >
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
           <div className="card-title">
             <div className="not-prose avatar">
               <div className="w-11 rounded-full">
                 <Image
-                  src={avatar.user.image ?? DEFAULT_ICON_PATH}
+                  src={avatar.user.image ?? defaultIconPath}
                   width={500}
                   height={500}
                   alt=""
@@ -26,7 +45,12 @@ export function Avatar({ avatar }: { avatar: AvatarWithUser }) {
           </div>
           <p>アバターの自己紹介文。</p>
           <div className="card-actions justify-end">
-            <button className="btn btn-primary">フォロー</button>
+            {loginAvatarIsInSocial && loginAvatarId !== avatar.id && 
+              (isFollowing ? (
+                <UnfollowButton avatarId={avatar.id} />
+              ) : (
+                <FollowButton avatarId={avatar.id} />
+              ))}
           </div>
         </div>
       </div>

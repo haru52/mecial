@@ -75,6 +75,19 @@ export const followsRouter = createTRPCRouter({
       });
     }),
 
+  isFollowing: publicProcedure.input(z.object({
+    followedById: z.string().uuid(),
+    followingId: z.string().uuid(),
+  })).query(async ({ ctx, input }) => {
+    const follow = await ctx.db.follows.findFirst({
+      where: {
+        followedById: input.followedById,
+        followingId: input.followingId,
+      },
+    });
+    return follow !== null;
+  }),
+
   getFollowingByAvatarId: publicProcedure
     .input(z.string().uuid())
     .query(async ({ ctx, input }) => {
