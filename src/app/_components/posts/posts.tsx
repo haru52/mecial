@@ -1,4 +1,7 @@
-import type { Post as PostEntity, PostWithCreatedByUser } from "~/entities/post";
+import type {
+  Post as PostEntity,
+  PostWithCreatedByUser,
+} from "~/entities/post";
 import type { User } from "~/entities/user";
 import { Post } from "./post";
 

@@ -10,46 +10,67 @@ export const followsRouter = createTRPCRouter({
   follow: protectedProcedure
     .input(z.string().uuid())
     .mutation(async ({ ctx, input }) => {
-      const user = await ctx.db.user.findUnique({
-        where: { id: ctx.session.user.id },
-        include: {
-          avatars: {
-            select: {
-              id: true,
-              socialId: true,
-            },
-          },
-        },
-      });
-      if (user === null) throw new Error("ログインユーザーが見つかりません");
-      if (user.avatars.length === 0) {
-        throw new Error("ログインアバターが見つかりません");
-      }
       const followedAvatar = await ctx.db.avatar.findUnique({
         where: { id: input },
       });
       if (followedAvatar === null) {
         throw new Error("フォローされるアバターが見つかりません");
       }
-      const followingAvatar = user.avatars.find(
-        (avatar) => avatar.socialId === followedAvatar.socialId,
-      );
-      if (followingAvatar === undefined)
-        throw new Error("フォローするアバターが見つかりません");
-      if (
-        !user.avatars.some(
-          (avatar) => avatar.socialId === followedAvatar.socialId,
-        )
-      ) {
+      const user = await ctx.db.user.findUnique({
+        where: { id: ctx.session.user.id },
+        include: {
+          avatars: {
+            select: { id: true },
+            where: { socialId: followedAvatar.socialId },
+          },
+        },
+      });
+      if (user === null) throw new Error("ログインユーザーが見つかりません");
+      const followingAvatar = user.avatars[0];
+      if (followingAvatar === undefined) {
         throw new Error("フォローするアバターが見つかりません");
       }
-      if (followedAvatar.userId === ctx.session.user.id) {
+      if (followingAvatar.id === followedAvatar.id) {
         throw new Error("自分自身をフォローすることはできません");
       }
       return ctx.db.follows.create({
         data: {
           followedBy: { connect: { id: followingAvatar.id } },
           following: { connect: { id: input } },
+        },
+      });
+    }),
+
+  unfollow: protectedProcedure
+    .input(z.string().uuid())
+    .mutation(async ({ ctx, input }) => {
+      const unfollowedAvatar = await ctx.db.avatar.findUnique({
+        where: { id: input },
+      });
+      if (unfollowedAvatar === null) {
+        throw new Error("フォロー解除されるアバターが見つかりません");
+      }
+      const user = await ctx.db.user.findUnique({
+        where: { id: ctx.session.user.id },
+        include: {
+          avatars: {
+            select: { id: true },
+            where: { socialId: unfollowedAvatar.socialId },
+          },
+        },
+      });
+      if (user === null) throw new Error("ログインユーザーが見つかりません");
+      const unfollowingAvatar = user.avatars[0];
+      if (unfollowingAvatar === undefined) {
+        throw new Error("フォロー解除するアバターが見つかりません");
+      }
+      if (unfollowingAvatar.id === unfollowedAvatar.id) {
+        throw new Error("自分自身をフォロー解除することはできません");
+      }
+      return ctx.db.follows.deleteMany({
+        where: {
+          followedById: unfollowingAvatar.id,
+          followingId: input,
         },
       });
     }),

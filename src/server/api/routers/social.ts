@@ -5,6 +5,7 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import { CreateSocial } from "~/entities/social";
+import { ScreenName } from "~/zod/zodSchemas";
 
 export const socialRouter = createTRPCRouter({
   create: protectedProcedure.input(CreateSocial).mutation(({ ctx, input }) => {
@@ -31,4 +32,18 @@ export const socialRouter = createTRPCRouter({
       where: { screenName: input },
     });
   }),
+
+  getByScreenNameWithAvatarUsers: publicProcedure
+    .input(ScreenName)
+    .query(({ ctx, input }) => {
+      return ctx.db.social.findFirst({
+        where: { screenName: input },
+        include: {
+          avatars: {
+            where: { isPrivate: false },
+            include: { user: true },
+          },
+        },
+      });
+    }),
 });
