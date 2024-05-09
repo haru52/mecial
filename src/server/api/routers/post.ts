@@ -5,6 +5,7 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import { CreatePost } from "~/entities/post";
+import { TRPCError } from "@trpc/server";
 
 export const postRouter = createTRPCRouter({
   create: protectedProcedure
@@ -14,10 +15,10 @@ export const postRouter = createTRPCRouter({
         where: { id: input.createdById },
       });
       if (avatar === null) {
-        throw new Error("Avatar not found");
+        throw new Error("アバターが存在しません");
       }
-      if (avatar.userId !== ctx.session.user.id) {
-        throw new Error("User not authorized");
+      if (ctx.session.user.id !== avatar.userId) {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
       }
       return ctx.db.post.create({
         data: {

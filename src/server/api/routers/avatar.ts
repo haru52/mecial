@@ -7,17 +7,15 @@ import {
 import { CreateAvatar } from "~/entities/avatar";
 
 export const avatarRouter = createTRPCRouter({
-  create: protectedProcedure
-    .input(CreateAvatar)
-    .mutation(async ({ ctx, input }) => {
-      return ctx.db.avatar.create({
-        data: {
-          isPrivate: false,
-          user: { connect: { id: ctx.session.user.id } },
-          social: { connect: { id: input.socialId } },
-        },
-      });
-    }),
+  create: protectedProcedure.input(CreateAvatar).mutation(({ ctx, input }) => {
+    return ctx.db.avatar.create({
+      data: {
+        isPrivate: false,
+        user: { connect: { id: ctx.session.user.id } },
+        social: { connect: { id: input.socialId } },
+      },
+    });
+  }),
 
   getMyAvatarBySocialId: protectedProcedure
     .input(z.number())
@@ -137,7 +135,7 @@ export const avatarRouter = createTRPCRouter({
 
   delete: protectedProcedure
     .input(z.string().uuid())
-    .mutation(async ({ ctx, input }) => {
+    .mutation(({ ctx, input }) => {
       return ctx.db.avatar.delete({
         where: { id: input },
       });

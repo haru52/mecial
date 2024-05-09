@@ -26,22 +26,13 @@ export default async function Page({
 }) {
   const user = await api.user.getByScreenName(params.userScreenName);
   const session = await getServerAuthSession();
-  const avatar = await api.avatar.getCurrentMyAvatar();
-  const avatarsWithSocial = await api.avatar.getMyAvatarsWithSocial();
-  const socials = avatarsWithSocial.map((avatar) => avatar.social);
-  const followingCount = avatar == null ? 0 : await api.follows.getFollowingCountByAvatarId(avatar.id);
-  const followersCount = avatar == null ? 0 : await api.follows.getFollowersCountByAvatarId(avatar.id);
 
   if (user === null) return notFound();
-  if (avatar === null) return notFound();
   return (
     <>
       <h1>{user?.name}</h1>
-      <FollowButton avatarId={avatar.id} />
       <ul>
         <li>ID：@{user?.screenName}</li>
-        <li>{followingCount} フォロー中</li>
-        <li>{followersCount} フォロワー</li>
       </ul>
       {session?.user.id === user.id && (
         <>
@@ -50,12 +41,6 @@ export default async function Page({
         </>
       )}
       <Link href={`${user.screenName}/posts`}>Posts</Link>
-      {(avatar !== null && user.currentSocialId !== null) && (
-        <>
-      <CreatePost avatarId={avatar.id} />
-      <SelectSocial socials={socials} currentSocialId={user.currentSocialId} />
-      </>
-    )}
     </>
   );
 }

@@ -15,6 +15,7 @@ export const CreateAvatar = Avatar.omit({
   isPrivate: true,
   createdAt: true,
   updatedAt: true,
+  userId: true,
 });
 
 export const UpdateAvatar = Avatar.omit({

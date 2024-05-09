@@ -5,6 +5,7 @@ import { api } from "~/trpc/server";
 import { Posts } from "./_components/posts/posts";
 import Link from "next/link";
 import { redirect } from 'next/navigation'
+import { CreatePost } from "./_components/create-post";
 
 export default async function Home() {
   const session = await getServerAuthSession();
@@ -23,7 +24,10 @@ export default async function Home() {
   return (
     <>
       {session !== null ? (
+        <>
+        <CreatePost avatarId={avatar?.id ?? ""} />
         <Posts posts={postsWithCreatedByUser as unknown as PostWithCreatedByUser[]} />
+        </>
       ) : (
         <div
           className="hero min-h-screen"

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 export function LeaveSocialButton({ avatarId, avatarsLength }: { avatarId: string, avatarsLength: number}) {
   const router = useRouter();
-  const { mutate } = api.avatar.delete.useMutation();
+  const { mutate: deleteAvatarMutate } = api.avatar.delete.useMutation();
   const { mutate: userUpdateMutate } = api.user.update.useMutation();
 
   return (
@@ -13,7 +13,7 @@ export function LeaveSocialButton({ avatarId, avatarsLength }: { avatarId: strin
       className="btn btn-error"
       onClick={(e) => {
         e.preventDefault();
-        mutate(avatarId);
+        deleteAvatarMutate(avatarId);
         if (avatarsLength === 1) {
           userUpdateMutate({
             currentSocialId: null,
