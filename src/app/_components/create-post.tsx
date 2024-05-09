@@ -22,7 +22,7 @@ export function CreatePost({ avatarId }: { avatarId: string }) {
         e.preventDefault();
         createPost.mutate({ content: content, createdById: avatarId });
       }}
-      className="w-full max-w-md"
+      className="w-full max-w-md mt-7"
     >
       <textarea
         placeholder="いまどうしてる？"

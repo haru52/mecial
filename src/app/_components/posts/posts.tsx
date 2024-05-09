@@ -9,7 +9,7 @@ export function Posts({ posts }: { posts: PostWithCreatedByUser[] }) {
   return (
     <>
       {posts.length >= 1 ? (
-        <ul>
+        <ul className="pl-0">
           <>
             {posts.map((post) => (
               <div key={post.id} className="mt-5">
