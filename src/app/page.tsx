@@ -28,14 +28,14 @@ export default async function Home() {
       avatar.id,
     ]);
   })();
-  const avatars = await api.avatar.getMyAvatarsWithSocial();
-  const socials = avatars.map((a) => a.social);
+  const avatars = session === null ? null : await api.avatar.getMyAvatarsWithSocial();
+  const socials = avatars?.map((a) => a.social);
 
   return (
     <>
       {session === null && (
         <div
-          className="hero min-h-screen"
+          className="hero min-h-[calc(100vh-68px)]"
           style={{
             backgroundImage: "url(hero.jpeg)",
           }}
