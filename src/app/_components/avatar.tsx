@@ -1,5 +1,5 @@
 import type { AvatarWithUser } from "~/entities/avatar";
-import { defaultIconPath } from "~/consts";
+import { defaultUserIconPath } from "~/consts";
 import Image from "next/image";
 import Link from "next/link";
 import { FollowButton } from "./follow-button";
@@ -31,7 +31,7 @@ export async function Avatar({
             <div className="not-prose avatar">
               <div className="w-11 rounded-full">
                 <Image
-                  src={avatar.user.image ?? defaultIconPath}
+                  src={avatar.user.image ?? defaultUserIconPath}
                   width={500}
                   height={500}
                   alt=""

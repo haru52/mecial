@@ -33,6 +33,12 @@ export const socialRouter = createTRPCRouter({
     });
   }),
 
+  getById: publicProcedure.input(z.number()).query(({ ctx, input }) => {
+    return ctx.db.social.findFirst({
+      where: { id: input },
+    });
+  }),
+
   getByScreenNameWithAvatarUsers: publicProcedure
     .input(ScreenName)
     .query(({ ctx, input }) => {
