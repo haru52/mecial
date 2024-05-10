@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { Social } from "./social";
 import type { User } from "./user";
 
 export const Avatar = z.object({
@@ -30,5 +31,6 @@ export const UpdateAvatar = Avatar.omit({
 export type Avatar = z.infer<typeof Avatar>;
 
 export type AvatarWithUser = Avatar & {
+  social: Social;
   user: User;
 };

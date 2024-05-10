@@ -63,7 +63,7 @@ export default async function Home() {
       )}
       {session !== null && (
         <Posts
-          posts={postsWithCreatedByUser as unknown as PostWithCreatedByUser[]}
+          posts={postsWithCreatedByUser}
         />
       )}
     </>

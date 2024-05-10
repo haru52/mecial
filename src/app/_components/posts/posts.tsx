@@ -1,20 +1,16 @@
-import type {
-  Post as PostEntity,
-  PostWithCreatedByUser,
-} from "~/entities/post";
-import type { User } from "~/entities/user";
+import type { PostWithCreatedByUser } from "~/entities/post";
 import { Post } from "./post";
 
 export function Posts({ posts }: { posts: PostWithCreatedByUser[] }) {
   return (
     <>
       {posts.length >= 1 ? (
-        <ul className="pl-0">
+        <ul className="list-none pl-0">
           <>
             {posts.map((post) => (
-              <div key={post.id} className="mt-5">
+              <li key={post.id} className="my-0 pl-0">
                 <Post post={post} />
-              </div>
+              </li>
             ))}
           </>
         </ul>

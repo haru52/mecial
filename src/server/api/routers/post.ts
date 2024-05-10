@@ -46,6 +46,7 @@ export const postRouter = createTRPCRouter({
         include: {
           createdBy: {
             include: {
+              social: true,
               user: true,
             },
           },
