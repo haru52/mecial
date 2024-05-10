@@ -53,4 +53,57 @@ export const postRouter = createTRPCRouter({
         },
       });
     }),
+
+  search: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.db.post.findMany({
+      orderBy: { createdAt: "desc" },
+      where: { content: { contains: input, mode: "insensitive" } },
+      include: {
+        createdBy: {
+          include: {
+            social: true,
+            user: true,
+          },
+        },
+      },
+    });
+  }),
+
+  searchInCurrentSocial: protectedProcedure
+    .input(z.string())
+    .query(async ({ ctx, input }) => {
+      const user = await ctx.db.user.findUnique({
+        where: { id: ctx.session.user.id },
+      });
+      return user?.currentSocialId == null
+        ? ctx.db.post.findMany({
+            orderBy: { createdAt: "desc" },
+            where: {
+              content: { contains: input, mode: "insensitive" },
+            },
+            include: {
+              createdBy: {
+                include: {
+                  social: true,
+                  user: true,
+                },
+              },
+            },
+          })
+        : ctx.db.post.findMany({
+            orderBy: { createdAt: "desc" },
+            where: {
+              content: { contains: input, mode: "insensitive" },
+              createdBy: { socialId: user.currentSocialId },
+            },
+            include: {
+              createdBy: {
+                include: {
+                  social: true,
+                  user: true,
+                },
+              },
+            },
+          });
+    }),
 });
