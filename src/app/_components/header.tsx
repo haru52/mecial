@@ -1,14 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { defaultUserIconPath, loginPath, logoutPath } from "~/consts";
-import { getServerAuthSession } from "~/server/auth";
-import { api } from "~/trpc/server";
+import type { Social } from "~/entities/social";
+import type { User } from "~/entities/user";
+import { closeDaisyUiDropdown } from "~/util";
 
-export async function Header() {
-  const session = await getServerAuthSession();
-  const user = session === null ? null : await api.user.getById(session.user.id);
-  const currentSocial = user?.currentSocialId == null ? null : await api.social.getById(user.currentSocialId);
-
+export function Header({ user, currentSocial }: { user: User | null, currentSocial: Social | null }) {
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -20,8 +19,8 @@ export async function Header() {
             { currentSocial !== null &&
               <li><Link href={`/socials/${currentSocial.screenName}`}>{currentSocial.name}</Link></li>
             }
-            <li><Link href="/socials">ソーシャル</Link></li>
-            <li><Link href="/users">ユーザー</Link></li>
+            <li onClick={closeDaisyUiDropdown}><Link href="/socials">ソーシャル</Link></li>
+            <li onClick={closeDaisyUiDropdown}><Link href="/users">ユーザー</Link></li>
           </ul>
         </div>
         <Link href="/" className="btn btn-ghost text-xl">Mecial</Link>
@@ -49,9 +48,9 @@ export async function Header() {
               </div>
             </div>
             <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-              <li><Link href={`/${user.screenName}`}>プロフィール</Link></li>
-              <li><Link href={`/${user.screenName}/edit`}>設定</Link></li>
-              <li><Link href={logoutPath}>ログアウト</Link></li>
+              <li onClick={closeDaisyUiDropdown}><Link href={`/${user.screenName}`}>プロフィール</Link></li>
+              <li onClick={closeDaisyUiDropdown}><Link href={`/${user.screenName}/edit`}>設定</Link></li>
+              <li onClick={closeDaisyUiDropdown}><Link href={logoutPath}>ログアウト</Link></li>
             </ul>
           </div>
         )}

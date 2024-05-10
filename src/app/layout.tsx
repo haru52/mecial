@@ -9,6 +9,7 @@ import type { Metadata } from "next";
 
 import { clsx } from "clsx";
 import { getServerAuthSession } from "~/server/auth";
+import { api } from "~/trpc/server";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,11 +32,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerAuthSession();
+  const user = session === null ? null : await api.user.getById(session.user.id);
+  const currentSocial = user?.currentSocialId == null ? null : await api.social.getById(user.currentSocialId);
 
   return (
     <html lang="ja">
       <body className={`font-sans ${inter.variable}`}>
-        <Header />
+        <Header user={user} currentSocial={currentSocial} />
         <main
           className={clsx({ "container prose mx-auto px-4": session !== null })}
         >
