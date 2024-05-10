@@ -16,14 +16,16 @@ export const userRouter = createTRPCRouter({
         where: { screenName: input.screenName ?? "" },
       });
       const exist = existUser !== null;
-      if (exist) {
+      if (exist && existUser?.id !== ctx.session.user.id) {
         throw new Error("このIDは既に使われています");
       }
       const defaultData = {
         screenName: input.screenName,
         name: input.name,
         email: input.email,
-        image: input.image,
+        image: input.image === "" ? null : input.image,
+        introduction: input.introduction === "" ? null : input.introduction,
+        url: input.url === "" ? null : input.url,
       };
       const data = (() => {
         if (input.currentSocialId === undefined) return defaultData;

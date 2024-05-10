@@ -12,7 +12,7 @@ export const generateMetadata = async ({
   params: { screenName: string };
 }): Promise<Metadata> => {
   const social = await api.social.getByScreenName(params.screenName);
-  return social === null ? { title: "404 Not Found" } : { title: `${social.name} アバター` };
+  return social === null ? { title: "404 Not Found" } : { title: `${social.name}のアバター` };
 };
 
 export default async function Page({
@@ -30,7 +30,7 @@ export default async function Page({
   const avatars = social.avatars;
   return (
     <>
-      <h1>{social.name} アバター</h1>
+      <h1>{social.name}のアバター</h1>
       <Avatars avatars={avatars} loginAvatarId={loginAvatar?.id} />
     </>
   );

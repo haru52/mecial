@@ -10,6 +10,7 @@ export const User = z.object({
     .email({ message: "メールアドレスの形式で入力してください" })
     .nullable(),
   image: Url.nullable(),
+  introduction: z.string().nullable(),
   url: Url.nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
@@ -25,6 +26,7 @@ export const UpdateUser = User.omit({
   name: true,
   email: true,
   image: true,
+  introduction: true,
   url: true,
   currentSocialId: true,
 });

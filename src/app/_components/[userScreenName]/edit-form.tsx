@@ -12,6 +12,8 @@ export function EditForm({ user }: { user: User }) {
   const [name, setName] = useState(user.name);
   const [screenName, setScreenName] = useState(user.screenName);
   const [email, setEmail] = useState(user.email);
+  const [introduction, setIntroduction] = useState(user.introduction);
+  const [url, setUrl] = useState(user.url);
   const [image, setImage] = useState(user.image);
   const { mutate, error } = api.user.update.useMutation({
     onSuccess: () => {
@@ -21,6 +23,8 @@ export function EditForm({ user }: { user: User }) {
   const nameErrors = error?.data?.zodError?.fieldErrors.name;
   const screenNameErrors = error?.data?.zodError?.fieldErrors.screenName;
   const emailErrors = error?.data?.zodError?.fieldErrors.email;
+  const urlErrors = error?.data?.zodError?.fieldErrors.url;
+  const introductionErrors = error?.data?.zodError?.fieldErrors.introduction;
   const imageErrors = error?.data?.zodError?.fieldErrors.image;
   return (
     <form
@@ -31,6 +35,8 @@ export function EditForm({ user }: { user: User }) {
           screenName,
           email,
           image,
+          introduction,
+          url,
         });
       }}
     >
@@ -69,6 +75,27 @@ export function EditForm({ user }: { user: User }) {
           required
         />
         <InputErrorMessages errMsgs={emailErrors} />
+      </label>
+      <label className="form-control w-full max-w-xs mx-auto">
+        <span className="label">自己紹介</span>
+        <textarea
+          placeholder="自己紹介文。"
+          className={clsx("textarea textarea-bordered w-full max-w-xs", { "input-error": introductionErrors !== undefined })}
+          value={introduction ?? ""}
+          onChange={(e) => setIntroduction(e.target.value)}
+        />
+        <InputErrorMessages errMsgs={emailErrors} />
+      </label>
+      <label className="form-control w-full max-w-xs mx-auto">
+        <span className="label">ウェブサイト</span>
+        <input
+          type="text"
+          placeholder="https://taroyamada.com"
+          className={clsx("input input-bordered w-full max-w-xs", { "input-error": urlErrors !== undefined })}
+          value={url ?? ""}
+          onChange={(e) => setUrl(e.target.value)}
+        />
+        <InputErrorMessages errMsgs={imageErrors} />
       </label>
       <label className="form-control w-full max-w-xs mx-auto">
         <span className="label">アイコン画像URL</span>

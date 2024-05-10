@@ -9,14 +9,12 @@ export function UnfollowButton({ avatarId }: { avatarId: string }) {
 
   return (
     <button
-      className="btn btn-outline btn-primary"
+      className="btn btn-outline btn-primary hover:btn-error after:content-['フォロー中'] hover:after:content-['フォロー解除']"
       onClick={(e) => {
         e.preventDefault();
         mutate(avatarId);
         router.refresh();
       }}
-    >
-      フォロー中
-    </button>
+    ></button>
   );
 }

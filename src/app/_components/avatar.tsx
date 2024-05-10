@@ -43,7 +43,7 @@ export async function Avatar({
               <span>@{avatar.user.screenName}</span>
             </div>
           </div>
-          <p>アバターの自己紹介文。</p>
+          <p>{avatar.user.introduction ?? ""}</p>
           <div className="card-actions justify-end">
             {loginAvatarIsInSocial && loginAvatarId !== avatar.id && 
               (isFollowing ? (
