@@ -1,11 +1,15 @@
 "use client";
 
-import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
+import { api } from "~/trpc/react";
 
 export function FollowButton({ avatarId }: { avatarId: string }) {
-  const { mutate } = api.follows.follow.useMutation();
   const router = useRouter();
+  const { mutate } = api.follows.follow.useMutation({
+    onSuccess: () => {
+      router.refresh();
+    },
+  });
 
   return (
     <button
@@ -13,7 +17,6 @@ export function FollowButton({ avatarId }: { avatarId: string }) {
       onClick={(e) => {
         e.preventDefault();
         mutate(avatarId);
-        router.refresh();
       }}
     >
       フォロー

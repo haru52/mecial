@@ -2,10 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { api } from "~/trpc/server";
 import { notFound } from "next/navigation";
-import { CreatePost } from "~/app/_components/create-post";
 import { getServerAuthSession } from "~/server/auth";
-import { SelectSocial } from "../_components/[userScreenName]/select-social";
-import { FollowButton } from "../_components/follow-button";
 
 export const generateMetadata = async ({
   params,

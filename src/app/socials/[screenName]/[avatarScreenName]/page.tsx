@@ -1,17 +1,26 @@
-import { api } from "~/trpc/server";
-import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { FollowButton } from "~/app/_components/follow-button";
+import { UnfollowButton } from "~/app/_components/unfollow-button";
+import { api } from "~/trpc/server";
 
 export default async function Page({
   params,
 }: {
   params: { screenName: string; avatarScreenName: string };
 }) {
-  const avatar = await api.avatar.getByScreenNameWithUser(
-    params.avatarScreenName,
-  );
+  const avatar = await api.avatar.getFullBySocialScreenNameAndUserScreenName({
+    socialScreenName: params.screenName,
+    userScreenName: params.avatarScreenName,
+  });
   if (avatar === null) notFound();
+  const loginAvatar = await api.avatar.getMyAvatarBySocialId(avatar.social.id);
+  if (loginAvatar === null) throw new Error("Avatar not found");
+  const isFollowing = await api.follows.isFollowing({
+    followedById: loginAvatar.id,
+    followingId: avatar.id,
+  });
 
   return (
     <>
@@ -27,6 +36,12 @@ export default async function Page({
       </div>
       <h1>{avatar.user.name}</h1>
       <p>@{avatar.user.screenName}</p>
+      {loginAvatar.id !== avatar.id &&
+        (isFollowing ? (
+          <UnfollowButton avatarId={avatar.id} />
+        ) : (
+          <FollowButton avatarId={avatar.id} />
+        ))}
       <p>{avatar.user.introduction}</p>
       {avatar.user.url !== null && avatar.user.url !== "" && (
         <p>

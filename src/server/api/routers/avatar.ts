@@ -119,6 +119,28 @@ export const avatarRouter = createTRPCRouter({
       });
     }),
 
+  getFullBySocialScreenNameAndUserScreenName: publicProcedure
+    .input(
+      z.object({ userScreenName: z.string(), socialScreenName: z.string() }),
+    )
+    .query(({ ctx, input }) => {
+      return ctx.db.avatar.findFirst({
+        where: {
+          user: {
+            screenName: input.userScreenName,
+          },
+          social: {
+            screenName: input.socialScreenName,
+          },
+        },
+        include: {
+          user: true,
+          social: true,
+          posts: true,
+        },
+      });
+    }),
+
   getFollowersByUserId: publicProcedure
     .input(z.string().uuid())
     .query(async ({ ctx, input }) => {

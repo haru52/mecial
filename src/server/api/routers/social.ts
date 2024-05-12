@@ -47,7 +47,7 @@ export const socialRouter = createTRPCRouter({
         include: {
           avatars: {
             where: { isPrivate: false },
-            include: { user: true },
+            include: { user: true, social: true },
           },
         },
       });

@@ -31,7 +31,7 @@ export default async function Page({
   return (
     <>
       <h1>{social.name}のアバター</h1>
-      <Avatars avatars={avatars} loginAvatarId={loginAvatar?.id} />
+      <Avatars avatars={avatars} socialScreenName={params.screenName} loginAvatarId={loginAvatar?.id} />
     </>
   );
 }

@@ -8,9 +8,11 @@ import { api } from "~/trpc/server";
 
 export async function Avatar({
   avatar,
+  socialScreenName,
   loginAvatarId,
 }: {
   avatar: AvatarWithUser;
+  socialScreenName: string;
   loginAvatarId?: string;
 }) {
   const loginAvatarIsInSocial = loginAvatarId !== undefined;
@@ -22,7 +24,7 @@ export async function Avatar({
     : false;
   return (
     <Link
-      href={`/socials/main/${avatar.user.screenName}`}
+      href={`/socials/${avatar.social.screenName}/${avatar.user.screenName}`}
       className="no-underline inline-block"
     >
       <div className="card w-96 bg-base-100 shadow-xl">
