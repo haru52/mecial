@@ -136,7 +136,16 @@ export const avatarRouter = createTRPCRouter({
         include: {
           user: true,
           social: true,
-          posts: true,
+          posts: {
+            include: {
+              createdBy: {
+                include: {
+                  user: true,
+                  social: true,
+                },
+              },
+            },
+          },
         },
       });
     }),

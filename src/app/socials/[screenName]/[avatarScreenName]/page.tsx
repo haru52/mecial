@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FollowButton } from "~/app/_components/follow-button";
+import { Posts } from "~/app/_components/posts/posts";
 import { UnfollowButton } from "~/app/_components/unfollow-button";
 import { api } from "~/trpc/server";
 
@@ -50,6 +51,7 @@ export default async function Page({
           </Link>
         </p>
       )}
+      <Posts posts={avatar.posts} />
     </>
   );
 }
