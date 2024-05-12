@@ -7,6 +7,7 @@ export default async function Page() {
   return (
     <>
       <h1>ソーシャル</h1>
+      <a href="/socials/new" className="btn btn-primary">ソーシャルを作成</a>
       <ul>
         {socials.map((social: Social) => (
           <li key={social.id}>

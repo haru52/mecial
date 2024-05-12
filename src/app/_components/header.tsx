@@ -43,6 +43,9 @@ export function Header({
             tabIndex={0}
             className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
           >
+            <li onClick={closeDaisyUiDropdown}>
+              <Link href="/">ホーム</Link>
+            </li>
             {currentSocial !== null && (
               <li>
                 <Link href={`/socials/${currentSocial.screenName}`}>
@@ -64,6 +67,9 @@ export function Header({
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
+          <li onClick={closeDaisyUiDropdown}>
+            <Link href="/">ホーム</Link>
+          </li>
           {currentSocial !== null && (
             <li>
               <Link href={`/socials/${currentSocial.screenName}`}>

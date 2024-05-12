@@ -1,6 +1,5 @@
 "use client";
 
-import { Social } from "~/entities/social";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -9,15 +8,15 @@ import { InputErrorMessages } from "~/app/_components/input-error-messages";
 
 export function CreateSocialForm() {
   const router = useRouter();
-  const { mutate, error } = api.social.create.useMutation({
-    onSuccess: () => {
-      router.refresh();
-    },
-  });
   const [screenName, setScreenName] = useState("");
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
+  const { mutate, error } = api.social.create.useMutation({
+    onSuccess: () => {
+      router.push(`/socials/${screenName}`);
+    },
+  });
   const screenNameErrors: string[] = [];
   if (error?.data?.zodError?.fieldErrors.screenName !== undefined) {
     screenNameErrors.push(...error.data.zodError.fieldErrors.screenName);
