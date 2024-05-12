@@ -47,7 +47,7 @@ export default async function Page({
       {avatar === null ? (
         <JoinSocialButton social={social} user={user} />
       ) : (
-        <LeaveSocialButton avatarId={avatar.id} avatarsLength={loginUserAvatars.length} />
+        <LeaveSocialButton avatarId={avatar.id} />
       )}
     </>
   );

@@ -13,8 +13,11 @@ export function JoinSocialButton({
   user: User;
 }) {
   const router = useRouter();
-  const { mutate } = api.avatar.create.useMutation();
-  const { mutate: userUpdateMutate } = api.user.update.useMutation();
+  const { mutate } = api.avatar.create.useMutation({
+    onSuccess: () => {
+      router.refresh();
+    },
+  });
 
   return (
     <button
@@ -24,12 +27,6 @@ export function JoinSocialButton({
         mutate({
           socialId: social.id,
         });
-        if (user.currentSocialId === null) {
-          userUpdateMutate({
-            currentSocialId: social.id,
-          });
-        }
-        router.refresh();
       }}
     >
       参加

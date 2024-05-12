@@ -7,15 +7,31 @@ import {
 import { CreateAvatar } from "~/entities/avatar";
 
 export const avatarRouter = createTRPCRouter({
-  create: protectedProcedure.input(CreateAvatar).mutation(({ ctx, input }) => {
-    return ctx.db.avatar.create({
-      data: {
-        isPrivate: false,
-        user: { connect: { id: ctx.session.user.id } },
-        social: { connect: { id: input.socialId } },
-      },
-    });
-  }),
+  create: protectedProcedure
+    .input(CreateAvatar)
+    .mutation(async ({ ctx, input }) => {
+      const avatar = await ctx.db.avatar.create({
+        data: {
+          isPrivate: false,
+          user: { connect: { id: ctx.session.user.id } },
+          social: { connect: { id: input.socialId } },
+        },
+      });
+      const avatarsCount = await ctx.db.avatar.count({
+        where: {
+          userId: ctx.session.user.id,
+        },
+      });
+      if (avatarsCount === 1) {
+        await ctx.db.user.update({
+          where: { id: ctx.session.user.id },
+          data: {
+            currentSocial: { connect: { id: input.socialId } },
+          },
+        });
+      }
+      return avatar;
+    }),
 
   getMyAvatarBySocialId: protectedProcedure
     .input(z.number())
@@ -166,9 +182,23 @@ export const avatarRouter = createTRPCRouter({
 
   delete: protectedProcedure
     .input(z.string().uuid())
-    .mutation(({ ctx, input }) => {
-      return ctx.db.avatar.delete({
+    .mutation(async ({ ctx, input }) => {
+      const avatar = await ctx.db.avatar.delete({
         where: { id: input },
       });
+      const avatarsCount = await ctx.db.avatar.count({
+        where: {
+          userId: ctx.session.user.id,
+        },
+      });
+      if (avatarsCount === 0) {
+        await ctx.db.user.update({
+          where: { id: ctx.session.user.id },
+          data: {
+            currentSocial: { disconnect: true },
+          },
+        });
+      }
+      return avatar;
     }),
 });

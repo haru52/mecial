@@ -3,23 +3,20 @@
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 
-export function LeaveSocialButton({ avatarId, avatarsLength }: { avatarId: string, avatarsLength: number}) {
+export function LeaveSocialButton({ avatarId }: { avatarId: string }) {
   const router = useRouter();
-  const { mutate: deleteAvatarMutate } = api.avatar.delete.useMutation();
-  const { mutate: userUpdateMutate } = api.user.update.useMutation();
+  const { mutate } = api.avatar.delete.useMutation({
+    onSuccess: () => {
+      router.refresh();
+    },
+  });
 
   return (
     <button
       className="btn btn-error"
       onClick={(e) => {
         e.preventDefault();
-        deleteAvatarMutate(avatarId);
-        if (avatarsLength === 1) {
-          userUpdateMutate({
-            currentSocialId: null,
-          });
-        }
-        router.refresh();
+        mutate(avatarId);
       }}
     >
       退出
