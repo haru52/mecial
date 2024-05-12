@@ -37,7 +37,7 @@ export const postRouter = createTRPCRouter({
       });
     }),
 
-  getAllByCreatedByIdsWithCreatedByUser: publicProcedure
+  getFullAllByCreatedByIds: publicProcedure
     .input(z.array(z.string().uuid()))
     .query(({ ctx, input }) => {
       return ctx.db.post.findMany({
@@ -105,5 +105,28 @@ export const postRouter = createTRPCRouter({
               },
             },
           });
+    }),
+
+  getFullAllBySocialScreenName: publicProcedure
+    .input(z.string())
+    .query(async ({ ctx, input }) => {
+      const social = await ctx.db.social.findUnique({
+        where: { screenName: input },
+      });
+      if (social === null) {
+        throw new Error("ソーシャルが存在しません");
+      }
+      return ctx.db.post.findMany({
+        orderBy: { createdAt: "desc" },
+        where: { createdBy: { socialId: social.id } },
+        include: {
+          createdBy: {
+            include: {
+              social: true,
+              user: true,
+            },
+          },
+        },
+      });
     }),
 });

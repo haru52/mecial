@@ -1,7 +1,7 @@
-import type { PostWithCreatedByUser } from "~/entities/post";
+import type { PostWithCreatedByUserAndSocial } from "~/entities/post";
 import { Post } from "./post";
 
-export function Posts({ posts }: { posts: PostWithCreatedByUser[] }) {
+export function Posts({ posts }: { posts: PostWithCreatedByUserAndSocial[] }) {
   return (
     <>
       {posts.length >= 1 ? (

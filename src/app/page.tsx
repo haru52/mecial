@@ -1,9 +1,4 @@
 import { getServerAuthSession } from "~/server/auth";
-import type { User } from "~/entities/user";
-import type {
-  Post as PostEntity,
-  PostWithCreatedByUser,
-} from "~/entities/post";
 import { api } from "~/trpc/server";
 import { Posts } from "./_components/posts/posts";
 import Link from "next/link";
@@ -23,12 +18,13 @@ export default async function Home() {
     if (avatar === null) return [];
     const follows = await api.follows.getFollowingByAvatarId(avatar.id);
     const followingIds = follows.map((f) => f.followingId);
-    return await api.post.getAllByCreatedByIdsWithCreatedByUser([
+    return await api.post.getFullAllByCreatedByIds([
       ...followingIds,
       avatar.id,
     ]);
   })();
-  const avatars = session === null ? null : await api.avatar.getMyAvatarsWithSocial();
+  const avatars =
+    session === null ? null : await api.avatar.getMyAvatarsWithSocial();
   const socials = avatars?.map((a) => a.social);
 
   return (
@@ -61,11 +57,7 @@ export default async function Home() {
           <CreatePost avatarId={avatar?.id ?? ""} />
         </>
       )}
-      {session !== null && (
-        <Posts
-          posts={postsWithCreatedByUser}
-        />
-      )}
+      {session !== null && <Posts posts={postsWithCreatedByUser} />}
     </>
   );
 }

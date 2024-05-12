@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { defaultUserIconPath } from "~/consts";
-import type { PostWithCreatedByUser } from "~/entities/post";
+import type { PostWithCreatedByUserAndSocial } from "~/entities/post";
 
-export async function Post({ post }: { post: PostWithCreatedByUser }) {
+export async function Post({ post }: { post: PostWithCreatedByUserAndSocial }) {
   const avatarPath = `/socials/${post.createdBy.social.screenName}/${post.createdBy.user.screenName}`;
 
   return (

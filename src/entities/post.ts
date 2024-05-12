@@ -22,6 +22,6 @@ export const UpdatePost = Post.omit({
 
 export type Post = z.infer<typeof Post>;
 
-export type PostWithCreatedByUser = Post & {
+export type PostWithCreatedByUserAndSocial = Post & {
   createdBy: AvatarWithUser;
 };

@@ -5,6 +5,7 @@ import { LeaveSocialButton } from "~/app/_components/socials/[screenName]/leave-
 import { notFound } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
 import Link from "next/link";
+import { Posts } from "~/app/_components/posts/posts";
 
 export const generateMetadata = async ({
   params,
@@ -27,8 +28,8 @@ export default async function Page({
   const user = await api.user.getByIdWithAvatars(session.user.id);
   if (user === null) return notFound();
   const avatar = await api.avatar.getMyAvatarBySocialId(social.id);
-  const loginUserAvatars = user.avatars;
   const avatars = social.avatars;
+  const posts = await api.post.getFullAllBySocialScreenName(params.screenName);
   return (
     <>
       <h1>{social.name}</h1>
@@ -49,6 +50,7 @@ export default async function Page({
       ) : (
         <LeaveSocialButton avatarId={avatar.id} />
       )}
+      <Posts posts={posts} />
     </>
   );
 }
