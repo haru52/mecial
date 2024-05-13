@@ -42,8 +42,18 @@ export default async function Page({
           />
         </div>
       </div>
-      <h1>{avatar.user.name} @ {avatar.social.name}</h1>
-      <p>@{avatar.user.screenName}@{avatar.social.screenName}</p>
+      <h1>
+        {avatar.user.name} @{" "}
+        <Link
+          href={`/socials/${avatar.social.screenName}`}
+          className="no-underline hover:underline"
+        >
+          {avatar.social.name}
+        </Link>
+      </h1>
+      <p>
+        @{avatar.user.screenName}@{avatar.social.screenName}
+      </p>
       {loginAvatar !== null &&
         loginAvatar.id !== avatar.id &&
         (isFollowing ? (
