@@ -48,7 +48,7 @@ export default async function Page({
         )}
         <li>
           <Link href={`/socials/${params.screenName}/avatars`}>
-            {social.avatars.length} 人のアバター
+            {social.avatars.length} アバター
           </Link>
         </li>
       </ul>

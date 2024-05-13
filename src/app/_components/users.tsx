@@ -1,12 +1,14 @@
 import type { User as UserEntity } from "~/entities/user";
-import {User} from "./user";
+import { User } from "./user";
 
 export function Users({ users }: { users: UserEntity[] }) {
   return (
-    <div>
+    <ul className="list-none pl-0">
       {users.map((user) => (
-        <User key={user.screenName} user={user} />
+        <li key={user.screenName} className="my-0 pl-0">
+          <User user={user} />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
