@@ -1,4 +1,4 @@
-import type { AvatarWithUser } from "~/entities/avatar";
+import type { AvatarWithUserAndSocial } from "~/entities/avatar";
 import { defaultUserIconPath } from "~/consts";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,8 +10,7 @@ export async function Avatar({
   avatar,
   loginAvatarId,
 }: {
-  avatar: AvatarWithUser;
-  socialScreenName: string;
+  avatar: AvatarWithUserAndSocial;
   loginAvatarId?: string;
 }) {
   const loginAvatarIsInSocial = loginAvatarId !== undefined;
@@ -40,7 +39,7 @@ export async function Avatar({
               </div>
             </div>
             <div>
-              <h2 className="my-0">{`${avatar.user.name}`}</h2>
+              <h2 className="my-0">{avatar.user.name} @ {avatar.social.name}</h2>
               <span>@{avatar.user.screenName}</span>
             </div>
           </div>

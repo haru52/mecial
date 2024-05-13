@@ -30,7 +30,7 @@ export const UpdateAvatar = Avatar.omit({
 
 export type Avatar = z.infer<typeof Avatar>;
 
-export type AvatarWithUser = Avatar & {
-  social: Social;
+export type AvatarWithUserAndSocial = Avatar & {
   user: User;
+  social: Social;
 };

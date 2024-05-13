@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { AvatarWithUser } from "./avatar";
+import type { AvatarWithUserAndSocial } from "./avatar";
 
 export const Post = z.object({
   id: z.number(),
@@ -23,5 +23,5 @@ export const UpdatePost = Post.omit({
 export type Post = z.infer<typeof Post>;
 
 export type PostWithCreatedByUserAndSocial = Post & {
-  createdBy: AvatarWithUser;
+  createdBy: AvatarWithUserAndSocial;
 };

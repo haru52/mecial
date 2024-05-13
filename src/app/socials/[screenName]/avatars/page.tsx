@@ -28,7 +28,7 @@ export default async function Page({
   return (
     <main className="container prose mx-auto px-4">
       <h1>{social.name}のアバター</h1>
-      <Avatars avatars={social.avatars} socialScreenName={params.screenName} loginAvatarId={loginAvatar?.id} />
+      <Avatars avatars={social.avatars} loginAvatarId={loginAvatar?.id} />
     </main>
   );
 }

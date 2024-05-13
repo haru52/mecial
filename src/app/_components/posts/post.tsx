@@ -25,7 +25,9 @@ export async function Post({ post }: { post: PostWithCreatedByUserAndSocial }) {
           <Link href={avatarPath} className="no-underline hover:underline">
             <h2 className="my-0 text-sm">{post.createdBy.user.name}</h2>
           </Link>
-          <span className="text-sm">@{post.createdBy.user.screenName}</span>
+          <Link href={avatarPath} className="no-underline hover:underline">
+            <span className="text-sm">@{post.createdBy.user.screenName}@{post.createdBy.social.screenName}</span>
+          </Link>
         </div>
         <p className="my-1">{post.content}</p>
         <span className="text-xs">

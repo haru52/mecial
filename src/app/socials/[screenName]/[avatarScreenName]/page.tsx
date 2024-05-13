@@ -42,8 +42,8 @@ export default async function Page({
           />
         </div>
       </div>
-      <h1>{avatar.user.name}</h1>
-      <p>@{avatar.user.screenName}</p>
+      <h1>{avatar.user.name} @ {avatar.social.name}</h1>
+      <p>@{avatar.user.screenName}@{avatar.social.screenName}</p>
       {loginAvatar !== null &&
         loginAvatar.id !== avatar.id &&
         (isFollowing ? (
