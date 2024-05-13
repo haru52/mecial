@@ -18,6 +18,7 @@ export function EditForm({ user }: { user: User }) {
   const { mutate, error } = api.user.update.useMutation({
     onSuccess: () => {
       router.push(`/${screenName}`);
+      router.refresh();
     },
   });
   const nameErrors = error?.data?.zodError?.fieldErrors.name;

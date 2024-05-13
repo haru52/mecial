@@ -52,7 +52,7 @@ export default async function Page({
         </Link>
       </h1>
       <p>
-        @{avatar.user.screenName}@{avatar.social.screenName}
+        @{avatar.user.screenName}.{avatar.social.screenName}
       </p>
       {loginAvatar !== null &&
         loginAvatar.id !== avatar.id &&
