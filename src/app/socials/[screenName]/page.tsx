@@ -21,15 +21,18 @@ export default async function Page({
 }: {
   params: { screenName: string };
 }) {
-  const social = await api.social.getByScreenNameWithAvatarUsers(params.screenName);
+  const social = await api.social.getByScreenNameWithAvatarUsers(
+    params.screenName,
+  );
   if (social === null) notFound();
-  const session = await getServerAuthSession();
-  if (session === null) return notFound();
-  const user = await api.user.getByIdWithAvatars(session.user.id);
-  if (user === null) return notFound();
-  const avatar = await api.avatar.getMyAvatarBySocialId(social.id);
-  const avatars = social.avatars;
   const posts = await api.post.getFullAllBySocialScreenName(params.screenName);
+  const session = await getServerAuthSession();
+  const user =
+    session === null
+      ? null
+      : await api.user.getByIdWithAvatars(session.user.id);
+  const avatar =
+    user === null ? null : await api.avatar.getMyAvatarBySocialId(social.id);
   return (
     <>
       <h1>{social.name}</h1>
@@ -43,13 +46,18 @@ export default async function Page({
             </a>
           </li>
         )}
-        <li><Link href={`/socials/${params.screenName}/avatars`}>{avatars.length} 人のアバター</Link></li>
+        <li>
+          <Link href={`/socials/${params.screenName}/avatars`}>
+            {social.avatars.length} 人のアバター
+          </Link>
+        </li>
       </ul>
-      {avatar === null ? (
-        <JoinSocialButton social={social} user={user} />
-      ) : (
-        <LeaveSocialButton avatarId={avatar.id} />
-      )}
+      {user !== null &&
+        (avatar === null ? (
+          <JoinSocialButton social={social} user={user} />
+        ) : (
+          <LeaveSocialButton avatarId={avatar.id} />
+        ))}
       <Posts posts={posts} />
     </>
   );

@@ -8,7 +8,6 @@ import { api } from "~/trpc/server";
 
 export async function Avatar({
   avatar,
-  socialScreenName,
   loginAvatarId,
 }: {
   avatar: AvatarWithUser;

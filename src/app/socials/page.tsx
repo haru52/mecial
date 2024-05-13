@@ -1,6 +1,11 @@
 import type { Social } from "~/entities/social";
 import { api } from "~/trpc/server";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "ソーシャル",
+};
 
 export default async function Page() {
   const socials = await api.social.getAll();

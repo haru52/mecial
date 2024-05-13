@@ -23,15 +23,12 @@ export default async function Page({
   const social = await api.social.getByScreenNameWithAvatarUsers(params.screenName);
   if (social === null) notFound();
   const session = await getServerAuthSession();
-  if (session === null) redirect(loginPath);
-  const loginUser = await api.user.getByIdWithAvatars(session.user.id);
-  if (loginUser === null) redirect(loginPath);
-  const loginAvatar = loginUser.avatars.find((avatar) => avatar.socialId === social.id);
-  const avatars = social.avatars;
+  const loginUser = session === null ? null : await api.user.getByIdWithAvatars(session.user.id);
+  const loginAvatar = loginUser === null ? undefined : loginUser.avatars.find((avatar) => avatar.socialId === social.id);
   return (
     <>
       <h1>{social.name}のアバター</h1>
-      <Avatars avatars={avatars} socialScreenName={params.screenName} loginAvatarId={loginAvatar?.id} />
+      <Avatars avatars={social.avatars} socialScreenName={params.screenName} loginAvatarId={loginAvatar?.id} />
     </>
   );
 }
