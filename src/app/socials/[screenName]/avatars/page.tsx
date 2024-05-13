@@ -1,10 +1,8 @@
 import { api } from "~/trpc/server";
 import type { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { Avatars } from "~/app/_components/avatars";
 import { getServerAuthSession } from "~/server/auth";
-import { loginPath } from "~/consts";
-import Link from "next/link";
 
 export const generateMetadata = async ({
   params,

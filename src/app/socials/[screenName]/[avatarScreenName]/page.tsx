@@ -18,8 +18,12 @@ export default async function Page({
     userScreenName: params.avatarScreenName,
   });
   if (avatar === null) notFound();
-  const followingCount = await api.follows.getFollowingCountByAvatarId(avatar.id);
-  const followersCount = await api.follows.getFollowersCountByAvatarId(avatar.id);
+  const followingCount = await api.follows.getFollowingCountByAvatarId(
+    avatar.id,
+  );
+  const followersCount = await api.follows.getFollowersCountByAvatarId(
+    avatar.id,
+  );
   const loginAvatar =
     session === null
       ? null
@@ -66,14 +70,24 @@ export default async function Page({
       <p>{avatar.user.introduction}</p>
       {avatar.user.url !== null && avatar.user.url !== "" && (
         <p>
-          <Link href={avatar.user.url} target="_blank" rel="noreferrer">
+          <Link href={avatar.user.url} target="_blank" rel="noreferrer" className="link link-primary no-underline hover:underline">
             {avatar.user.url}
           </Link>
         </p>
       )}
       <p>
-      <span>{followingCount} フォロー中</span>
-      <span className="ml-3">{followersCount} フォロワー</span>
+        <Link
+          href={`${avatar.user.screenName}/following`}
+          className="no-underline hover:underline"
+        >
+          {followingCount} フォロー中
+        </Link>
+        <Link
+          href={`${avatar.user.screenName}/followers`}
+          className="ml-3 no-underline hover:underline"
+        >
+          {followersCount} フォロワー
+        </Link>
       </p>
       <Posts posts={avatar.posts} />
     </main>

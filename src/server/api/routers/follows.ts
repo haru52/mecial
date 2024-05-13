@@ -105,7 +105,11 @@ export const followsRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return ctx.db.follows.findMany({
         where: { followedById: input },
-        include: { following: true },
+        include: {
+          following: {
+            include: { user: true, social: true },
+          },
+        },
       });
     }),
 
@@ -139,7 +143,11 @@ export const followsRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return ctx.db.follows.findMany({
         where: { followingId: input },
-        include: { followedBy: true },
+        include: {
+          followedBy: {
+            include: { user: true, social: true },
+          },
+        },
       });
     }),
 
