@@ -26,7 +26,7 @@ export default async function Page({
 
   if (user === null) return notFound();
   return (
-    <>
+    <main className="container prose mx-auto px-4">
       <h1>{user?.name}</h1>
       <ul>
         <li>ID：@{user?.screenName}</li>
@@ -37,7 +37,6 @@ export default async function Page({
           <br />
         </>
       )}
-      <Link href={`${user.screenName}/posts`}>Posts</Link>
-    </>
+    </main>
   );
 }

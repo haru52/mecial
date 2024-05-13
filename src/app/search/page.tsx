@@ -32,5 +32,9 @@ export default async function Page({
       ? await api.post.search(q)
       : await api.post.searchInCurrentSocial(q);
 
-  return <Posts posts={posts} />;
+  return (
+    <main className="container prose mx-auto px-4">
+      <Posts posts={posts} />
+    </main>
+  );
 }

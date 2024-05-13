@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default async function Page() {
   const socials = await api.social.getAll();
   return (
-    <>
+    <main className="container prose mx-auto px-4">
       <h1>ソーシャル</h1>
       <a href="/socials/new" className="btn btn-primary">ソーシャルを作成</a>
       <ul>
@@ -22,6 +22,6 @@ export default async function Page() {
           </li>
         ))}
       </ul>
-    </>
+    </main>
   );
 }

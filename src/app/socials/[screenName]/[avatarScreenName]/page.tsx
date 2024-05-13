@@ -31,7 +31,7 @@ export default async function Page({
         });
 
   return (
-    <>
+    <main className="container prose mx-auto px-4">
       <div className="not-prose avatar">
         <div className="w-24 rounded-full">
           <Image
@@ -60,6 +60,6 @@ export default async function Page({
         </p>
       )}
       <Posts posts={avatar.posts} />
-    </>
+    </main>
   );
 }

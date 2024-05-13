@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 export default async function Page() {
   const users = await api.user.getAll();
   return (
-    <div>
+    <main className="container prose mx-auto px-4">
       <h1>Users</h1>
       <Users users={users} />
-    </div>
+    </main>
   );
 }

@@ -26,9 +26,9 @@ export default async function Page({
   const loginUser = session === null ? null : await api.user.getByIdWithAvatars(session.user.id);
   const loginAvatar = loginUser === null ? undefined : loginUser.avatars.find((avatar) => avatar.socialId === social.id);
   return (
-    <>
+    <main className="container prose mx-auto px-4">
       <h1>{social.name}のアバター</h1>
       <Avatars avatars={social.avatars} socialScreenName={params.screenName} loginAvatarId={loginAvatar?.id} />
-    </>
+    </main>
   );
 }

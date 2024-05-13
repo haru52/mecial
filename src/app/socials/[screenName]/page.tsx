@@ -34,7 +34,7 @@ export default async function Page({
   const avatar =
     user === null ? null : await api.avatar.getMyAvatarBySocialId(social.id);
   return (
-    <>
+    <main className="container prose mx-auto px-4">
       <h1>{social.name}</h1>
       <ul>
         <li>{`@${social.screenName}`}</li>
@@ -59,6 +59,6 @@ export default async function Page({
           <LeaveSocialButton avatarId={avatar.id} />
         ))}
       <Posts posts={posts} />
-    </>
+    </main>
   );
 }
