@@ -112,6 +112,7 @@ export function Header({
                 className="grow"
                 placeholder="検索"
                 value={searchQuery}
+                required
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </label>
