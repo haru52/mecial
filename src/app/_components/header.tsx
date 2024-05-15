@@ -94,7 +94,7 @@ export function Header({
           }}
         >
           <div className="form-control">
-            <label className="input input-bordered flex w-24 items-center gap-2 md:w-auto">
+            <label className="input input-bordered flex items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -110,7 +110,7 @@ export function Header({
               <input
                 type="search"
                 name="search"
-                className="grow"
+                className="w-14 grow md:w-auto"
                 placeholder="検索"
                 value={searchQuery}
                 required
