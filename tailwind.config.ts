@@ -14,4 +14,7 @@ export default {
     require("@tailwindcss/typography"),
     require("daisyui")
   ],
+  daisyui: {
+    darkTheme: false,
+  },
 } satisfies Config;

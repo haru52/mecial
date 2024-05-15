@@ -8,6 +8,7 @@ import type { User } from "~/entities/user";
 import { closeDaisyUiDropdown } from "~/util";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { ThemeController } from "./theme-controller";
 
 export function Header({
   user,
@@ -118,6 +119,7 @@ export function Header({
             </label>
           </div>
         </form>
+        <ThemeController />
         {user === null ? (
           <Link href={loginPath} className="btn">
             ログイン
