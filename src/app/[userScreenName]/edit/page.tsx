@@ -3,6 +3,7 @@ import { loginPath } from "~/consts";
 import { notFound, redirect } from "next/navigation";
 import { EditForm } from "~/app/_components/[userScreenName]/edit-form";
 import { getServerAuthSession } from "~/server/auth";
+import { DeleteUserLink } from "~/app/_components/delete-user-link";
 
 export default async function Page({
   params,
@@ -19,6 +20,7 @@ export default async function Page({
     <main className="container prose mx-auto px-4">
       <h1 className="text-center">{user.name} のプロフィールを編集</h1>
       <EditForm user={user} />
+      <DeleteUserLink />
     </main>
   );
 }

@@ -6,7 +6,7 @@ import { useState } from "react";
 import { InputErrorMessages } from "~/app/_components/input-error-messages";
 import { api } from "~/trpc/react";
 
-export function SignupForm({ userId }: { userId: string }) {
+export function SignupForm() {
   const router = useRouter();
   const [screenName, setScreenName] = useState("");
   const { mutate, error } = api.user.update.useMutation({
@@ -40,6 +40,7 @@ export function SignupForm({ userId }: { userId: string }) {
           value={screenName ?? ""}
           onChange={(e) => setScreenName(e.target.value)}
           required
+          autoFocus
         />
         <InputErrorMessages errMsgs={screenNameErrors} />
       </label>

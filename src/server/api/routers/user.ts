@@ -65,37 +65,11 @@ export const userRouter = createTRPCRouter({
       });
     }),
 
-  getByIdWithPosts: publicProcedure
-    .input(z.string().uuid())
-    .query(({ ctx, input }) => {
-      return ctx.db.user.findFirst({
-        where: { id: input },
-        include: {
-          posts: {
-            orderBy: { createdAt: "desc" },
-          },
-        },
-      });
-    }),
-
   getByScreenName: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.db.user.findFirst({
       where: { screenName: input },
     });
   }),
-
-  getByScreenNameWithPosts: publicProcedure
-    .input(z.string())
-    .query(({ ctx, input }) => {
-      return ctx.db.user.findFirst({
-        where: { screenName: input },
-        include: {
-          posts: {
-            orderBy: { createdAt: "desc" },
-          },
-        },
-      });
-    }),
 
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.db.user.findMany({
