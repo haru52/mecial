@@ -1,4 +1,5 @@
 import { getServerAuthSession } from "~/server/auth";
+import hero from "../../public/hero.jpeg";
 import { api } from "~/trpc/server";
 import { Posts } from "./_components/posts/posts";
 import Link from "next/link";
@@ -36,7 +37,7 @@ export default async function Home() {
         <div
           className="hero min-h-[calc(100vh-68px)]"
           style={{
-            backgroundImage: "url(hero.jpeg)",
+            backgroundImage: `url(${hero.src})`,
           }}
         >
           <div className="hero-overlay bg-opacity-60"></div>

@@ -23,7 +23,7 @@ export async function Avatar({
   return (
     <Link
       href={`/socials/${avatar.social.screenName}/${avatar.user.screenName}`}
-      className="no-underline inline-block"
+      className="inline-block no-underline"
     >
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
@@ -39,13 +39,16 @@ export async function Avatar({
               </div>
             </div>
             <div>
-              <h2 className="my-0">{avatar.user.name} @ {avatar.social.name}</h2>
-              <span>@{avatar.user.screenName}</span>
+              <h2 className="my-0 inline text-sm">{avatar.user.name}</h2>
+              <span className="ml-3 text-sm">
+                @{avatar.user.screenName}.{avatar.social.screenName}
+              </span>
             </div>
           </div>
           <p>{avatar.user.introduction ?? ""}</p>
           <div className="card-actions justify-end">
-            {loginAvatarIsInSocial && loginAvatarId !== avatar.id && 
+            {loginAvatarIsInSocial &&
+              loginAvatarId !== avatar.id &&
               (isFollowing ? (
                 <UnfollowButton avatarId={avatar.id} />
               ) : (
