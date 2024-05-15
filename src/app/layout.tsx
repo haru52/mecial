@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/react";
 
 import { Header } from "~/app/_components/header";
+import { Footer } from "./_components/footer";
 import type { Metadata } from "next";
 
 import { clsx } from "clsx";
@@ -44,6 +45,7 @@ export default async function RootLayout({
       <body className={`font-sans ${inter.variable}`}>
         <Header user={user} currentSocial={currentSocial} />
         <TRPCReactProvider>{children}</TRPCReactProvider>
+        <Footer />
       </body>
     </html>
   );
