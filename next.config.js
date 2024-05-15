@@ -20,6 +20,18 @@ const config = {
         port: "",
         pathname: "/avatars/**",
       },
+      {
+        protocol: "https",
+        hostname: "secure.gravatar.com",
+        port: "",
+        pathname: "/avatar/**",
+      },
+      {
+        protocol: "https",
+        hostname: "i.imgur.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

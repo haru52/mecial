@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ScreenName, Url } from "~/zod/zodSchemas";
+import { IconImage, ScreenName, Url } from "~/zod/zodSchemas";
 
 export const User = z.object({
   id: z.string().uuid(),
@@ -9,7 +9,7 @@ export const User = z.object({
     .string()
     .email({ message: "メールアドレスの形式で入力してください" })
     .nullable(),
-  image: Url.nullable(),
+  image: IconImage.nullable(),
   introduction: z.string().nullable(),
   url: Url.nullable(),
   createdAt: z.date(),

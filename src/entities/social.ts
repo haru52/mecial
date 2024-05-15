@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { ScreenName, Url } from "~/zod/zodSchemas";
+import { IconImage, ScreenName, Url } from "~/zod/zodSchemas";
 
 export const Social = z.object({
   id: z.number(),
   screenName: ScreenName,
   name: z.string().min(1),
-  image: Url.nullable(),
+  image: IconImage.nullable(),
   description: z.string().nullable(),
   url: Url.nullable(),
   createdAt: z.date(),

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { api } from "~/trpc/server";
 import { notFound } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
+import Image from "next/image";
 
 export const generateMetadata = async ({
   params,

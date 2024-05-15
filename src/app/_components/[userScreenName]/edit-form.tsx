@@ -96,7 +96,7 @@ export function EditForm({ user }: { user: User }) {
           value={url ?? ""}
           onChange={(e) => setUrl(e.target.value)}
         />
-        <InputErrorMessages errMsgs={imageErrors} />
+        <InputErrorMessages errMsgs={urlErrors} />
       </label>
       <label className="form-control w-full max-w-xs mx-auto">
         <span className="label">アイコン画像URL</span>
