@@ -4,8 +4,8 @@ export function Footer() {
   return (
     <footer className="footer footer-center rounded bg-base-200 p-10 text-base-content">
       <nav className="grid grid-flow-col gap-4">
-        <Link href="/terms-of-service">Terms of Service</Link>
-        <Link href="/privacy-policy">Privacy Policy</Link>
+        <Link href="/terms-of-service">利用規約</Link>
+        <Link href="/privacy-policy">プライバシーポリシー</Link>
       </nav>
       <nav>
         <div className="grid grid-flow-col gap-4">
