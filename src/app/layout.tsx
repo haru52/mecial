@@ -42,9 +42,13 @@ export default async function RootLayout({
 
   return (
     <html lang="ja">
-      <body className={`font-sans ${inter.variable}`}>
+      <body
+        className={`font-sans ${inter.variable} flex min-h-screen flex-col`}
+      >
         <Header user={user} currentSocial={currentSocial} />
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <TRPCReactProvider>
+          <div className="grow">{children}</div>
+        </TRPCReactProvider>
         <Footer />
       </body>
     </html>
