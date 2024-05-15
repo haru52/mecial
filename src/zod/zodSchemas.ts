@@ -11,7 +11,7 @@ export const ScreenName = z
 export const Url = z.string().url({ message: "URLの形式で入力してください" });
 
 export const IconImage = Url.regex(
-  /^https:\/\/(lh3\.googleusercontent\.com\/.+|cdn\.discordapp\.com\/avatars\/.+|(secure\.)?gravatar\.com\/avatar\/[0-9a-fA-f]{32}|i\.imgur\.com\/.+)\..+/,
+  /^https:\/\/(lh3\.googleusercontent\.com\/.+|cdn\.discordapp\.com\/avatars\/.+|(secure\.)?gravatar\.com\/avatar\/[0-9a-fA-f]{32}|i\.imgur\.com\/.+).+/,
   {
     message:
       "以下のいずれかのサービスの画像URLを入力してください：Googleアカウント、Discordアカウント、Gravatar、Imgur",
