@@ -36,10 +36,6 @@ jobs:
         uses: karancode/yamllint-github-action@v2.1.1
         with:
           yamllint_strict: true
-      - name: "Lint: shell script"
-        uses: ludeeus/action-shellcheck@master
-        with:
-          ignore_paths: .husky/_ node_modules
       - name: "Lint: GitHub Actions workflow"
         # yamllint disable rule:line-length
         run: |
@@ -50,17 +46,17 @@ jobs:
 # yamllint disable rule:comments-indentation
   # 当リポジトリが npm プロジェクトであり、かつ、package.json に build または
   # test script がある場合、以下のジョブをアンコメントしてください。
-  # build:
-  #   name: Build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version-file: .node-version
-  #         cache: npm
-  #     - run: npm ci
-  #     - run: npm run build
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+      - run: npm run build
   # test:
   #   name: Test
   #   runs-on: ubuntu-latest

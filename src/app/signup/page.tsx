@@ -9,7 +9,7 @@ export default async function Page() {
   return (
     <main className="container prose mx-auto px-4">
       <h1>サインアップ</h1>
-      <SignupForm userId={session.user.id} />
+      <SignupForm />
     </main>
   );
 }

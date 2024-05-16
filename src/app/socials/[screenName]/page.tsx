@@ -54,7 +54,7 @@ export default async function Page({
       </ul>
       {user !== null &&
         (avatar === null ? (
-          <JoinSocialButton social={social} user={user} />
+          <JoinSocialButton social={social} />
         ) : (
           <LeaveSocialButton avatarId={avatar.id} />
         ))}

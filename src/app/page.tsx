@@ -52,7 +52,7 @@ export default async function Home() {
           </div>
         </div>
       )}
-      {session !== null && user?.currentSocialId != null && (
+      {session !== null && user?.currentSocialId != null && socials !== undefined && (
         <>
           <SelectSocial
             socials={socials}
