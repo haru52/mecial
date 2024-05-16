@@ -1,0 +1,4 @@
+{
+  "reporters": ["consoleFull", "markdown", "badge"],
+  "ignore": ["**/*.test.ts"]
+}
