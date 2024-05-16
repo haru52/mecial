@@ -52,15 +52,17 @@ export default async function Home() {
           </div>
         </div>
       )}
-      {session !== null && user?.currentSocialId != null && socials !== undefined && (
-        <>
-          <SelectSocial
-            socials={socials}
-            currentSocialId={user.currentSocialId}
-          />
-          <CreatePost avatarId={avatar?.id ?? ""} />
-        </>
-      )}
+      {session !== null &&
+        user?.currentSocialId != null &&
+        socials !== undefined && (
+          <>
+            <SelectSocial
+              socials={socials}
+              currentSocialId={user.currentSocialId}
+            />
+            <CreatePost avatarId={avatar?.id ?? ""} />
+          </>
+        )}
       {session !== null && <Posts posts={postsWithCreatedByUser} />}
     </main>
   );
