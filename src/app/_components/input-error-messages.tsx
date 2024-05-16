@@ -4,9 +4,11 @@ export function InputErrorMessages({
   errMsgs: string[] | undefined;
 }) {
   return errMsgs ? (
-    <ul className="block label my-auto">
+    <ul className="label my-auto block">
       {errMsgs.map((errMsg, i) => (
-        <li key={i} className="label-text-alt text-error">{errMsg}</li>
+        <li key={i} className="label-text-alt text-error">
+          {errMsg}
+        </li>
       ))}
     </ul>
   ) : (

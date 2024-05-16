@@ -41,7 +41,7 @@ export function EditForm({ user }: { user: User }) {
         });
       }}
     >
-      <label className="form-control w-full max-w-xs mx-auto">
+      <label className="form-control mx-auto w-full max-w-xs">
         <span className="label">名前</span>
         <input
           type="text"
@@ -53,7 +53,7 @@ export function EditForm({ user }: { user: User }) {
         />
         <InputErrorMessages errMsgs={nameErrors} />
       </label>
-      <label className="form-control w-full max-w-xs mx-auto">
+      <label className="form-control mx-auto w-full max-w-xs">
         <span className="label">ID</span>
         <input
           type="text"
@@ -65,7 +65,7 @@ export function EditForm({ user }: { user: User }) {
         />
         <InputErrorMessages errMsgs={screenNameErrors} />
       </label>
-      <label className="form-control w-full max-w-xs mx-auto">
+      <label className="form-control mx-auto w-full max-w-xs">
         <span className="label">メールアドレス</span>
         <input
           type="email"
@@ -77,28 +77,32 @@ export function EditForm({ user }: { user: User }) {
         />
         <InputErrorMessages errMsgs={emailErrors} />
       </label>
-      <label className="form-control w-full max-w-xs mx-auto">
+      <label className="form-control mx-auto w-full max-w-xs">
         <span className="label">自己紹介</span>
         <textarea
           placeholder="自己紹介文。"
-          className={clsx("textarea textarea-bordered w-full max-w-xs", { "input-error": introductionErrors !== undefined })}
+          className={clsx("textarea textarea-bordered w-full max-w-xs", {
+            "input-error": introductionErrors !== undefined,
+          })}
           value={introduction ?? ""}
           onChange={(e) => setIntroduction(e.target.value)}
         />
         <InputErrorMessages errMsgs={emailErrors} />
       </label>
-      <label className="form-control w-full max-w-xs mx-auto">
+      <label className="form-control mx-auto w-full max-w-xs">
         <span className="label">ウェブサイト</span>
         <input
           type="text"
           placeholder="https://taroyamada.com"
-          className={clsx("input input-bordered w-full max-w-xs", { "input-error": urlErrors !== undefined })}
+          className={clsx("input input-bordered w-full max-w-xs", {
+            "input-error": urlErrors !== undefined,
+          })}
           value={url ?? ""}
           onChange={(e) => setUrl(e.target.value)}
         />
         <InputErrorMessages errMsgs={urlErrors} />
       </label>
-      <label className="form-control w-full max-w-xs mx-auto">
+      <label className="form-control mx-auto w-full max-w-xs">
         <span className="label">アイコン画像URL</span>
         <input
           type="text"
@@ -110,7 +114,7 @@ export function EditForm({ user }: { user: User }) {
         />
         <InputErrorMessages errMsgs={imageErrors} />
       </label>
-      <div className="form-control mt-7 w-full max-w-xs mx-auto">
+      <div className="form-control mx-auto mt-7 w-full max-w-xs">
         <input
           type="submit"
           value="保存"

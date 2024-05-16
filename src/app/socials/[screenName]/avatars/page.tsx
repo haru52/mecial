@@ -10,7 +10,9 @@ export const generateMetadata = async ({
   params: { screenName: string };
 }): Promise<Metadata> => {
   const social = await api.social.getByScreenName(params.screenName);
-  return social === null ? { title: "404 Not Found" } : { title: `${social.name}のアバター` };
+  return social === null
+    ? { title: "404 Not Found" }
+    : { title: `${social.name}のアバター` };
 };
 
 export default async function Page({
@@ -18,11 +20,19 @@ export default async function Page({
 }: {
   params: { screenName: string };
 }) {
-  const social = await api.social.getByScreenNameWithAvatarUsers(params.screenName);
+  const social = await api.social.getByScreenNameWithAvatarUsers(
+    params.screenName,
+  );
   if (social === null) notFound();
   const session = await getServerAuthSession();
-  const loginUser = session === null ? null : await api.user.getByIdWithAvatars(session.user.id);
-  const loginAvatar = loginUser === null ? undefined : loginUser.avatars.find((avatar) => avatar.socialId === social.id);
+  const loginUser =
+    session === null
+      ? null
+      : await api.user.getByIdWithAvatars(session.user.id);
+  const loginAvatar =
+    loginUser === null
+      ? undefined
+      : loginUser.avatars.find((avatar) => avatar.socialId === social.id);
   return (
     <main className="container prose mx-auto px-4">
       <h1>{social.name}のアバター</h1>

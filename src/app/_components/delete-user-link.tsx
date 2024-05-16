@@ -17,7 +17,7 @@ export function DeleteUserLink() {
   };
 
   return (
-    <p className="text-center mt-12">
+    <p className="mt-12 text-center">
       <a className="link link-error" onClick={handleDeleteUser}>
         アカウントを削除
       </a>

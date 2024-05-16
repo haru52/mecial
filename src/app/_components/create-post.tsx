@@ -22,7 +22,7 @@ export function CreatePost({ avatarId }: { avatarId: string }) {
         e.preventDefault();
         createPost.mutate({ content: content, createdById: avatarId });
       }}
-      className="w-full max-w-md mt-7"
+      className="mt-7 w-full max-w-md"
     >
       <textarea
         placeholder="いまどうしてる？"
@@ -32,12 +32,12 @@ export function CreatePost({ avatarId }: { avatarId: string }) {
         required
       ></textarea>
       <div className="flex flex-row-reverse">
-      <input
-        type="submit"
-        className="btn btn-primary rounded-full mt-5"
-        disabled={createPost.isPending}
-        value={createPost.isPending ? "ポスト送信中…" : "ポストする"}
-      ></input>
+        <input
+          type="submit"
+          className="btn btn-primary mt-5 rounded-full"
+          disabled={createPost.isPending}
+          value={createPost.isPending ? "ポスト送信中…" : "ポストする"}
+        ></input>
       </div>
     </form>
   );

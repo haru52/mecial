@@ -70,7 +70,12 @@ export default async function Page({
       <p>{avatar.user.introduction}</p>
       {avatar.user.url !== null && avatar.user.url !== "" && (
         <p>
-          <Link href={avatar.user.url} target="_blank" rel="noreferrer" className="link link-primary no-underline hover:underline">
+          <Link
+            href={avatar.user.url}
+            target="_blank"
+            rel="noreferrer"
+            className="link link-primary no-underline hover:underline"
+          >
             {avatar.user.url}
           </Link>
         </p>

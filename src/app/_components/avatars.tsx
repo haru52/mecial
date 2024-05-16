@@ -1,7 +1,13 @@
 import type { AvatarWithUserAndSocial } from "~/entities/avatar";
 import { Avatar } from "./avatar";
 
-export function Avatars({ avatars, loginAvatarId }: { avatars: AvatarWithUserAndSocial[], loginAvatarId?: string}) {
+export function Avatars({
+  avatars,
+  loginAvatarId,
+}: {
+  avatars: AvatarWithUserAndSocial[];
+  loginAvatarId?: string;
+}) {
   return (
     <ul className="list-none pl-0">
       {avatars.map((avatar) => (

@@ -12,7 +12,9 @@ export default async function Page() {
   return (
     <main className="container prose mx-auto px-4">
       <h1>ソーシャル</h1>
-      <a href="/socials/new" className="btn btn-primary">ソーシャルを作成</a>
+      <a href="/socials/new" className="btn btn-primary">
+        ソーシャルを作成
+      </a>
       <ul>
         {socials.map((social: Social) => (
           <li key={social.id}>
