@@ -10,7 +10,7 @@ export default async function Page() {
   const users = await api.user.getAll();
   return (
     <main className="container prose mx-auto px-4">
-      <h1>Users</h1>
+      <h1>ユーザー</h1>
       <Users users={users} />
     </main>
   );

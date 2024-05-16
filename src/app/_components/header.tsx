@@ -122,7 +122,7 @@ export function Header({
               <input
                 type="search"
                 name="search"
-                className="w-14 grow md:w-auto"
+                className="w-24 grow md:w-auto"
                 placeholder="検索"
                 value={searchQuery}
                 required
