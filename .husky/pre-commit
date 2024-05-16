@@ -1,0 +1,6 @@
+# npx lint-staged
+
+# .textlintignore で foo.md を無視するように指定していたとしても、`textlint foo.md` を実行すると
+# foo.md に対して lint が実行されてしまう。
+# そこで、textlint については lint-staged 内ではなく個別に実行する。
+npm run lint:text
