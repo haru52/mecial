@@ -1,4 +1,4 @@
-# npx lint-staged
+npx lint-staged
 
 # .textlintignore で foo.md を無視するように指定していたとしても、`textlint foo.md` を実行すると
 # foo.md に対して lint が実行されてしまう。

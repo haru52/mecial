@@ -5,5 +5,4 @@
 "*.{md,markdown}": markdownlint
 "*.{yml,yaml}": yamllint --strict
 "*.sh": shellcheck
-".husky/*": shellcheck
-# ".github/workflows/*.{yml,yaml}": actionlint
+".github/workflows/*.{yml,yaml}": actionlint
