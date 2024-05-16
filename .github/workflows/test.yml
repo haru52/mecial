@@ -29,7 +29,7 @@ jobs:
         # 理由：Dependabot によるコミットメッセージ 1 行の長さが 100 文字を
         # 超えることがあるため。
         if: github.actor != 'dependabot[bot]'
-        uses: wagoid/commitlint-github-action@v5
+        uses: wagoid/commitlint-github-action@v6
         with:
           configFile: .commitlintrc.yml
       - name: "Lint: YAML"
