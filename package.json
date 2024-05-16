@@ -23,6 +23,7 @@
     "format:md": "npm run lint:md -- --fix",
     "format:text": "npm run lint:text -- --fix",
     "format:prettier": "prettier --write .",
+    "format:es": "eslint --cache --fix .",
     "start": "next start",
     "prepare": "husky"
   },

@@ -8,7 +8,6 @@ import { Header } from "~/app/_components/header";
 import { Footer } from "./_components/footer";
 import type { Metadata } from "next";
 
-import { clsx } from "clsx";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 
