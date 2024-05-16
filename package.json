@@ -24,6 +24,7 @@
     "format:text": "npm run lint:text -- --fix",
     "format:prettier": "prettier --write .",
     "format:es": "eslint --cache --fix .",
+    "jscpd": "jscpd src",
     "start": "next start",
     "prepare": "husky"
   },
@@ -47,6 +48,7 @@
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
     "@commitlint/cz-commitlint": "^19.2.0",
+    "@jscpd/badge-reporter": "^3.4.5",
     "@secretlint/secretlint-rule-preset-recommend": "^8.2.4",
     "@tailwindcss/typography": "^0.5.13",
     "@types/eslint": "^8.56.2",
@@ -61,6 +63,7 @@
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.1.3",
     "husky": "^9.0.11",
+    "jscpd": "^3.5.10",
     "lint-staged": "^15.2.2",
     "markdownlint-cli": "^0.40.0",
     "npm-check-updates": "^16.14.20",
