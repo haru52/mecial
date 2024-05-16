@@ -1,20 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
-const LOCAL_STORAGE_IS_DARK_KEY = "is_dark";
-
-export function ThemeController() {
-  const savedIsDark = localStorage.getItem(LOCAL_STORAGE_IS_DARK_KEY);
-  const [isDark, setIsDark] = useState(
-    savedIsDark === null
-      ? window.matchMedia("(prefers-color-scheme: dark)").matches
-      : (JSON.parse(savedIsDark) as boolean),
-  );
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_IS_DARK_KEY, JSON.stringify(isDark));
-  }, [isDark]);
-
+export function ThemeController({
+  isDark,
+  setIsDark,
+}: {
+  isDark: boolean;
+  setIsDark: Dispatch<SetStateAction<boolean>>;
+}) {
   return (
     <label className="swap swap-rotate">
       {/* this hidden checkbox controls the state */}

@@ -6,9 +6,11 @@ import { defaultUserIconPath, loginPath, logoutPath } from "~/consts";
 import type { Social } from "~/entities/social";
 import type { User } from "~/entities/user";
 import { closeDaisyUiDropdown } from "~/util";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ThemeController } from "./theme-controller";
+
+const LOCAL_STORAGE_IS_DARK_KEY = "is_dark";
 
 export function Header({
   user,
@@ -19,6 +21,15 @@ export function Header({
 }) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
+  const savedIsDark = localStorage.getItem(LOCAL_STORAGE_IS_DARK_KEY);
+  const [isDark, setIsDark] = useState(
+    savedIsDark === null
+      ? window.matchMedia("(prefers-color-scheme: dark)").matches
+      : (JSON.parse(savedIsDark) as boolean),
+  );
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_IS_DARK_KEY, JSON.stringify(isDark));
+  }, [isDark]);
 
   return (
     <div className="navbar bg-base-100">
@@ -60,6 +71,7 @@ export function Header({
             <li onClick={closeDaisyUiDropdown}>
               <Link href="/users">ユーザー</Link>
             </li>
+            <ThemeController isDark={isDark} setIsDark={setIsDark} />
           </ul>
         </div>
         <Link href="/" className="btn btn-ghost text-xl">
@@ -119,7 +131,9 @@ export function Header({
             </label>
           </div>
         </form>
-        <ThemeController />
+        <div className="hidden lg:block">
+          <ThemeController isDark={isDark} setIsDark={setIsDark} />
+        </div>
         {user === null ? (
           <Link href={loginPath} className="btn">
             ログイン
