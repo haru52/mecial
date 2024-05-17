@@ -11,13 +11,13 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           submodules: recursive
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version-file: .node-version
+          node-version-file: .tool-versions
           cache: npm
       - run: npm ci
       - name: "Lint: credentials"
@@ -50,10 +50,10 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version-file: .node-version
+          node-version-file: .tool-versions
           cache: npm
       - run: npm ci
       - run: npm run build
@@ -61,10 +61,10 @@ jobs:
   #   name: Test
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
   #       with:
-  #         node-version-file: .node-version
+  #         node-version-file: .tool-versions
   #         cache: npm
   #     - run: npm ci
   #     - run: npm test
