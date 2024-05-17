@@ -9,8 +9,4 @@
 
 ## 脆弱性の報告
 
-このセクションでは脆弱性を報告する方法を説明してください。
-
-<!-- textlint-disable japanese/sentence-length -->
-脆弱性を報告するにはどこにアクセスすればよいのか、報告された脆弱性についての更新情報をどのくらいの頻度で受け取ることを期待できるのか、脆弱性が承認または否認された場合に何を期待できるのか、などを説明してください。
-<!-- textlint-enable japanese/sentence-length -->
+[haru の問い合わせフォーム](https://docs.google.com/forms/d/e/1FAIpQLSddUF5PDhRpYPZ8VGVZClTBQCo-SQb4QzszOZanmWjUnH_stw/viewform?usp=sf_link)
