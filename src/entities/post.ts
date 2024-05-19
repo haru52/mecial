@@ -18,6 +18,7 @@ export const CreatePost = Post.omit({
 export const UpdatePost = Post.omit({
   createdAt: true,
   updatedAt: true,
+  createdById: true,
 });
 
 export type Post = z.infer<typeof Post>;
