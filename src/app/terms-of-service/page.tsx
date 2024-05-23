@@ -2,7 +2,7 @@ export default function Page() {
   return (
     <main className="container prose mx-auto px-4">
       <h1>利用規約</h1>
-      <p className="text-right">2024 年 5 月 18 日</p>
+      <p className="text-right">2024 年 5 月 24 日</p>
       <ol>
         <li>当サイトは商用利用を含めすべて無料でご利用いただけます</li>
         <li>
