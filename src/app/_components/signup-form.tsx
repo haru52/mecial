@@ -9,7 +9,7 @@ import { api } from "~/trpc/react";
 export function SignupForm() {
   const router = useRouter();
   const [screenName, setScreenName] = useState("");
-  const { mutate, error } = api.user.update.useMutation({
+  const { mutate, error, isPending } = api.user.update.useMutation({
     onSuccess: () => {
       router.push(`/`);
       router.refresh();
@@ -47,8 +47,9 @@ export function SignupForm() {
       <div className="form-control mx-auto mt-7 w-full max-w-xs">
         <input
           type="submit"
-          value="サインアップ"
+          value={isPending ? "サインアップ中…" : "サインアップ"}
           className="btn btn-primary btn-block"
+          disabled={isPending}
         />
       </div>
     </form>
