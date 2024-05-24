@@ -71,7 +71,13 @@ export function Header({
             <li onClick={closeDaisyUiDropdown}>
               <Link href="/users">ユーザー</Link>
             </li>
-            <ThemeController isDark={isDark} setIsDark={setIsDark} />
+            <li>
+              <ThemeController
+                isDark={isDark}
+                setIsDark={setIsDark}
+                placeContentStart={true}
+              />
+            </li>
           </ul>
         </div>
         <Link href="/" className="btn btn-ghost text-xl">
@@ -122,7 +128,7 @@ export function Header({
               <input
                 type="search"
                 name="search"
-                className="w-24 grow md:w-auto"
+                className="w-16 grow md:w-auto"
                 placeholder="検索"
                 value={searchQuery}
                 required

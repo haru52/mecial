@@ -1,16 +1,23 @@
 "use client";
 
+import { clsx } from "clsx";
 import { type Dispatch, type SetStateAction } from "react";
 
 export function ThemeController({
   isDark,
   setIsDark,
+  placeContentStart = false,
 }: {
   isDark: boolean;
   setIsDark: Dispatch<SetStateAction<boolean>>;
+  placeContentStart?: boolean;
 }) {
   return (
-    <label className="swap swap-rotate">
+    <label
+      className={clsx("swap swap-rotate", {
+        "place-content-start": placeContentStart,
+      })}
+    >
       {/* this hidden checkbox controls the state */}
       <input
         type="checkbox"
