@@ -46,7 +46,7 @@ export default async function RootLayout({
         className={`font-sans ${inter.variable} flex min-h-screen flex-col`}
       >
         <TRPCReactProvider>
-          <ThemeProvider defaultTheme="system">
+          <ThemeProvider>
             <Header user={user} currentSocial={currentSocial} />
             <div className="grow">{children}</div>
             <Footer />
