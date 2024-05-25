@@ -9,17 +9,20 @@ export function ThemeController({
 }: {
   placeContentStart?: boolean;
 }) {
+  // https://next-themes-example.vercel.app/
+  // https://github.com/pacocoursey/next-themes/blob/bf0c5a45eaf6fb2b336a6b93840e4ec572bc08c8/examples/example/pages/index.js
   const [mounted, setMounted] = useState(false);
+  const [isSystemDarkMode, setIsSystemDarkMode] = useState(false);
   const { theme, setTheme } = useTheme();
-  useEffect(() => setMounted(true), []);
-  const [systemIsDarkMode, setSystemIsDarkMode] = useState(false);
   useEffect(() => {
-    setSystemIsDarkMode(
+    setMounted(true);
+    setIsSystemDarkMode(
       window.matchMedia("(prefers-color-scheme: dark)").matches,
     );
   }, []);
 
   return mounted ? (
+    // https://daisyui.com/components/theme-controller/#theme-controller-using-a-swap
     <label
       className={clsx("swap swap-rotate", {
         "place-content-start": placeContentStart,
@@ -29,13 +32,7 @@ export function ThemeController({
       <input
         type="checkbox"
         value="dark"
-        checked={
-          !mounted
-            ? false
-            : theme === "system"
-              ? systemIsDarkMode
-              : theme === "dark"
-        }
+        checked={theme === "system" ? isSystemDarkMode : theme === "dark"}
         onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
       />
 
@@ -58,6 +55,6 @@ export function ThemeController({
       </svg>
     </label>
   ) : (
-    <div className="h-10 w-10"></div>
+    <div className="h-10 w-10"></div> // マウント前後でチェックボックスの位置が変わらないようにする
   );
 }
