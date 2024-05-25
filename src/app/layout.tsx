@@ -45,13 +45,13 @@ export default async function RootLayout({
       <body
         className={`font-sans ${inter.variable} flex min-h-screen flex-col`}
       >
-        <ThemeProvider defaultTheme="system">
-          <Header user={user} currentSocial={currentSocial} />
-          <TRPCReactProvider>
+        <TRPCReactProvider>
+          <ThemeProvider defaultTheme="system">
+            <Header user={user} currentSocial={currentSocial} />
             <div className="grow">{children}</div>
-          </TRPCReactProvider>
-          <Footer />
-        </ThemeProvider>
+            <Footer />
+          </ThemeProvider>
+        </TRPCReactProvider>
       </body>
     </html>
   );
