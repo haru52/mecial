@@ -44,7 +44,12 @@ export function PostEditForm({
           />
         </div>
         <div className="form-control mt-5">
-          <input type="submit" value="保存" className="btn btn-primary" />
+          <input
+            type="submit"
+            value={updatePost.isPending ? "保存中…" : "保存"}
+            className="btn btn-primary"
+            disabled={updatePost.isPending}
+          />
           <button
             type="button"
             className="btn btn-neutral"

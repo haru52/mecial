@@ -15,7 +15,7 @@ export function EditForm({ user }: { user: User }) {
   const [introduction, setIntroduction] = useState(user.introduction);
   const [url, setUrl] = useState(user.url);
   const [image, setImage] = useState(user.image);
-  const { mutate, error } = api.user.update.useMutation({
+  const { mutate, error, isPending } = api.user.update.useMutation({
     onSuccess: () => {
       router.push(`/${screenName}`);
       router.refresh();
@@ -117,8 +117,9 @@ export function EditForm({ user }: { user: User }) {
       <div className="form-control mx-auto mt-7 w-full max-w-xs">
         <input
           type="submit"
-          value="保存"
+          value={isPending ? "保存中…" : "保存"}
           className="btn btn-primary btn-block"
+          disabled={isPending}
         />
       </div>
     </form>

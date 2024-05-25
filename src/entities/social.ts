@@ -10,12 +10,14 @@ export const Social = z.object({
   url: Url.nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
+  createdById: z.string().uuid().nullable(),
 });
 
 export const CreateSocial = Social.omit({
   id: true,
   createdAt: true,
   updatedAt: true,
+  createdById: true,
 }).partial({
   image: true,
   description: true,
@@ -25,6 +27,7 @@ export const CreateSocial = Social.omit({
 export const UpdateSocial = Social.omit({
   createdAt: true,
   updatedAt: true,
+  createdById: true,
 }).partial({
   screenName: true,
   name: true,

@@ -12,7 +12,7 @@ export function CreateSocialForm() {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
-  const { mutate, error } = api.social.create.useMutation({
+  const { mutate, error, isPending } = api.social.create.useMutation({
     onSuccess: () => {
       router.push(`/socials/${screenName}`);
     },
@@ -97,8 +97,9 @@ export function CreateSocialForm() {
         <div className="form-control mx-auto mt-7 w-full max-w-xs">
           <input
             type="submit"
-            value="作成"
+            value={isPending ? "作成中…" : "作成"}
             className="btn btn-primary btn-block"
+            disabled={isPending}
           />
         </div>
       </form>
