@@ -12,6 +12,12 @@ export function ThemeController({
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   useEffect(() => setMounted(true), []);
+  const [systemIsDarkMode, setSystemIsDarkMode] = useState(false);
+  useEffect(() => {
+    setSystemIsDarkMode(
+      window.matchMedia("(prefers-color-scheme: dark)").matches,
+    );
+  }, []);
 
   return mounted ? (
     <label
@@ -23,7 +29,13 @@ export function ThemeController({
       <input
         type="checkbox"
         value="dark"
-        checked={mounted ? theme === "dark" : false}
+        checked={
+          !mounted
+            ? false
+            : theme === "system"
+              ? systemIsDarkMode
+              : theme === "dark"
+        }
         onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
       />
 
