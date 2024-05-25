@@ -10,6 +10,7 @@ import type { Metadata } from "next";
 
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
+import { ThemeProvider } from "next-themes";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,15 +41,17 @@ export default async function RootLayout({
       : await api.social.getById(user.currentSocialId);
 
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
       <body
         className={`font-sans ${inter.variable} flex min-h-screen flex-col`}
       >
-        <Header user={user} currentSocial={currentSocial} />
-        <TRPCReactProvider>
-          <div className="grow">{children}</div>
-        </TRPCReactProvider>
-        <Footer />
+        <ThemeProvider defaultTheme="system">
+          <Header user={user} currentSocial={currentSocial} />
+          <TRPCReactProvider>
+            <div className="grow">{children}</div>
+          </TRPCReactProvider>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
