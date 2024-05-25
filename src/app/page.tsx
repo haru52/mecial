@@ -11,7 +11,7 @@ import { clsx } from "clsx";
 export default async function Home() {
   const session = await getServerAuthSession();
   const user = session === null ? null : await api.user.getMe();
-  if (user?.screenName === null) redirect("/signup"); // 初回ログイン（サインアップ）
+  if (user !== null && user.screenName === null) redirect("/signup"); // 初回ログイン（サインアップ）
   const avatar =
     user?.currentSocialId == null
       ? null
