@@ -1,6 +1,6 @@
 import "~/styles/globals.css";
 
-import { Inter } from "next/font/google";
+import { Noto_Sans_JP } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
 
@@ -12,7 +12,7 @@ import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 import { ThemeProvider } from "next-themes";
 
-const inter = Inter({
+const notoSansJp = Noto_Sans_JP({
   subsets: ["latin"],
   variable: "--font-sans",
 });
@@ -43,7 +43,7 @@ export default async function RootLayout({
   return (
     <html lang="ja" suppressHydrationWarning>
       <body
-        className={`font-sans ${inter.variable} flex min-h-screen flex-col`}
+        className={`font-sans ${notoSansJp.variable} flex min-h-screen flex-col`}
       >
         <TRPCReactProvider>
           <ThemeProvider>
