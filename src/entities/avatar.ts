@@ -13,19 +13,11 @@ export const Avatar = z.object({
 
 export const CreateAvatar = Avatar.omit({
   id: true,
-  isPrivate: true,
   createdAt: true,
   updatedAt: true,
   userId: true,
-});
-
-export const UpdateAvatar = Avatar.omit({
-  createdAt: true,
-  updatedAt: true,
 }).partial({
   isPrivate: true,
-  userId: true,
-  socialId: true,
 });
 
 export type Avatar = z.infer<typeof Avatar>;

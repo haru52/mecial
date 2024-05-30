@@ -5,7 +5,7 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import { CreateSocial } from "~/entities/social";
-import { ScreenName } from "~/zod/zodSchemas";
+import { ScreenName } from "~/zod/zod-schemas";
 
 export const socialRouter = createTRPCRouter({
   create: protectedProcedure.input(CreateSocial).mutation(({ ctx, input }) => {

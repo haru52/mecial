@@ -1,16 +1,15 @@
 import { z } from "zod";
-import { IconImage, ScreenName, Url } from "~/zod/zodSchemas";
+import { IconImage, ScreenName, Url, ZodString } from "~/zod/zod-schemas";
 
 export const User = z.object({
-  id: z.string().uuid(),
+  id: ZodString.uuid(),
   screenName: ScreenName.nullable(),
-  name: z.string().min(1, { message: "名前を入力してください" }).nullable(),
-  email: z
-    .string()
-    .email({ message: "メールアドレスの形式で入力してください" })
-    .nullable(),
+  name: ZodString.min(1, { message: "名前を入力してください" }).nullable(),
+  email: ZodString.email({
+    message: "メールアドレスの形式で入力してください",
+  }).nullable(),
   image: IconImage.nullable(),
-  introduction: z.string().nullable(),
+  introduction: ZodString.nullable(),
   url: Url.nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),

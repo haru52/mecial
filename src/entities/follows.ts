@@ -14,12 +14,4 @@ export const CreateFollows = Follows.omit({
   updatedAt: true,
 });
 
-export const UpdateFollows = Follows.omit({
-  createdAt: true,
-  updatedAt: true,
-}).partial({
-  followedById: true,
-  followingId: true,
-});
-
 export type Follows = z.infer<typeof Follows>;

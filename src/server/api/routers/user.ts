@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { UpdateUser } from "~/entities/user";
-import { ScreenName } from "~/zod/zodSchemas";
+import { ScreenName } from "~/zod/zod-schemas";
 
 import {
   createTRPCRouter,

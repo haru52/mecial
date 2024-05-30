@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { IconImage, ScreenName, Url } from "~/zod/zodSchemas";
+import { IconImage, ScreenName, Url } from "~/zod/zod-schemas";
 
 export const Social = z.object({
   id: z.number(),
@@ -30,13 +30,13 @@ export const UpdateSocial = Social.omit({
   createdAt: true,
   updatedAt: true,
   createdById: true,
-  administratorId: true,
 }).partial({
   screenName: true,
   name: true,
   image: true,
   description: true,
   url: true,
+  administratorId: true,
 });
 
 export type Social = z.infer<typeof Social>;
