@@ -29,15 +29,17 @@ model Social {
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt
 
-    createdBy   User?   @relation("createdSocial", fields: [createdById], references: [id], onDelete: SetNull)
-    createdById String?
+    createdBy       User?   @relation("createdSocial", fields: [createdById], references: [id], onDelete: SetNull)
+    createdById     String?
+    administrator   User    @relation("socialAdministrator", fields: [administratorId], references: [id])
+    administratorId String
 
     @@index([screenName])
 }
 
 model Avatar {
     id         String    @id @default(uuid())
-    isPrivate  Boolean   @default(true)
+    isPrivate  Boolean   @default(false)
     posts      Post[]
     followedBy Follows[] @relation("followedBy")
     following  Follows[] @relation("following")
@@ -50,6 +52,7 @@ model Avatar {
     socialId Int
 
     @@unique([socialId, userId])
+    @@index([socialId, userId])
 }
 
 model Post {
@@ -71,7 +74,7 @@ model Follows {
     following    Avatar   @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
     followingId  String
     createdAt    DateTime @default(now())
-    updatedAt    DateTime @updatedAt @default(now())
+    updatedAt    DateTime @updatedAt
 
     @@unique([followingId, followedById])
     @@index([followingId, followedById])
@@ -116,6 +119,7 @@ model User {
     accounts       Account[]
     sessions       Session[]
     createdSocials Social[]  @relation("createdSocial")
+    adminSocials   Social[]  @relation("socialAdministrator")
     avatars        Avatar[]
     createdAt      DateTime  @default(now())
     updatedAt      DateTime  @updatedAt @default(now())

@@ -17,6 +17,7 @@ export const socialRouter = createTRPCRouter({
         description: input.description,
         url: input.url,
         createdBy: { connect: { id: ctx.session.user.id } },
+        administrator: { connect: { id: ctx.session.user.id } },
       },
     });
   }),
