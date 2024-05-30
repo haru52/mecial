@@ -122,7 +122,7 @@ model User {
     adminSocials   Social[]  @relation("socialAdministrator")
     avatars        Avatar[]
     createdAt      DateTime  @default(now())
-    updatedAt      DateTime  @updatedAt @default(now())
+    updatedAt      DateTime  @updatedAt
 
     currentSocial   Social? @relation("currentSocial", fields: [currentSocialId], references: [id], onDelete: SetNull)
     currentSocialId Int?
