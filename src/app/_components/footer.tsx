@@ -6,10 +6,10 @@ export function Footer() {
   return (
     <footer className="footer footer-center rounded bg-base-200 p-10 text-base-content">
       <nav className="grid grid-flow-col gap-4">
-        <Link href="/terms-of-service" className="hover:underline">
+        <Link href="/terms-of-service" className="link-hover link">
           利用規約
         </Link>
-        <Link href="/privacy-policy" className="hover:underline">
+        <Link href="/privacy-policy" className="link-hover link">
           プライバシーポリシー
         </Link>
       </nav>
@@ -31,7 +31,7 @@ export function Footer() {
             href="https://haru52.com/"
             target="_blank"
             rel="noreferrer"
-            className="hover:underline"
+            className="link-hover link"
           >
             haru
           </Link>
