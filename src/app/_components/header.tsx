@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { defaultUserIconPath, loginPath, logoutPath } from "~/consts";
 import type { Social } from "~/entities/social";
 import type { User } from "~/entities/user";
@@ -19,6 +19,11 @@ export function Header({
 }) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
+  const searchParams = useSearchParams();
+  const searchParamQ = searchParams.get("q");
+  useEffect(() => {
+    setSearchQuery(searchParamQ ?? "");
+  }, [searchParamQ]);
 
   return (
     <div className="navbar bg-base-100">
