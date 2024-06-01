@@ -3,7 +3,13 @@
 import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
 
-export function FollowButton({ avatarId }: { avatarId: string }) {
+export function FollowButton({
+  followedById,
+  followingId,
+}: {
+  followedById: string;
+  followingId: string;
+}) {
   const router = useRouter();
   const { mutate } = api.follows.follow.useMutation({
     onSuccess: () => {
@@ -16,7 +22,7 @@ export function FollowButton({ avatarId }: { avatarId: string }) {
       className="btn btn-primary"
       onClick={(e) => {
         e.preventDefault();
-        mutate(avatarId);
+        mutate({ followedById, followingId });
       }}
     >
       フォロー

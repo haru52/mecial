@@ -3,7 +3,13 @@
 import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
 
-export function UnfollowButton({ avatarId }: { avatarId: string }) {
+export function UnfollowButton({
+  followedById,
+  followingId,
+}: {
+  followedById: string;
+  followingId: string;
+}) {
   const router = useRouter();
   const { mutate } = api.follows.unfollow.useMutation({
     onSuccess: () => {
@@ -16,7 +22,7 @@ export function UnfollowButton({ avatarId }: { avatarId: string }) {
       className="btn btn-outline btn-primary hover:btn-error after:content-['フォロー中'] hover:after:content-['フォロー解除']"
       onClick={(e) => {
         e.preventDefault();
-        mutate(avatarId);
+        mutate({ followedById, followingId });
       }}
     ></button>
   );

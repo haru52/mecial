@@ -50,9 +50,15 @@ export async function Avatar({
             {loginAvatarIsInSocial &&
               loginAvatarId !== avatar.id &&
               (isFollowing ? (
-                <UnfollowButton avatarId={avatar.id} />
+                <UnfollowButton
+                  followedById={loginAvatarId}
+                  followingId={avatar.id}
+                />
               ) : (
-                <FollowButton avatarId={avatar.id} />
+                <FollowButton
+                  followedById={loginAvatarId}
+                  followingId={avatar.id}
+                />
               ))}
           </div>
         </div>

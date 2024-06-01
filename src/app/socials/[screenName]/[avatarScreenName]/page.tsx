@@ -63,9 +63,12 @@ export default async function Page({
       {loginAvatar !== null &&
         loginAvatar.id !== avatar.id &&
         (isFollowing ? (
-          <UnfollowButton avatarId={avatar.id} />
+          <UnfollowButton
+            followedById={loginAvatar.id}
+            followingId={avatar.id}
+          />
         ) : (
-          <FollowButton avatarId={avatar.id} />
+          <FollowButton followedById={loginAvatar.id} followingId={avatar.id} />
         ))}
       <p>{avatar.user.introduction}</p>
       {avatar.user.url !== null && avatar.user.url !== "" && (
