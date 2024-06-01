@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { defaultUserIconPath, loginPath, logoutPath } from "~/consts";
 import type { Social } from "~/entities/social";
 import type { User } from "~/entities/user";
 import { closeDaisyUiDropdown } from "~/util";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { ThemeController } from "./theme-controller";
 
 export function Header({

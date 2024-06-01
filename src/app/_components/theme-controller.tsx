@@ -9,6 +9,11 @@ export function ThemeController({
 }: {
   placeContentStart?: boolean;
 }) {
+  const Theme = {
+    system: "system",
+    dark: "dark",
+    light: "light",
+  };
   // https://next-themes-example.vercel.app/
   // https://github.com/pacocoursey/next-themes/blob/bf0c5a45eaf6fb2b336a6b93840e4ec572bc08c8/examples/example/pages/index.js
   const [mounted, setMounted] = useState(false);
@@ -31,9 +36,11 @@ export function ThemeController({
       {/* this hidden checkbox controls the state */}
       <input
         type="checkbox"
-        value="dark"
-        checked={theme === "system" ? isSystemDarkMode : theme === "dark"}
-        onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
+        value={Theme.dark}
+        checked={
+          theme === Theme.system ? isSystemDarkMode : theme === Theme.dark
+        }
+        onChange={(e) => setTheme(e.target.checked ? Theme.dark : Theme.light)}
       />
 
       {/* sun icon */}
