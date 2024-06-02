@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "プライバシーポリシー",
+};
+
 export default function Page() {
   return (
-    <main className="container prose mx-auto px-4">
-      <h1>プライバシーポリシー</h1>
-      <p className="text-right">2024 年 5 月 24 日</p>
+    <main className="container prose mx-auto my-6 px-4">
+      <h1 className="text-center">プライバシーポリシー</h1>
+      <p className="text-right">2024 年 6 月 2 日</p>
       <ol>
         <li>
           当サイトはユーザーがログインに使用した Google または Discord
@@ -20,7 +26,7 @@ export default function Page() {
           当サイトが保有する個人情報などのデータを、ユーザーの同意なく第三者に提供することはいたしません
         </li>
         <li>
-          当サイトのユーザーがご自身のアカウントを削除された場合、当サイトが保有している当該のユーザー情報（個人情報）および当該ユーザーが作成したポストデータなどがすべて削除されます
+          当サイトのユーザーがご自身のアカウントを削除された場合、当サイトが保有する当該のユーザー情報（個人情報）および当該ユーザーが作成したポストはすべて削除されます
         </li>
       </ol>
     </main>
