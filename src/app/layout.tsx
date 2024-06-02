@@ -4,27 +4,28 @@ import { Noto_Sans_JP } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
 
-import { Header } from "~/app/_components/header";
-import { Footer } from "./_components/footer";
 import type { Metadata } from "next";
-
+import { ThemeProvider } from "next-themes";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
-import { ThemeProvider } from "next-themes";
+import { Footer } from "./_components/footer";
+import { Header } from "./_components/header";
 
 const notoSansJp = Noto_Sans_JP({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
+const defaultTitle = "Mecial";
+
 export const metadata: Metadata = {
   title: {
-    template: "%s | Mecial",
-    default: "Mecial",
+    template: `%s | ${defaultTitle}`,
+    default: defaultTitle,
   },
   description: "メタSNS。",
-  // metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
   icons: [{ rel: "icon", url: "/favicon.ico" }],
+  metadataBase: new URL("https://mecial.haru52.com"),
 };
 
 export default async function RootLayout({
@@ -33,8 +34,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerAuthSession();
-  const user =
-    session === null ? null : await api.user.getById(session.user.id);
+  const user = session === null ? null : await api.user.getMe();
   const currentSocial =
     user?.currentSocialId == null
       ? null
@@ -48,7 +48,7 @@ export default async function RootLayout({
         <TRPCReactProvider>
           <ThemeProvider>
             <Header user={user} currentSocial={currentSocial} />
-            <div className="grow">{children}</div>
+            <main className="grow">{children}</main>
             <Footer />
           </ThemeProvider>
         </TRPCReactProvider>
