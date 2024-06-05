@@ -53,7 +53,7 @@ export function Header({
               <Link href="/">ホーム</Link>
             </li>
             {currentSocial !== null && (
-              <li>
+              <li onClick={closeDaisyUiDropdown}>
                 <Link href={`/socials/${currentSocial.screenName}`}>
                   {currentSocial.name}
                 </Link>
@@ -76,7 +76,7 @@ export function Header({
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li onClick={closeDaisyUiDropdown}>
+          <li>
             <Link href="/">ホーム</Link>
           </li>
           {currentSocial !== null && (
