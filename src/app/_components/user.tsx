@@ -1,4 +1,4 @@
-import { defaultUserIconPath } from "~/consts";
+import { defaultUserAndAvatarIconPath } from "~/consts";
 import Image from "next/image";
 import Link from "next/link";
 import type { User as UserEntity } from "~/entities/user";
@@ -12,7 +12,7 @@ export async function User({ user }: { user: UserEntity }) {
             <div className="not-prose avatar">
               <div className="w-11 rounded-full">
                 <Image
-                  src={user.image ?? defaultUserIconPath}
+                  src={user.image ?? defaultUserAndAvatarIconPath}
                   width={500}
                   height={500}
                   alt=""

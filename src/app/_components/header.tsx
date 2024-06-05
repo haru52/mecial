@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { defaultUserIconPath, loginPath, logoutPath } from "~/consts";
+import { defaultUserAndAvatarIconPath, loginPath, logoutPath } from "~/consts";
 import type { Social } from "~/entities/social";
 import type { User } from "~/entities/user";
 import { closeDaisyUiDropdown } from "~/util";
@@ -143,7 +143,7 @@ export function Header({
             >
               <div className="w-10 rounded-full">
                 <Image
-                  src={user?.image ?? defaultUserIconPath}
+                  src={user?.image ?? defaultUserAndAvatarIconPath}
                   width={500}
                   height={500}
                   alt={user.name ?? "あなたのアイコン画像"}

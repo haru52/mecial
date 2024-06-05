@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PostEditAndDeleteLinks } from "~/app/_components/post-edit-and-delete-links";
 import Image from "next/image";
 import type { PostWithCreatedByUserAndSocial } from "~/entities/post";
-import { defaultUserIconPath } from "~/consts";
+import { defaultUserAndAvatarIconPath } from "~/consts";
 import type { Dispatch, SetStateAction } from "react";
 
 export function PostDetailOrEdit({
@@ -24,7 +24,9 @@ export function PostDetailOrEdit({
             <div className="not-prose avatar">
               <div className="w-11 rounded-full">
                 <Image
-                  src={post.createdBy.user.image ?? defaultUserIconPath}
+                  src={
+                    post.createdBy.user.image ?? defaultUserAndAvatarIconPath
+                  }
                   width={500}
                   height={500}
                   alt={post.createdBy.user.name ?? "ユーザーアイコン"}
