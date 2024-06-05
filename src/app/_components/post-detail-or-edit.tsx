@@ -17,7 +17,7 @@ export function PostDetailOrEdit({
   const avatarPath = `/socials/${post.createdBy.social.screenName}/${post.createdBy.user.screenName}`;
 
   return (
-    <div className="card w-96 bg-base-100 shadow-xl">
+    <div className="card mx-auto w-80 bg-base-100 shadow-xl sm:w-96">
       <div className="card-body">
         <div className="card-title">
           <Link href={avatarPath}>

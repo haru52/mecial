@@ -5,8 +5,11 @@ import type { User as UserEntity } from "~/entities/user";
 
 export async function User({ user }: { user: UserEntity }) {
   return (
-    <Link href={`${user.screenName}`} className="inline-block no-underline">
-      <div className="card w-96 bg-base-100 shadow-xl">
+    <Link
+      href={`${user.screenName}`}
+      className="mx-auto block w-fit no-underline"
+    >
+      <div className="card w-80 bg-base-100 shadow-xl sm:w-96">
         <div className="card-body">
           <div className="card-title">
             <div className="not-prose avatar">
