@@ -4,27 +4,31 @@ import type { PostWithCreatedByUserAndSocial } from "~/entities/post";
 import type { Dispatch, SetStateAction } from "react";
 import { api } from "~/trpc/react";
 import { useState } from "react";
-import { PostDetailOrEdit } from "./post-detail-or-edit";
+import { PostDetailOrEditFrame } from "./post-detail-or-edit-frame";
+import { useRouter } from "next/navigation";
 
 export function PostEditForm({
   post,
   setIsEditing,
-  refetchPost,
 }: {
   post: PostWithCreatedByUserAndSocial;
   setIsEditing: Dispatch<SetStateAction<boolean>>;
-  refetchPost: () => void;
 }) {
+  const router = useRouter();
   const [content, setContent] = useState(post.content);
   const updatePost = api.post.update.useMutation({
     onSuccess: () => {
       setIsEditing(false);
-      refetchPost();
+      router.refresh();
     },
   });
 
   return (
-    <PostDetailOrEdit post={post} setIsEditing={setIsEditing}>
+    <PostDetailOrEditFrame
+      post={post}
+      isEditing={false}
+      setIsEditing={setIsEditing}
+    >
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -59,6 +63,6 @@ export function PostEditForm({
           </button>
         </div>
       </form>
-    </PostDetailOrEdit>
+    </PostDetailOrEditFrame>
   );
 }
