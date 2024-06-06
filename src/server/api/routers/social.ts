@@ -6,6 +6,7 @@ import {
 } from "~/server/api/trpc";
 import { CreateSocial, UpdateSocial } from "~/entities/social";
 import { ScreenName } from "~/zod/zod-schemas";
+import { TRPCError } from "@trpc/server";
 
 export const socialRouter = createTRPCRouter({
   create: protectedProcedure.input(CreateSocial).mutation(({ ctx, input }) => {
@@ -69,22 +70,40 @@ export const socialRouter = createTRPCRouter({
       });
     }),
 
-  update: protectedProcedure.input(UpdateSocial).mutation(({ ctx, input }) => {
-    return ctx.db.social.update({
-      data: {
-        screenName: input.screenName,
-        name: input.name,
-        image: input.image,
-        description: input.description,
-        url: input.url,
-      },
-      where: { id: input.id },
-    });
-  }),
+  update: protectedProcedure
+    .input(UpdateSocial)
+    .mutation(async ({ ctx, input }) => {
+      const social = await ctx.db.social.findUnique({
+        where: { id: input.id },
+        select: { administratorId: true },
+      });
+      if (social === null) throw new Error("ソーシャルが見つかりません");
+      if (social.administratorId !== ctx.session.user.id)
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      return ctx.db.social.update({
+        data: {
+          screenName: input.screenName,
+          name: input.name,
+          image: input.image,
+          description: input.description,
+          url: input.url,
+        },
+        where: { id: input.id },
+      });
+    }),
 
-  delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
-    return ctx.db.social.delete({
-      where: { id: input },
-    });
-  }),
+  delete: protectedProcedure
+    .input(z.number())
+    .mutation(async ({ ctx, input }) => {
+      const social = await ctx.db.social.findUnique({
+        where: { id: input },
+        select: { administratorId: true },
+      });
+      if (social === null) throw new Error("ソーシャルが見つかりません");
+      if (social.administratorId !== ctx.session.user.id)
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      return ctx.db.social.delete({
+        where: { id: input },
+      });
+    }),
 });
