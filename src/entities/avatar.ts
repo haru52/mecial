@@ -22,7 +22,10 @@ export const CreateAvatar = Avatar.omit({
 
 export type Avatar = z.infer<typeof Avatar>;
 
-export type AvatarWithUserAndSocial = Avatar & {
+export type AvatarWithUser = Avatar & {
   user: User;
+};
+
+export type AvatarWithUserAndSocial = AvatarWithUser & {
   social: Social;
 };

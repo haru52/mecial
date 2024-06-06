@@ -4,7 +4,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
-import { CreateSocial } from "~/entities/social";
+import { CreateSocial, UpdateSocial } from "~/entities/social";
 import { ScreenName } from "~/zod/zod-schemas";
 
 export const socialRouter = createTRPCRouter({
@@ -43,7 +43,7 @@ export const socialRouter = createTRPCRouter({
   getByScreenNameWithAvatarUsers: publicProcedure
     .input(ScreenName)
     .query(({ ctx, input }) => {
-      return ctx.db.social.findFirst({
+      return ctx.db.social.findUnique({
         where: { screenName: input },
         include: {
           avatars: {
@@ -53,4 +53,38 @@ export const socialRouter = createTRPCRouter({
         },
       });
     }),
+
+  getByScreenNameWithAvatarUsersAndAdministrator: publicProcedure
+    .input(ScreenName)
+    .query(({ ctx, input }) => {
+      return ctx.db.social.findUnique({
+        where: { screenName: input },
+        include: {
+          avatars: {
+            where: { isPrivate: false },
+            include: { user: true },
+          },
+          administrator: true,
+        },
+      });
+    }),
+
+  update: protectedProcedure.input(UpdateSocial).mutation(({ ctx, input }) => {
+    return ctx.db.social.update({
+      data: {
+        screenName: input.screenName,
+        name: input.name,
+        image: input.image,
+        description: input.description,
+        url: input.url,
+      },
+      where: { id: input.id },
+    });
+  }),
+
+  delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
+    return ctx.db.social.delete({
+      where: { id: input },
+    });
+  }),
 });

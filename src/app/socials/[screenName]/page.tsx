@@ -1,11 +1,8 @@
 import { api } from "~/trpc/server";
-import type { Metadata } from "next";
-import { JoinSocialButton } from "~/app/_components/socials/[screenName]/join-social-button";
-import { LeaveSocialButton } from "~/app/_components/socials/[screenName]/leave-social-button";
 import { notFound } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
-import Link from "next/link";
-import { Posts } from "~/app/_components/posts/posts";
+import type { Metadata } from "next";
+import { SocialDetailOrEdit } from "~/app/_components/social-detail-or-edit";
 
 export const generateMetadata = async ({
   params,
@@ -21,9 +18,10 @@ export default async function Page({
 }: {
   params: { screenName: string };
 }) {
-  const social = await api.social.getByScreenNameWithAvatarUsers(
-    params.screenName,
-  );
+  const social =
+    await api.social.getByScreenNameWithAvatarUsersAndAdministrator(
+      params.screenName,
+    );
   if (social === null) notFound();
   const posts = await api.post.getFullAllBySocialScreenName(params.screenName);
   const session = await getServerAuthSession();
@@ -34,31 +32,11 @@ export default async function Page({
   const avatar =
     user === null ? null : await api.avatar.getMyAvatarBySocialId(social.id);
   return (
-    <main className="container prose mx-auto px-4">
-      <h1>{social.name}</h1>
-      <ul>
-        <li>{`@${social.screenName}`}</li>
-        <li>{social.description}</li>
-        {social.url !== null && (
-          <li>
-            <a href={social.url} target="_blank" rel="noreferrer">
-              {social.url}
-            </a>
-          </li>
-        )}
-        <li>
-          <Link href={`/socials/${params.screenName}/avatars`}>
-            {social.avatars.length} アバター
-          </Link>
-        </li>
-      </ul>
-      {user !== null &&
-        (avatar === null ? (
-          <JoinSocialButton social={social} />
-        ) : (
-          <LeaveSocialButton avatarId={avatar.id} />
-        ))}
-      <Posts posts={posts} />
-    </main>
+    <SocialDetailOrEdit
+      social={social}
+      user={user}
+      avatar={avatar}
+      posts={posts}
+    />
   );
 }

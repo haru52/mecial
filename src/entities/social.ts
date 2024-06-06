@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { IconImage, ScreenName, Url } from "~/zod/zod-schemas";
+import { type User } from "./user";
+import { type AvatarWithUser } from "./avatar";
 
 export const Social = z.object({
   id: z.number(),
@@ -40,3 +42,8 @@ export const UpdateSocial = Social.omit({
 });
 
 export type Social = z.infer<typeof Social>;
+
+export type SocialWithAvatarUsersAndAdministrator = Social & {
+  avatars: AvatarWithUser[];
+  administrator: User;
+};
