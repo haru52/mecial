@@ -12,7 +12,7 @@ export function Post({ post }: { post: PostWithCreatedByUserAndSocial }) {
 
   return (
     <div
-      className="card mx-auto w-80 cursor-pointer bg-base-100 shadow-xl sm:w-96"
+      className="card w-full cursor-pointer bg-base-100 shadow-xl"
       onClick={(e) => {
         e.preventDefault();
         router.push(

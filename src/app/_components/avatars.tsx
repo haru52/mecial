@@ -11,7 +11,7 @@ export function Avatars({
   return (
     <ul className="list-none pl-0">
       {avatars.map((avatar) => (
-        <li key={avatar.id} className="pl-0">
+        <li key={avatar.id} className="mb-0 mt-1 pl-0">
           <Avatar avatar={avatar} loginAvatarId={loginAvatarId} />
         </li>
       ))}
