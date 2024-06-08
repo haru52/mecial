@@ -22,7 +22,12 @@ export function Post({ post }: { post: PostWithCreatedByUserAndSocial }) {
     >
       <div className="card-body">
         <div className="card-title">
-          <Link href={avatarPath}>
+          <Link
+            href={avatarPath}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             <div className="not-prose avatar">
               <div className="w-11 rounded-full">
                 <Image
@@ -36,10 +41,18 @@ export function Post({ post }: { post: PostWithCreatedByUserAndSocial }) {
               </div>
             </div>
           </Link>
-          <Link href={avatarPath} className="no-underline hover:underline">
+          <Link
+            href={avatarPath}
+            className="no-underline hover:underline"
+            onClick={(e) => e.stopPropagation()}
+          >
             <h2 className="my-0 text-sm">{post.createdBy.user.name}</h2>
           </Link>
-          <Link href={avatarPath} className="no-underline hover:underline">
+          <Link
+            href={avatarPath}
+            className="no-underline hover:underline"
+            onClick={(e) => e.stopPropagation()}
+          >
             <span className="block text-sm">
               @{post.createdBy.user.screenName}.
               {post.createdBy.social.screenName}
