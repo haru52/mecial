@@ -22,13 +22,13 @@ export function CreatePost({ avatarId }: { avatarId: string }) {
         e.preventDefault();
         createPost.mutate({ content: content, createdById: avatarId });
       }}
-      className="mt-7 w-full max-w-md"
+      className="mt-7 w-full"
     >
       <textarea
         placeholder="いまどうしてる？"
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        className="textarea textarea-bordered block w-full max-w-md"
+        className="textarea textarea-bordered w-full"
         required
       ></textarea>
       <div className="flex flex-row-reverse">

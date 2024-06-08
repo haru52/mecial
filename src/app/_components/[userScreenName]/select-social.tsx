@@ -21,29 +21,26 @@ export function SelectSocial({
   const [socialId, setSocialId] = useState(currentSocialId.toString());
 
   return (
-    <label className="w-full max-w-xs">
-      <span>ソーシャル</span>
-      <select
-        name="socialId"
-        className="select select-bordered ml-5 w-full max-w-xs"
-        value={socialId}
-        onChange={(e) => {
-          setSocialId(e.target.value);
-          mutate({
-            currentSocialId: parseInt(e.target.value, 10),
-          });
-        }}
-      >
-        {socials.map((social) => (
-          <option
-            key={social.id}
-            value={social.id}
-            defaultValue={currentSocialId}
-          >
-            {social.name}
-          </option>
-        ))}
-      </select>
-    </label>
+    <select
+      name="socialId"
+      className="select select-bordered w-full"
+      value={socialId}
+      onChange={(e) => {
+        setSocialId(e.target.value);
+        mutate({
+          currentSocialId: parseInt(e.target.value, 10),
+        });
+      }}
+    >
+      {socials.map((social) => (
+        <option
+          key={social.id}
+          value={social.id}
+          defaultValue={currentSocialId}
+        >
+          {social.name}
+        </option>
+      ))}
+    </select>
   );
 }

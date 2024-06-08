@@ -30,9 +30,7 @@ export default async function Home() {
   const socials = avatars?.map((a) => a.social);
 
   return (
-    <main
-      className={clsx({ "container prose mx-auto px-4": session !== null })}
-    >
+    <div className={clsx({ "container prose mx-auto px-4": session !== null })}>
       {session === null && (
         <div
           className="hero min-h-[calc(100vh-68px)]"
@@ -64,6 +62,6 @@ export default async function Home() {
           </>
         )}
       {session !== null && <Posts posts={postsWithCreatedByUser} />}
-    </main>
+    </div>
   );
 }
