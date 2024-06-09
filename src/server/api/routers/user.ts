@@ -77,6 +77,21 @@ export const userRouter = createTRPCRouter({
     });
   }),
 
+  getByScreenNameWithSocials: publicProcedure
+    .input(ScreenName)
+    .query(({ ctx, input }) => {
+      return ctx.db.user.findUnique({
+        where: { screenName: input },
+        include: {
+          avatars: {
+            include: {
+              social: true,
+            },
+          },
+        },
+      });
+    }),
+
   checkIfScreenNameExists: protectedProcedure
     .input(ScreenName)
     .query(async ({ ctx, input }) => {

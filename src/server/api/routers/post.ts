@@ -70,6 +70,23 @@ export const postRouter = createTRPCRouter({
       });
     }),
 
+  getAllByUserId: publicProcedure
+    .input(z.string().uuid())
+    .query(({ ctx, input }) => {
+      return ctx.db.post.findMany({
+        orderBy: { createdAt: "desc" },
+        where: { createdBy: { userId: input } },
+        include: {
+          createdBy: {
+            include: {
+              social: true,
+              user: true,
+            },
+          },
+        },
+      });
+    }),
+
   search: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.db.post.findMany({
       orderBy: { createdAt: "desc" },

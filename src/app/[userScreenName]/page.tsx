@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
+import type { Social } from "~/entities/social";
 import Link from "next/link";
 import { api } from "~/trpc/server";
 import { notFound } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
+import Image from "next/image";
+import { defaultUserAndAvatarIconPath } from "~/consts";
+import { Socials } from "../_components/socials";
+import { Posts } from "../_components/posts/posts";
 
 export const generateMetadata = async ({
   params,
@@ -16,27 +21,63 @@ export const generateMetadata = async ({
   };
 };
 
+function compare(a: Social, b: Social) {
+  if (a.screenName < b.screenName) {
+    return -1;
+  }
+  if (a.screenName > b.screenName) {
+    return 1;
+  }
+  return 0;
+}
+
 export default async function Page({
   params,
 }: {
   params: { userScreenName: string };
 }) {
-  const user = await api.user.getByScreenName(params.userScreenName);
+  const user = await api.user.getByScreenNameWithSocials(params.userScreenName);
   const session = await getServerAuthSession();
 
   if (user === null) return notFound();
+  const socials = user.avatars.map((avatar) => avatar.social).sort(compare);
+  const posts = await api.post.getAllByUserId(user.id);
   return (
-    <main className="container prose mx-auto px-4">
-      <h1>{user?.name}</h1>
-      <ul>
-        <li>ID：@{user?.screenName}</li>
-      </ul>
+    <div className="container prose mx-auto px-4">
+      <div className="not-prose avatar">
+        <div className="w-24 rounded-full">
+          <Image
+            src={user.image ?? defaultUserAndAvatarIconPath}
+            width={500}
+            height={500}
+            alt=""
+          />
+        </div>
+      </div>
       {session?.user.id === user.id && (
-        <>
-          <Link href={`${user.screenName}/edit`}>Edit</Link>
-          <br />
-        </>
+        <Link href={`${user.screenName}/edit`} className="btn btn-primary">
+          プロフィールを編集
+        </Link>
       )}
-    </main>
+      <h1>{user.name}</h1>
+      <p>@{user.screenName}</p>
+      <p>{user.introduction}</p>
+      {user.url !== null && (
+        <p>
+          <Link
+            href={user.url}
+            target="_blank"
+            rel="noreferrer"
+            className="link link-primary"
+          >
+            {user.url}
+          </Link>
+        </p>
+      )}
+      <h2>ソーシャル</h2>
+      <Socials socials={socials} />
+      <h2>ポスト</h2>
+      <Posts posts={posts} />
+    </div>
   );
 }
