@@ -51,6 +51,7 @@ export default async function Page({
             width={500}
             height={500}
             alt=""
+            priority={true}
           />
         </div>
       </div>
