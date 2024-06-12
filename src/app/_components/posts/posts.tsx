@@ -6,7 +6,7 @@ export function Posts({ posts }: { posts: PostWithCreatedByUserAndSocial[] }) {
     <ul className="list-none pl-0">
       <>
         {posts.map((post) => (
-          <li key={post.id} className="mb-0 mt-1 pl-0">
+          <li key={post.id} className="mb-0 mt-0.5 pl-0">
             <Post post={post} />
           </li>
         ))}

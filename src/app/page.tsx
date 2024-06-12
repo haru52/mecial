@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { CreatePost } from "./_components/create-post";
 import { SelectSocial } from "./_components/[userScreenName]/select-social";
 import { clsx } from "clsx";
+import { type AvatarWithUser } from "~/entities/avatar";
 
 export default async function Home() {
   const session = await getServerAuthSession();
@@ -16,6 +17,8 @@ export default async function Home() {
     user?.currentSocialId == null
       ? null
       : await api.avatar.getMyAvatarBySocialIdWithPosts(user.currentSocialId);
+  const avatarWithUser: AvatarWithUser | null =
+    avatar === null || user === null ? null : { ...avatar, user };
   const postsWithCreatedByUser = await (async () => {
     if (avatar === null) return [];
     const follows = await api.follows.getFollowingByAvatarId(avatar.id);
@@ -58,7 +61,7 @@ export default async function Home() {
               socials={socials}
               currentSocialId={user.currentSocialId}
             />
-            <CreatePost avatarId={avatar?.id ?? ""} />
+            {avatarWithUser !== null && <CreatePost avatar={avatarWithUser} />}
           </>
         )}
       {session !== null && <Posts posts={postsWithCreatedByUser} />}
