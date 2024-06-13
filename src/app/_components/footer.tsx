@@ -27,6 +27,8 @@ export function Footer() {
             href="https://github.com/haru52/mecial"
             target="_blank"
             rel="noreferrer"
+            title="GitHubでソースコードを見る"
+            aria-label="GitHubでソースコードを見る"
           >
             <FontAwesomeIcon icon={faGithub} className="h-6 w-6 fill-current" />
           </Link>
