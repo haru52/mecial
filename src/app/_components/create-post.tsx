@@ -2,20 +2,24 @@
 
 import { defaultSocialIconPath } from "~/consts";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import type { AvatarWithUser } from "~/entities/avatar";
+import type { AvatarWithUserAndSocial } from "~/entities/avatar";
 
 import { api } from "~/trpc/react";
 import Link from "next/link";
 
-export function CreatePost({ avatar }: { avatar: AvatarWithUser }) {
-  const router = useRouter();
+export function CreatePost({
+  avatar,
+  getPostsQueryRefetch,
+}: {
+  avatar: AvatarWithUserAndSocial;
+  getPostsQueryRefetch: () => void;
+}) {
   const [content, setContent] = useState("");
 
   const createPost = api.post.create.useMutation({
     onSuccess: () => {
-      router.refresh();
+      getPostsQueryRefetch();
       setContent("");
     },
   });
@@ -24,7 +28,9 @@ export function CreatePost({ avatar }: { avatar: AvatarWithUser }) {
     <div className="mt-5 flex items-start">
       <div className="not-prose avatar">
         <div className="w-16 rounded-full">
-          <Link href={`/${avatar.user.screenName}`}>
+          <Link
+            href={`/socials/${avatar.social.screenName}/${avatar.user.screenName}`}
+          >
             <Image
               src={avatar.user.image ?? defaultSocialIconPath}
               width={500}

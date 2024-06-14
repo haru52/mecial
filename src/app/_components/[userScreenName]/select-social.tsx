@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import type { Social } from "~/entities/social";
-import { api } from "~/trpc/react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { defaultSocialIconPath } from "~/consts";
 import Link from "next/link";
@@ -15,20 +13,17 @@ function getSocialById(socials: Social[], id: number) {
 export function SelectSocial({
   socials,
   currentSocialId,
+  setCurrentSocialId,
 }: {
   socials: Social[];
   currentSocialId: number;
+  setCurrentSocialId: (id: number) => void;
 }) {
-  const router = useRouter();
-  const { mutate } = api.user.update.useMutation({
-    onSuccess: () => {
-      router.refresh();
-    },
-  });
-  const [socialId, setSocialId] = useState(currentSocialId.toString());
   const [social, setSocial] = useState<Social | undefined>(
     getSocialById(socials, currentSocialId),
   );
+
+  if (social === undefined) return null;
 
   return (
     <div className="flex items-center">
@@ -36,10 +31,10 @@ export function SelectSocial({
         <div className="w-16 rounded-full">
           <Link href={`/socials/${social?.screenName}`}>
             <Image
-              src={social?.image ?? defaultSocialIconPath}
+              src={social.image ?? defaultSocialIconPath}
               width={500}
               height={500}
-              alt={social?.name ?? "Social icon"}
+              alt={social.name ?? "Social icon"}
             />
           </Link>
         </div>
@@ -47,17 +42,14 @@ export function SelectSocial({
       <select
         name="socialId"
         className="select select-bordered ml-6 grow"
-        value={socialId}
+        value={currentSocialId.toString()}
         onChange={(e) => {
-          setSocialId(e.target.value);
+          setCurrentSocialId(parseInt(e.target.value, 10));
           setSocial(socials.find((s) => s.id === parseInt(e.target.value, 10)));
-          mutate({
-            currentSocialId: parseInt(e.target.value, 10),
-          });
         }}
       >
         {socials.map((social) => (
-          <option key={social.id} value={social.id}>
+          <option key={social.id} value={social.id.toString()}>
             {social.name}
           </option>
         ))}
