@@ -33,7 +33,7 @@ export default async function Page({
       : await api.post.searchInCurrentSocial(q);
 
   return (
-    <div className="container prose mx-auto mb-10 mt-5 px-4">
+    <div className="container prose mx-auto mb-10 mt-5">
       <Posts posts={posts} />
     </div>
   );

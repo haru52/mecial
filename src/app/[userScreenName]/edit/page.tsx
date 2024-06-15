@@ -17,7 +17,7 @@ export default async function Page({
   if (session.user.id !== user.id) notFound();
 
   return (
-    <div className="container prose mx-auto mb-10 mt-5 px-4">
+    <div className="container prose mx-auto mb-10 mt-5">
       <h1 className="text-center">{user.name}のプロフィールを編集</h1>
       <EditForm user={user} />
       <DeleteUserLink />

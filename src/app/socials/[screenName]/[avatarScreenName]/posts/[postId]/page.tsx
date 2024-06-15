@@ -16,7 +16,7 @@ export default async function Page({
   if (post === null) notFound();
   const isAuthor = post.createdBy.userId === session.user.id;
   return (
-    <div className="container prose mx-auto mb-10 mt-5 px-4 pt-5">
+    <div className="container prose mx-auto mb-10 mt-5">
       <PostDetailOrEdit post={post} isAuthor={isAuthor} />
     </div>
   );
