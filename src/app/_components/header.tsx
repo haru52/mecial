@@ -136,9 +136,9 @@ export function Header({
           <ThemeController />
         </div>
         {user === null ? (
-          <Link href={loginPath} className="btn">
+          <a href={loginPath} className="btn">
             ログイン
-          </Link>
+          </a>
         ) : (
           <div className="dropdown dropdown-end">
             <div
@@ -166,7 +166,7 @@ export function Header({
                 <Link href={`/${user.screenName}/edit`}>設定</Link>
               </li>
               <li onClick={closeDaisyUiDropdown}>
-                <Link href={logoutPath}>ログアウト</Link>
+                <a href={logoutPath}>ログアウト</a>
               </li>
             </ul>
           </div>

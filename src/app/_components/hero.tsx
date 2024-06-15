@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { loginPath } from "~/consts";
 import hero from "../../../public/hero.jpeg";
 
 export function Hero() {
@@ -14,9 +14,9 @@ export function Hero() {
         <div className="max-w-md">
           <h1 className="mb-5 text-5xl font-bold">Mecial</h1>
           <p className="mb-5">Mecial（ミーシャル）はメタSNSです。</p>
-          <Link href="api/auth/signin" className="btn btn-primary">
+          <a href={loginPath} className="btn btn-primary">
             ログイン
-          </Link>
+          </a>
         </div>
       </div>
     </div>
