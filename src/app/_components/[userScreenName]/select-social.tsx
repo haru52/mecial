@@ -10,6 +10,10 @@ function getSocialById(socials: Social[], id: number) {
   return socials.find((s) => s.id === id);
 }
 
+function sortByScreenName(a: Social, b: Social) {
+  return a.screenName.localeCompare(b.screenName);
+}
+
 export function SelectSocial({
   socials,
   currentSocialId,
@@ -48,7 +52,7 @@ export function SelectSocial({
           setSocial(socials.find((s) => s.id === parseInt(e.target.value, 10)));
         }}
       >
-        {socials.map((social) => (
+        {socials.sort(sortByScreenName).map((social) => (
           <option key={social.id} value={social.id.toString()}>
             {social.name}
           </option>

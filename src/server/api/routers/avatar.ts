@@ -75,6 +75,12 @@ export const avatarRouter = createTRPCRouter({
     });
   }),
 
+  getMyAvatars: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.db.avatar.findMany({
+      where: { userId: ctx.session.user.id },
+    });
+  }),
+
   getMyAvatarsWithSocial: protectedProcedure.query(async ({ ctx }) => {
     return ctx.db.avatar.findMany({
       where: { userId: ctx.session.user.id },
@@ -183,6 +189,12 @@ export const avatarRouter = createTRPCRouter({
   delete: protectedProcedure
     .input(z.string().uuid())
     .mutation(async ({ ctx, input }) => {
+      const user = await ctx.db.user.findUnique({
+        where: { id: ctx.session.user.id },
+        select: { currentSocialId: true },
+      });
+      if (user === null) throw new Error("User not found");
+      const currentSocialId = user.currentSocialId;
       const avatar = await ctx.db.avatar.delete({
         where: { id: input },
       });
@@ -198,7 +210,30 @@ export const avatarRouter = createTRPCRouter({
             currentSocial: { disconnect: true },
           },
         });
+      } else if (currentSocialId === avatar.socialId) {
+        const avatars = await ctx.db.avatar.findMany({
+          where: {
+            userId: ctx.session.user.id,
+          },
+          include: {
+            social: {
+              select: { id: true, screenName: true },
+            },
+          },
+        });
+        const newCurrentAvatar = avatars.sort((a, b) =>
+          a.social.screenName.localeCompare(b.social.screenName),
+        )[0];
+        if (newCurrentAvatar !== undefined) {
+          await ctx.db.user.update({
+            where: { id: ctx.session.user.id },
+            data: {
+              currentSocial: { connect: { id: newCurrentAvatar.socialId } },
+            },
+          });
+        }
       }
+
       return avatar;
     }),
 });

@@ -19,10 +19,11 @@ export function UnfollowButton({
 
   return (
     <button
-      className="btn btn-outline btn-primary hover:btn-error after:content-['フォロー中'] hover:after:content-['フォロー解除']"
+      className="btn btn-outline btn-primary w-32 hover:btn-error after:content-['フォロー中'] hover:after:content-['フォロー解除']"
       onClick={(e) => {
         e.preventDefault();
-        mutate({ followedById, followingId });
+        confirm("本当にフォロー解除しますか？") &&
+          mutate({ followedById, followingId });
       }}
     ></button>
   );

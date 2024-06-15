@@ -4,6 +4,7 @@ import { defaultSocialIconPath } from "~/consts";
 import Image from "next/image";
 import { useState } from "react";
 import type { AvatarWithUserAndSocial } from "~/entities/avatar";
+import { useRouter } from "next/navigation";
 
 import { api } from "~/trpc/react";
 import Link from "next/link";
@@ -16,11 +17,12 @@ export function CreatePost({
   getPostsQueryRefetch: () => void;
 }) {
   const [content, setContent] = useState("");
-
+  const router = useRouter();
   const createPost = api.post.create.useMutation({
     onSuccess: () => {
       getPostsQueryRefetch();
       setContent("");
+      router.refresh();
     },
   });
 

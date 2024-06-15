@@ -11,15 +11,16 @@ export const metadata: Metadata = {
 export default async function Page() {
   const session = await getServerAuthSession();
   const socials = await api.social.getAll();
+  const avatars = await api.avatar.getMyAvatars();
   return (
-    <main className="container prose mx-auto px-4">
+    <div className="container prose mx-auto my-10 px-4">
       <h1 className="text-center">ソーシャル</h1>
       {session !== null && (
         <Link href="/socials/new" className="btn btn-primary">
           ソーシャルを作成
         </Link>
       )}
-      <Socials socials={socials} />
-    </main>
+      <Socials socials={socials} avatars={avatars} />
+    </div>
   );
 }

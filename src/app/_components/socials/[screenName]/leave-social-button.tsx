@@ -13,13 +13,11 @@ export function LeaveSocialButton({ avatarId }: { avatarId: string }) {
 
   return (
     <button
-      className="btn btn-error"
+      className="btn btn-outline btn-primary w-32 hover:btn-error after:content-['参加中'] hover:after:content-['退出']"
       onClick={(e) => {
         e.preventDefault();
-        mutate(avatarId);
+        confirm("本当に退出しますか？") && mutate(avatarId);
       }}
-    >
-      退出
-    </button>
+    ></button>
   );
 }

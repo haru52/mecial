@@ -75,8 +75,8 @@ export default async function Page({
           </Link>
         </p>
       )}
-      <h2>ソーシャル</h2>
-      <Socials socials={socials} />
+      <h2>参加中のソーシャル</h2>
+      <Socials socials={socials} avatars={user.avatars} />
       <h2>ポスト</h2>
       <Posts posts={posts} />
     </div>

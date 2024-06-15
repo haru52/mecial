@@ -12,7 +12,7 @@ export const generateMetadata = async ({
   const social = await api.social.getByScreenName(params.screenName);
   return social === null
     ? { title: "404 Not Found" }
-    : { title: `${social.name}のアバター` };
+    : { title: `${social.name}のメンバー` };
 };
 
 export default async function Page({
@@ -35,7 +35,7 @@ export default async function Page({
       : loginUser.avatars.find((avatar) => avatar.socialId === social.id);
   return (
     <main className="container prose mx-auto px-4">
-      <h1>{social.name}のアバター</h1>
+      <h1>{social.name}のメンバー</h1>
       <Avatars avatars={social.avatars} loginAvatarId={loginAvatar?.id} />
     </main>
   );

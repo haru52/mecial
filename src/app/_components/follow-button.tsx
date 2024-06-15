@@ -19,7 +19,7 @@ export function FollowButton({
 
   return (
     <button
-      className="btn btn-primary"
+      className="btn btn-primary w-32"
       onClick={(e) => {
         e.preventDefault();
         mutate({ followedById, followingId });

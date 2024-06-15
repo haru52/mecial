@@ -35,6 +35,7 @@ export default async function Page({
           followedById: loginAvatar.id,
           followingId: avatar.id,
         });
+  const posts = avatar.posts.reverse();
 
   return (
     <main className="container prose mx-auto px-4">
@@ -97,7 +98,7 @@ export default async function Page({
           {followersCount} フォロワー
         </Link>
       </p>
-      <Posts posts={avatar.posts} />
+      <Posts posts={posts} />
     </main>
   );
 }

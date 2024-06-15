@@ -48,6 +48,16 @@ export function SocialDetail({
       </div>
       <h1>{social.name}</h1>
       <p>@{social.screenName}</p>
+      {user !== null &&
+        (avatar === null ? (
+          <div className="mt-5">
+            <JoinSocialButton social={social} />
+          </div>
+        ) : (
+          <div className="mt-5">
+            <LeaveSocialButton avatarId={avatar.id} />
+          </div>
+        ))}
       <p>{social.description}</p>
       {social.url && (
         <p>
@@ -64,7 +74,7 @@ export function SocialDetail({
       <p>
         {" "}
         <Link href={`/socials/${social.screenName}/avatars`}>
-          {social.avatars.length} アバター
+          {social.avatars.length} 人のメンバー
         </Link>
       </p>
       {social.administratorId === user?.id && (
@@ -89,16 +99,6 @@ export function SocialDetail({
           </span>
         </div>
       )}
-      {user !== null &&
-        (avatar === null ? (
-          <div className="mt-5">
-            <JoinSocialButton social={social} />
-          </div>
-        ) : (
-          <div className="mt-5">
-            <LeaveSocialButton avatarId={avatar.id} />
-          </div>
-        ))}
       <Posts posts={posts} />
     </main>
   );

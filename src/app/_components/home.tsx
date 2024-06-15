@@ -8,6 +8,7 @@ import { SelectSocial } from "./[userScreenName]/select-social";
 import type { Avatar, AvatarWithUserAndSocial } from "~/entities/avatar";
 import type { Social } from "~/entities/social";
 import { Posts } from "./posts/posts";
+import { useRouter } from "next/navigation";
 
 type AvatarWithSocial = Avatar & { social: Social };
 
@@ -28,9 +29,14 @@ export function Home({
   user: User;
   avatars: AvatarWithSocial[];
 }) {
+  const router = useRouter();
   const [currentSocialId, setCurrentSocialId] = useState(user.currentSocialId);
   if (currentSocialId === null) throw new Error("currentSocialId is null");
-  const { mutate: userUpdateMutate } = api.user.update.useMutation();
+  const { mutate: userUpdateMutate } = api.user.update.useMutation({
+    onSuccess: () => {
+      router.refresh();
+    },
+  });
   const socials = avatars === null ? [] : avatars.map((a) => a.social);
 
   const [avatar, setAvatar] = useState<AvatarWithUserAndSocial>({
@@ -39,8 +45,9 @@ export function Home({
   });
   useEffect(() => {
     userUpdateMutate({ currentSocialId });
-    setAvatar({ ...findDefinedAvatar(avatars, currentSocialId), user: user });
-  }, [currentSocialId, avatars, user, userUpdateMutate]);
+    setAvatar({ ...findDefinedAvatar(avatars, currentSocialId), user });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentSocialId, userUpdateMutate]);
 
   const getFollowsQuery = api.follows.getFollowingByAvatarId.useQuery(
     avatar.id,
