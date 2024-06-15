@@ -16,6 +16,7 @@ function findDefinedAvatar(
   avatars: AvatarWithSocial[],
   currentSocialId: number,
 ) {
+  if (avatars.length === 0) throw new Error("avatars is empty");
   const avatar = avatars.find((a) => a.social.id === currentSocialId);
   if (avatar === undefined) throw new Error("avatar is undefined");
 
@@ -29,8 +30,19 @@ export function Home({
   user: User;
   avatars: AvatarWithSocial[];
 }) {
+  if (avatars.length < 1) throw new Error("avatars is empty");
   const router = useRouter();
-  const [currentSocialId, setCurrentSocialId] = useState(user.currentSocialId);
+  const initialCurrentSocialId = (() => {
+    if (user.currentSocialId !== null) return user.currentSocialId;
+    const socials = avatars.map((a) => a.social);
+    const social = socials.reduce((a, b) =>
+      a.screenName < b.screenName ? a : b,
+    );
+    return social.id;
+  })();
+  const [currentSocialId, setCurrentSocialId] = useState(
+    initialCurrentSocialId,
+  );
   if (currentSocialId === null) throw new Error("currentSocialId is null");
   const { mutate: userUpdateMutate } = api.user.update.useMutation({
     onSuccess: () => {
