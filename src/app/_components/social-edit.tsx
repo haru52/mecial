@@ -40,7 +40,7 @@ export function SocialEdit({
   const urlErrors = updateSocial.error?.data?.zodError?.fieldErrors.url;
 
   return (
-    <main className="container prose mx-auto px-4">
+    <>
       <h1>{social.name} を編集</h1>
       <form
         onSubmit={(e) => {
@@ -137,6 +137,6 @@ export function SocialEdit({
           キャンセル
         </button>
       </form>
-    </main>
+    </>
   );
 }

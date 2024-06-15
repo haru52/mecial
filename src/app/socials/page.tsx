@@ -13,7 +13,7 @@ export default async function Page() {
   const socials = await api.social.getAll();
   const avatars = await api.avatar.getMyAvatars();
   return (
-    <div className="container prose mx-auto my-10 px-4">
+    <div className="container prose mx-auto mb-10 mt-5 px-4">
       <h1 className="text-center">ソーシャル</h1>
       {session !== null && (
         <Link href="/socials/new" className="btn btn-primary">

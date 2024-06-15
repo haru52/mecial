@@ -2,7 +2,6 @@ import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 import { Hero } from "./_components/hero";
 import { redirect } from "next/navigation";
-import { clsx } from "clsx";
 import { Home } from "./_components/home";
 import Link from "next/link";
 
@@ -13,24 +12,20 @@ export default async function Page() {
   const avatars =
     session === null ? null : await api.avatar.getMyAvatarsWithSocial();
 
-  return (
-    <div className={clsx({ "container prose mx-auto px-4": session !== null })}>
-      {session === null ? (
-        <Hero />
+  return session === null ? (
+    <Hero />
+  ) : (
+    <div className="container prose mx-auto mb-10 mt-5 px-4">
+      {user !== null && avatars !== null && avatars.length >= 1 ? (
+        <Home user={user} avatars={avatars} />
       ) : (
-        <div className="mt-10">
-          {user !== null && avatars !== null && avatars.length >= 1 ? (
-            <Home user={user} avatars={avatars} />
-          ) : (
-            <p>
-              まだ
-              <Link href="/socials" className="not-prose link-hover link">
-                ソーシャル
-              </Link>
-              に参加していません
-            </p>
-          )}
-        </div>
+        <p>
+          まだ
+          <Link href="/socials" className="not-prose link-hover link">
+            ソーシャル
+          </Link>
+          に参加していません
+        </p>
       )}
     </div>
   );

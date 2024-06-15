@@ -43,7 +43,7 @@ export default async function Page({
   const socials = user.avatars.map((avatar) => avatar.social).sort(compare);
   const posts = await api.post.getAllByUserId(user.id);
   return (
-    <div className="container prose mx-auto px-4">
+    <div className="container prose mx-auto mb-10 mt-5 px-4">
       <div className="not-prose avatar">
         <div className="w-24 rounded-full">
           <Image

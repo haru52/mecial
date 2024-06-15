@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="container prose mx-auto my-6 px-4">
+    <div className="container prose mx-auto mb-10 mt-5 px-4">
       <h1 className="text-center">プライバシーポリシー</h1>
       <p className="text-right">2024 年 6 月 2 日</p>
       <ol>
@@ -29,6 +29,6 @@ export default function Page() {
           当サイトのユーザーがご自身のアカウントを削除された場合、当サイトが保有する当該のユーザー情報（個人情報）および当該ユーザーが作成したポストはすべて削除されます
         </li>
       </ol>
-    </main>
+    </div>
   );
 }

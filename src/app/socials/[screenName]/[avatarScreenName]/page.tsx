@@ -38,7 +38,7 @@ export default async function Page({
   const posts = avatar.posts.reverse();
 
   return (
-    <main className="container prose mx-auto px-4">
+    <div className="container prose mx-auto mb-10 mt-5 px-4">
       <div className="not-prose avatar">
         <div className="w-24 rounded-full">
           <Image
@@ -99,6 +99,6 @@ export default async function Page({
         </Link>
       </p>
       <Posts posts={posts} />
-    </main>
+    </div>
   );
 }

@@ -32,11 +32,13 @@ export default async function Page({
   const avatar =
     user === null ? null : await api.avatar.getMyAvatarBySocialId(social.id);
   return (
-    <SocialDetailOrEdit
-      social={social}
-      user={user}
-      avatar={avatar}
-      posts={posts}
-    />
+    <div className="container prose mx-auto mb-10 mt-5 px-4">
+      <SocialDetailOrEdit
+        social={social}
+        user={user}
+        avatar={avatar}
+        posts={posts}
+      />
+    </div>
   );
 }

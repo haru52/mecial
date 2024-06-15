@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <div className="container prose mx-auto my-6 px-4">
+    <div className="container prose mx-auto mb-10 mt-5 px-4">
       <h1 className="text-center">利用規約</h1>
       <p className="text-right">2024 年 6 月 2 日</p>
       <ol>

@@ -7,9 +7,9 @@ export default async function Page() {
     return null;
   }
   return (
-    <main className="container prose mx-auto px-4">
+    <div className="container prose mx-auto mb-10 mt-5 px-4">
       <h1>サインアップ</h1>
       <SignupForm />
-    </main>
+    </div>
   );
 }

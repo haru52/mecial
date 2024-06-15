@@ -1,7 +1,7 @@
 export default function Page() {
   return (
-    <main className="container prose mx-auto my-6 px-4">
+    <div className="container prose mx-auto mb-10 mt-5 px-4">
       <h1>Contact</h1>
-    </main>
+    </div>
   );
 }

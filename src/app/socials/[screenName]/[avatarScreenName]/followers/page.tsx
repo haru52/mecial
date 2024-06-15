@@ -44,12 +44,12 @@ export default async function Page({
           (loginAvatar) => loginAvatar.socialId === avatar.social.id,
         );
   return (
-    <main className="container prose mx-auto px-4">
+    <div className="container prose mx-auto px-4">
       <h1>
         {avatar.user.name}（{avatar.user.screenName}.{avatar.social.screenName}
         ）さんのフォロワー
       </h1>
       <Avatars avatars={following} loginAvatarId={loginAvatar?.id} />
-    </main>
+    </div>
   );
 }

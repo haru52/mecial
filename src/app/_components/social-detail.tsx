@@ -35,7 +35,7 @@ export function SocialDetail({
   });
 
   return (
-    <main className="container prose mx-auto px-4">
+    <>
       <div className="not-prose avatar">
         <div className="w-24 rounded-full">
           <Image
@@ -100,6 +100,6 @@ export function SocialDetail({
         </div>
       )}
       <Posts posts={posts} />
-    </main>
+    </>
   );
 }
