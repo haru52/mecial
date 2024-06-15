@@ -17,4 +17,4 @@ jobs:
       - run: npm run db:migrate:prod
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          DATABASE_URL_NON_POOLING: ${{ secrets.DATABASE_URL_NON_POOLING }}
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
