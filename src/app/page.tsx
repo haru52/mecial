@@ -15,7 +15,7 @@ export default async function Page() {
   return session === null ? (
     <Hero />
   ) : (
-    <div className="container prose mx-auto mb-10 mt-5">
+    <div className="container prose mx-auto mb-10 mt-5 px-4">
       {user !== null && avatars !== null && avatars.length >= 1 ? (
         <Home user={user} avatars={avatars} />
       ) : (
