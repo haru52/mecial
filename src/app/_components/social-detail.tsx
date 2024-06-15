@@ -29,7 +29,7 @@ export function SocialDetail({
   const router = useRouter();
   const deleteSocial = api.social.delete.useMutation({
     onSuccess: () => {
-      router.push("/");
+      router.push("/socials");
       router.refresh();
     },
   });

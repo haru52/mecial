@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default async function Page() {
   const session = await getServerAuthSession();
   const socials = await api.social.getAll();
-  const avatars = await api.avatar.getMyAvatars();
+  const avatars = session === null ? null : await api.avatar.getMyAvatars();
   return (
     <div className="container prose mx-auto mb-10 mt-5">
       <h1 className="text-center">ソーシャル</h1>
@@ -20,7 +20,11 @@ export default async function Page() {
           ソーシャルを作成
         </Link>
       )}
-      <Socials socials={socials} avatars={avatars} />
+      <Socials
+        socials={socials}
+        avatars={avatars}
+        isLoggedIn={session !== null}
+      />
     </div>
   );
 }
