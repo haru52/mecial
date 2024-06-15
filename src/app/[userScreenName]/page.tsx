@@ -76,7 +76,11 @@ export default async function Page({
         </p>
       )}
       <h2>参加中のソーシャル</h2>
-      <Socials socials={socials} avatars={user.avatars} />
+      <Socials
+        socials={socials}
+        avatars={user.avatars}
+        isLoggedIn={session !== null}
+      />
       <h2>ポスト</h2>
       <Posts posts={posts} />
     </div>
