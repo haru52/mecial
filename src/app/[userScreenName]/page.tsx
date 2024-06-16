@@ -15,9 +15,10 @@ export const generateMetadata = async ({
   params: { userScreenName: string };
 }): Promise<Metadata> => {
   const user = await api.user.getByScreenName(params.userScreenName);
+  if (user === null) return { title: "404 Not Found" };
 
   return {
-    title: user?.name ?? "User",
+    title: `${user.name}（@${user.screenName}）さん`,
   };
 };
 
