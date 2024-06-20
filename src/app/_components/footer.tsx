@@ -12,13 +12,8 @@ export function Footer() {
         <Link href="/privacy-policy" className="link-hover link">
           プライバシーポリシー
         </Link>
-        <Link
-          href="https://docs.google.com/forms/d/e/1FAIpQLSddUF5PDhRpYPZ8VGVZClTBQCo-SQb4QzszOZanmWjUnH_stw/viewform?usp=sf_link"
-          target="_blank"
-          rel="noreferrer"
-          className="link-hover link"
-        >
-          問い合わせ
+        <Link href="/contact" className="link-hover link">
+          お問い合わせ
         </Link>
       </nav>
       <nav>
