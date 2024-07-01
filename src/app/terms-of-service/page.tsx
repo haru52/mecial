@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "利用規約",
 };
 
-export default function Page() {
+export default function TermsOfService() {
   return (
     <div className="container prose mx-auto mb-10 mt-5 px-4">
       <h1 className="text-center">利用規約</h1>

@@ -2,10 +2,10 @@ import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 import { Hero } from "./_components/hero";
 import { redirect } from "next/navigation";
-import { Home } from "./_components/home";
+import { Home as HomeComponent } from "./_components/home";
 import Link from "next/link";
 
-export default async function Page() {
+export default async function Home() {
   const session = await getServerAuthSession();
   const user = session === null ? null : await api.user.getMe();
   if (user !== null && user.screenName === null) redirect("/signup"); // 初回ログイン（サインアップ）
@@ -17,7 +17,7 @@ export default async function Page() {
   ) : (
     <div className="container prose mx-auto mb-10 mt-5 px-4">
       {user !== null && avatars !== null && avatars.length >= 1 ? (
-        <Home user={user} avatars={avatars} />
+        <HomeComponent user={user} avatars={avatars} />
       ) : (
         <p>
           まだ

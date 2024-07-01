@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "プライバシーポリシー",
 };
 
-export default function Page() {
+export default function PrivacyPolicy() {
   return (
     <div className="container prose mx-auto mb-10 mt-5 px-4">
       <h1 className="text-center">プライバシーポリシー</h1>
