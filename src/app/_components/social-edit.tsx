@@ -24,6 +24,7 @@ export function SocialEdit({
   const updateSocial = api.social.update.useMutation({
     onSuccess: () => {
       setIsEditing(false);
+      router.push(`/socials/${screenName}`);
       router.refresh();
     },
     onError: () => {
