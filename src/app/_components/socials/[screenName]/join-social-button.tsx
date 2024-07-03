@@ -14,7 +14,7 @@ export function JoinSocialButton({ social }: { social: Social }) {
 
   return (
     <button
-      className="btn btn-primary w-32"
+      className="btn btn-primary w-32 rounded-full"
       onClick={(e) => {
         e.preventDefault();
         mutate({

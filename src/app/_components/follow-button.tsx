@@ -19,7 +19,7 @@ export function FollowButton({
 
   return (
     <button
-      className="btn btn-primary w-32"
+      className="btn btn-primary w-32 rounded-full"
       onClick={(e) => {
         e.preventDefault();
         mutate({ followedById, followingId });
