@@ -1,3 +1,9 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "お問い合わせ",
+};
+
 export default function Contact() {
   return (
     <div className="container prose mx-auto mb-10 mt-5 px-4">
