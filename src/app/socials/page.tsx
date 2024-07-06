@@ -16,7 +16,10 @@ export default async function Page() {
     <div className="container prose mx-auto mb-10 mt-5 px-4">
       <h1 className="text-center">ソーシャル</h1>
       {session !== null && (
-        <Link href="/socials/new" className="btn btn-primary w-full">
+        <Link
+          href="/socials/new"
+          className="btn btn-primary w-full rounded-full"
+        >
           ソーシャルを作成
         </Link>
       )}

@@ -51,7 +51,7 @@ export function PostEditForm({
           <input
             type="submit"
             value={updatePost.isPending ? "保存中…" : "保存"}
-            className="btn btn-primary"
+            className="btn btn-primary rounded-full"
             disabled={updatePost.isPending}
           />
           <button

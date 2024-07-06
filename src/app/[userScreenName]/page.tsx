@@ -57,7 +57,10 @@ export default async function Page({
         </div>
       </div>
       {session?.user.id === user.id && (
-        <Link href={`${user.screenName}/edit`} className="btn btn-primary">
+        <Link
+          href={`${user.screenName}/edit`}
+          className="btn btn-primary rounded-full"
+        >
           プロフィールを編集
         </Link>
       )}

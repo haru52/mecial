@@ -98,7 +98,7 @@ export function CreateSocialForm() {
           <input
             type="submit"
             value={isPending ? "作成中…" : "作成"}
-            className="btn btn-primary btn-block"
+            className="btn btn-primary btn-block rounded-full"
             disabled={isPending}
           />
         </div>

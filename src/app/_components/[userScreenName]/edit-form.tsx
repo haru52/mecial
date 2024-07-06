@@ -118,7 +118,7 @@ export function EditForm({ user }: { user: User }) {
         <input
           type="submit"
           value={isPending ? "保存中…" : "保存"}
-          className="btn btn-primary btn-block"
+          className="btn btn-primary btn-block rounded-full"
           disabled={isPending}
         />
       </div>
