@@ -35,7 +35,7 @@ export function Social({
             </div>
             <div>
               <h2 className="card-title my-0">{social.name}</h2>
-              <p className="my-0 text-sm">{social.screenName}</p>
+              <p className="my-0 text-sm">@{social.screenName}</p>
             </div>
           </div>
           <p className="my-0">{social.description}</p>

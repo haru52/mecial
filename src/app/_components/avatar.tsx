@@ -39,10 +39,10 @@ export async function Avatar({
               </div>
             </div>
             <div>
-              <h2 className="my-0 inline text-sm">{avatar.user.name}</h2>
-              <span className="ml-3 text-sm">
+              <h2 className="card-title my-0">{avatar.user.name}</h2>
+              <p className="my-0 text-sm">
                 @{avatar.user.screenName}.{avatar.social.screenName}
-              </span>
+              </p>
             </div>
           </div>
           <p>{avatar.user.introduction ?? ""}</p>

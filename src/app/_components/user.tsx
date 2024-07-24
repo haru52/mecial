@@ -23,9 +23,8 @@ export async function User({ user }: { user: UserEntity }) {
               </div>
             </div>
             <div>
-              <h2 className="my-0 inline text-sm">{user.name}</h2>
-              <span> </span>
-              <span className="text-sm">@{user.screenName}</span>
+              <h2 className="card-title my-0">{user.name}</h2>
+              <p className="my-0 text-sm">@{user.screenName}</p>
             </div>
           </div>
           <p>{user.introduction ?? ""}</p>
