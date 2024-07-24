@@ -46,6 +46,7 @@
     "@trpc/client": "next",
     "@trpc/react-query": "next",
     "@trpc/server": "next",
+    "dayjs": "^1.11.12",
     "next": "^14.2.1",
     "next-auth": "^4.24.6",
     "next-themes": "^0.3.0",
