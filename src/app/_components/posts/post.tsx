@@ -5,6 +5,12 @@ import Link from "next/link";
 import { defaultUserAndAvatarIconPath } from "~/consts";
 import type { PostWithCreatedByUserAndSocial } from "~/entities/post";
 import { useRouter } from "next/navigation";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ja";
+
+dayjs.extend(relativeTime);
+dayjs.locale("ja");
 
 export function Post({ post }: { post: PostWithCreatedByUserAndSocial }) {
   const avatarPath = `/socials/${post.createdBy.social.screenName}/${post.createdBy.user.screenName}`;
@@ -60,9 +66,7 @@ export function Post({ post }: { post: PostWithCreatedByUserAndSocial }) {
           </Link>
         </div>
         <p className="my-1">{post.content}</p>
-        <span className="text-xs">
-          {post.createdAt.toLocaleString("ja-JP")}
-        </span>
+        <span className="text-xs">{dayjs(post.createdAt).fromNow()}</span>
       </div>
     </div>
   );
