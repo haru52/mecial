@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getServerAuthSession } from "~/server/auth";
 import { Socials } from "../_components/socials";
+import { signupIfNeeds } from "~/server/signup-if-needs";
 
 export const metadata: Metadata = {
   title: "ソーシャル",
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const session = await getServerAuthSession();
+  await signupIfNeeds({ session });
   const socials = await api.social.getAll();
   const avatars = session === null ? null : await api.avatar.getMyAvatars();
   return (

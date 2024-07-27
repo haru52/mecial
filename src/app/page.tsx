@@ -1,14 +1,14 @@
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 import { Hero } from "./_components/hero";
-import { redirect } from "next/navigation";
 import { Home as HomeComponent } from "./_components/home";
 import Link from "next/link";
+import { signupIfNeeds } from "~/server/signup-if-needs";
 
 export default async function Home() {
   const session = await getServerAuthSession();
   const user = session === null ? null : await api.user.getMe();
-  if (user !== null && user.screenName === null) redirect("/signup"); // 初回ログイン（サインアップ）
+  await signupIfNeeds({ user });
   const avatars =
     session === null ? null : await api.avatar.getMyAvatarsWithSocial();
 

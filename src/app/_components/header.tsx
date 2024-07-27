@@ -159,12 +159,16 @@ export function Header({
               tabIndex={0}
               className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
             >
-              <li onClick={closeDaisyUiDropdown}>
-                <Link href={`/${user.screenName}`}>プロフィール</Link>
-              </li>
-              <li onClick={closeDaisyUiDropdown}>
-                <Link href={`/${user.screenName}/edit`}>設定</Link>
-              </li>
+              {user.screenName !== null && (
+                <li onClick={closeDaisyUiDropdown}>
+                  <Link href={`/${user.screenName}`}>プロフィール</Link>
+                </li>
+              )}
+              {user.screenName !== null && (
+                <li onClick={closeDaisyUiDropdown}>
+                  <Link href={`/${user.screenName}/edit`}>設定</Link>
+                </li>
+              )}
               <li onClick={closeDaisyUiDropdown}>
                 <a href={logoutPath}>ログアウト</a>
               </li>

@@ -45,7 +45,6 @@ export function SignupForm() {
           value={screenName ?? ""}
           onChange={(e) => setScreenName(e.target.value)}
           required
-          autoFocus
         />
         <InputErrorMessages errMsgs={screenNameErrors} />
       </label>
@@ -54,7 +53,7 @@ export function SignupForm() {
           type="submit"
           value={isDisabled ? "サインアップ中…" : "サインアップ"}
           className="btn btn-primary btn-block rounded-full"
-          disabled={isDisabled}
+          disabled={isDisabled || screenName.length === 0}
         />
       </div>
     </form>
