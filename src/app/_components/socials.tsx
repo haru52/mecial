@@ -5,11 +5,11 @@ import type { Avatar } from "~/entities/avatar";
 export function Socials({
   socials,
   avatars,
-  isLoggedIn,
+  isSignedUp,
 }: {
   socials: SocialEntity[];
   avatars: Avatar[] | null;
-  isLoggedIn: boolean;
+  isSignedUp: boolean;
 }) {
   return socials.length === 0 ? (
     <p>まだソーシャルがありません</p>
@@ -19,7 +19,7 @@ export function Socials({
         const avatar = avatars?.find((avatar) => avatar.socialId === social.id);
         return (
           <li key={social.id} className="mb-0 mt-0.5 pl-0">
-            <Social social={social} avatar={avatar} isLoggedIn={isLoggedIn} />
+            <Social social={social} avatar={avatar} isSignedUp={isSignedUp} />
           </li>
         );
       })}

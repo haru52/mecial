@@ -9,11 +9,11 @@ import type { Avatar } from "~/entities/avatar";
 export function Social({
   social,
   avatar,
-  isLoggedIn,
+  isSignedUp,
 }: {
   social: SocialEntity;
   avatar: Avatar | undefined;
-  isLoggedIn: boolean;
+  isSignedUp: boolean;
 }) {
   return (
     <Link
@@ -39,7 +39,7 @@ export function Social({
             </div>
           </div>
           <p className="my-0">{social.description}</p>
-          {isLoggedIn && (
+          {isSignedUp && (
             <div className="card-actions justify-end">
               {avatar === undefined ? (
                 <JoinSocialButton social={social} />

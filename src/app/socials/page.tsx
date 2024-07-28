@@ -28,7 +28,7 @@ export default async function Page() {
       <Socials
         socials={socials}
         avatars={avatars}
-        isLoggedIn={session !== null}
+        isSignedUp={session !== null}
       />
     </div>
   );

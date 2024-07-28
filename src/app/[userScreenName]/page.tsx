@@ -84,7 +84,7 @@ export default async function Page({
       <Socials
         socials={socials}
         avatars={loginUser === null ? null : loginUser.avatars}
-        isLoggedIn={session !== null}
+        isSignedUp={session !== null && loginUser?.screenName != null}
       />
       <h2>ポスト</h2>
       <Posts posts={posts} />
