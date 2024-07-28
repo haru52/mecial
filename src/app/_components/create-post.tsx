@@ -60,7 +60,7 @@ export function CreatePost({
           <input
             type="submit"
             className="btn btn-primary mt-2 rounded-full"
-            disabled={createPost.isPending || content.length === 0}
+            disabled={createPost.isPending || content.trim().length === 0}
             value={createPost.isPending ? "ポスト送信中…" : "ポストする"}
           ></input>
         </div>
