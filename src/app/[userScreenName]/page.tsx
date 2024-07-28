@@ -39,6 +39,7 @@ export default async function Page({
 }) {
   const user = await api.user.getByScreenNameWithSocials(params.userScreenName);
   const session = await getServerAuthSession();
+  const loginUser = await api.user.getMeWithAvatars();
 
   if (user === null) return notFound();
   const socials = user.avatars.map((avatar) => avatar.social).sort(compare);
@@ -82,7 +83,7 @@ export default async function Page({
       <h2>参加中のソーシャル</h2>
       <Socials
         socials={socials}
-        avatars={user.avatars}
+        avatars={loginUser === null ? null : loginUser.avatars}
         isLoggedIn={session !== null}
       />
       <h2>ポスト</h2>

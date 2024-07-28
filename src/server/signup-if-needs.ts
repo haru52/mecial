@@ -14,10 +14,8 @@ export async function signupIfNeeds(
   const loginUser = await (async () => {
     if (user != null) return user;
     const loginSession = session ?? (await getServerAuthSession());
-    if (loginSession === null) throw new Error("session is null");
+    if (loginSession === null) return null;
     return await api.user.getMe();
-  })().catch((e) => {
-    throw e;
-  });
+  })();
   if (loginUser !== null && loginUser.screenName === null) redirect("/signup");
 }
