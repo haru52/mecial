@@ -39,7 +39,7 @@ export default async function Page({
 }) {
   const user = await api.user.getByScreenNameWithSocials(params.userScreenName);
   const session = await getServerAuthSession();
-  const loginUser = await api.user.getMeWithAvatars();
+  const loginUser = session === null ? null : await api.user.getMeWithAvatars();
 
   if (user === null) return notFound();
   const socials = user.avatars.map((avatar) => avatar.social).sort(compare);
