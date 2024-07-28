@@ -48,7 +48,7 @@ export function SocialDetail({
       </div>
       <h1>{social.name}</h1>
       <p>@{social.screenName}</p>
-      {user !== null &&
+      {user?.screenName != null &&
         (avatar === null ? (
           <div className="mt-5">
             <JoinSocialButton social={social} />
