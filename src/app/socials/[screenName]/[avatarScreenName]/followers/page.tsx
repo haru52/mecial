@@ -46,7 +46,7 @@ export default async function Page({
   return (
     <div className="container prose mx-auto">
       <h1>
-        {avatar.user.name}（{avatar.user.screenName}.{avatar.social.screenName}
+        {avatar.user.name}（@{avatar.user.screenName}.{avatar.social.screenName}
         ）さんのフォロワー
       </h1>
       <Avatars avatars={following} loginAvatarId={loginAvatar?.id} />
