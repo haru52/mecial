@@ -5,6 +5,7 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import { CreateAvatar } from "~/entities/avatar";
+import { updateCurrentSocial } from "./share";
 
 export const avatarRouter = createTRPCRouter({
   create: protectedProcedure
@@ -17,19 +18,7 @@ export const avatarRouter = createTRPCRouter({
           social: { connect: { id: input.socialId } },
         },
       });
-      const avatarsCount = await ctx.db.avatar.count({
-        where: {
-          userId: ctx.session.user.id,
-        },
-      });
-      if (avatarsCount === 1) {
-        await ctx.db.user.update({
-          where: { id: ctx.session.user.id },
-          data: {
-            currentSocial: { connect: { id: input.socialId } },
-          },
-        });
-      }
+      await updateCurrentSocial(ctx.db, ctx.session.user.id);
       return avatar;
     }),
 
@@ -194,46 +183,10 @@ export const avatarRouter = createTRPCRouter({
         select: { currentSocialId: true },
       });
       if (user === null) throw new Error("User not found");
-      const currentSocialId = user.currentSocialId;
       const avatar = await ctx.db.avatar.delete({
         where: { id: input },
       });
-      const avatarsCount = await ctx.db.avatar.count({
-        where: {
-          userId: ctx.session.user.id,
-        },
-      });
-      if (avatarsCount === 0) {
-        await ctx.db.user.update({
-          where: { id: ctx.session.user.id },
-          data: {
-            currentSocial: { disconnect: true },
-          },
-        });
-      } else if (currentSocialId === avatar.socialId) {
-        const avatars = await ctx.db.avatar.findMany({
-          where: {
-            userId: ctx.session.user.id,
-          },
-          include: {
-            social: {
-              select: { id: true, screenName: true },
-            },
-          },
-        });
-        const newCurrentAvatar = avatars.sort((a, b) =>
-          a.social.screenName.localeCompare(b.social.screenName),
-        )[0];
-        if (newCurrentAvatar !== undefined) {
-          await ctx.db.user.update({
-            where: { id: ctx.session.user.id },
-            data: {
-              currentSocial: { connect: { id: newCurrentAvatar.socialId } },
-            },
-          });
-        }
-      }
-
+      await updateCurrentSocial(ctx.db, ctx.session.user.id);
       return avatar;
     }),
 });
