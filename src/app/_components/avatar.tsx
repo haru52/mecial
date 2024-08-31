@@ -53,6 +53,7 @@ export async function Avatar({
                 <UnfollowButton
                   followedById={loginAvatarId}
                   followingId={avatar.id}
+                  followingAvatarScreenName={avatar.user.screenName}
                 />
               ) : (
                 <FollowButton

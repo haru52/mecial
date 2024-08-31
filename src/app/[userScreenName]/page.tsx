@@ -46,27 +46,29 @@ export default async function Page({
   const posts = await api.post.getAllByUserId(user.id);
   return (
     <div className="container prose mx-auto mb-10 mt-5 px-4">
-      <div className="not-prose avatar">
-        <div className="w-24 rounded-full">
-          <Image
-            src={user.image ?? defaultUserAndAvatarIconPath}
-            width={500}
-            height={500}
-            alt=""
-            priority={true}
-          />
+      <div className="flex items-end">
+        <div className="not-prose avatar mr-auto">
+          <div className="w-24 rounded-full">
+            <Image
+              src={user.image ?? defaultUserAndAvatarIconPath}
+              width={500}
+              height={500}
+              alt=""
+              priority={true}
+            />
+          </div>
         </div>
+        {session?.user.id === user.id && (
+          <Link
+            href={`${user.screenName}/edit`}
+            className="btn btn-primary mr-0 rounded-full"
+          >
+            プロフィールを編集
+          </Link>
+        )}
       </div>
-      {session?.user.id === user.id && (
-        <Link
-          href={`${user.screenName}/edit`}
-          className="btn btn-primary rounded-full"
-        >
-          プロフィールを編集
-        </Link>
-      )}
-      <h1>{user.name}</h1>
-      <p>@{user.screenName}</p>
+      <h1 className="mb-0">{user.name}</h1>
+      <p className="mt-0">@{user.screenName}</p>
       <p>{user.introduction}</p>
       {user.url !== null && (
         <p>

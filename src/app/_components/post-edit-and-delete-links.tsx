@@ -33,7 +33,7 @@ export function PostEditAndDeleteLinks({
         href="#"
         onClick={(e) => {
           e.preventDefault();
-          if (!confirm("本当に削除しますか？")) {
+          if (!confirm("本当にこのポストを削除しますか？")) {
             return;
           }
           deletePost.mutate(postId);

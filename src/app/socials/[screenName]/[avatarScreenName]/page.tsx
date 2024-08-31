@@ -67,6 +67,7 @@ export default async function Page({
           <UnfollowButton
             followedById={loginAvatar.id}
             followingId={avatar.id}
+            followingAvatarScreenName={avatar.user.screenName}
           />
         ) : (
           <FollowButton followedById={loginAvatar.id} followingId={avatar.id} />

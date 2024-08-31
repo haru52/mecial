@@ -55,7 +55,10 @@ export function SocialDetail({
           </div>
         ) : (
           <div className="mt-5">
-            <LeaveSocialButton avatarId={avatar.id} />
+            <LeaveSocialButton
+              avatarId={avatar.id}
+              socialScreenName={social.screenName}
+            />
           </div>
         ))}
       <p>{social.description}</p>
@@ -92,7 +95,9 @@ export function SocialDetail({
             className="link ml-3"
             onClick={(e) => {
               e.preventDefault();
-              confirm("本当に削除しますか？") && deleteSocial.mutate(social.id);
+              confirm(
+                `本当に@${social.screenName}ソーシャルを削除しますか？`,
+              ) && deleteSocial.mutate(social.id);
             }}
           >
             削除

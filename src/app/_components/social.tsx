@@ -44,7 +44,10 @@ export function Social({
               {avatar === undefined ? (
                 <JoinSocialButton social={social} />
               ) : (
-                <LeaveSocialButton avatarId={avatar.id} />
+                <LeaveSocialButton
+                  avatarId={avatar.id}
+                  socialScreenName={social.screenName}
+                />
               )}
             </div>
           )}

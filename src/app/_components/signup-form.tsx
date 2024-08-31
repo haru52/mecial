@@ -53,7 +53,7 @@ export function SignupForm() {
           type="submit"
           value={isDisabled ? "サインアップ中…" : "サインアップ"}
           className="btn btn-primary btn-block rounded-full"
-          disabled={isDisabled || screenName.length === 0}
+          disabled={isDisabled || screenName.trim().length === 0}
         />
       </div>
     </form>
