@@ -42,7 +42,7 @@ export function SocialEdit({
 
   return (
     <>
-      <h1>{social.name} を編集</h1>
+      <h1 className="text-center">{social.name}を編集</h1>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -51,13 +51,14 @@ export function SocialEdit({
             id: social.id,
             screenName,
             name,
-            image: image === "" ? undefined : image,
-            description: description === "" ? undefined : description,
-            url: url === "" ? undefined : url,
+            image: image === "" ? null : image,
+            description: description === "" ? null : description,
+            url: url === "" ? null : url,
           });
         }}
+        className=""
       >
-        <label className="form-control w-full max-w-xs">
+        <label className="form-control mx-auto w-full max-w-xs">
           <div className="label">
             <span className="label-text">名前</span>
           </div>
@@ -71,7 +72,7 @@ export function SocialEdit({
           />
           <InputErrorMessages errMsgs={nameErrors} />
         </label>
-        <label className="form-control w-full max-w-xs">
+        <label className="form-control mx-auto w-full max-w-xs">
           <div className="label">
             <span className="label-text">ID</span>
           </div>
@@ -85,7 +86,7 @@ export function SocialEdit({
           />
           <InputErrorMessages errMsgs={screenNameErrors} />
         </label>
-        <label className="form-control w-full max-w-xs">
+        <label className="form-control mx-auto w-full max-w-xs">
           <div className="label">
             <span className="label-text">アイコン画像URL</span>
           </div>
@@ -98,7 +99,7 @@ export function SocialEdit({
           />
           <InputErrorMessages errMsgs={imageErrors} />
         </label>
-        <label className="form-control w-full max-w-xs">
+        <label className="form-control mx-auto w-full max-w-xs">
           <div className="label">
             <span className="label-text">説明</span>
           </div>
@@ -110,7 +111,7 @@ export function SocialEdit({
           />
           <InputErrorMessages errMsgs={descriptionErrors} />
         </label>
-        <label className="form-control w-full max-w-xs">
+        <label className="form-control mx-auto w-full max-w-xs">
           <div className="label">
             <span className="label-text">URL</span>
           </div>
@@ -123,20 +124,22 @@ export function SocialEdit({
           />
           <InputErrorMessages errMsgs={urlErrors} />
         </label>
-        <input
-          type="submit"
-          className="btn btn-primary"
-          value={isDisabled ? "保存中…" : "保存"}
-          disabled={isDisabled}
-        ></input>
-        <button
-          className="btn"
-          onClick={() => {
-            setIsEditing(false);
-          }}
-        >
-          キャンセル
-        </button>
+        <div className="mx-auto mt-5 flex w-full max-w-xs space-x-4">
+          <input
+            type="submit"
+            className="btn btn-primary flex-1"
+            value={isDisabled ? "保存中…" : "保存"}
+            disabled={isDisabled}
+          ></input>
+          <button
+            className="btn flex-1"
+            onClick={() => {
+              setIsEditing(false);
+            }}
+          >
+            キャンセル
+          </button>
+        </div>
       </form>
     </>
   );

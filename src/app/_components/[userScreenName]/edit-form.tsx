@@ -35,9 +35,9 @@ export function EditForm({ user }: { user: User }) {
           name,
           screenName,
           email,
-          image,
-          introduction,
-          url,
+          image: image === "" ? null : image,
+          introduction: introduction === "" ? null : introduction,
+          url: url === "" ? null : url,
         });
       }}
     >
@@ -110,7 +110,6 @@ export function EditForm({ user }: { user: User }) {
           className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": emailErrors !== undefined })}`}
           value={image ?? ""}
           onChange={(e) => setImage(e.target.value)}
-          required
         />
         <InputErrorMessages errMsgs={imageErrors} />
       </label>
