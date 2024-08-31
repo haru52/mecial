@@ -14,9 +14,9 @@ export const ScreenName = ZodString.min(1, {
 export const Url = ZodString.url({ message: "URLの形式で入力してください" });
 
 export const IconImage = Url.regex(
-  /^https:\/\/(lh3\.googleusercontent\.com\/.+|cdn\.discordapp\.com\/avatars\/.+|(secure\.)?gravatar\.com\/avatar\/[0-9a-fA-f]{32}|i\.imgur\.com\/.+).+/,
+  /^https:\/\/(lh3\.googleusercontent\.com\/.+|cdn\.discordapp\.com\/avatars\/.+|(secure\.)?gravatar\.com\/avatar\/[0-9a-fA-f]{32}|i\.ibb\.co\/.+|i\.postimg\.cc\/.+).+/,
   {
     message:
-      "以下のいずれかのサービスの画像URLを入力してください：Googleアカウント、Discordアカウント、Gravatar、Imgur",
+      "以下のいずれかのサービスの画像URLを入力してください：Googleアカウント、Discordアカウント、Gravatar、ImgBB、Postimages",
   },
 );

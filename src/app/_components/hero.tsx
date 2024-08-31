@@ -1,5 +1,5 @@
 import { loginPath } from "~/consts";
-import hero from "../../../public/hero.jpeg";
+import hero from "../../../public/hero.jpg";
 
 export function Hero() {
   return (
