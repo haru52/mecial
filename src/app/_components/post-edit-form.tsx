@@ -47,16 +47,20 @@ export function PostEditForm({
             onChange={(e) => setContent(e.target.value)}
           />
         </div>
-        <div className="form-control mt-5">
+        <div className="my-5 flex space-x-4">
           <input
             type="submit"
             value={updatePost.isPending ? "保存中…" : "保存"}
-            className="btn btn-primary rounded-full"
-            disabled={updatePost.isPending}
+            className="btn btn-primary flex-1 rounded-full"
+            disabled={
+              updatePost.isPending ||
+              content === post.content ||
+              content.trim().length === 0
+            }
           />
           <button
             type="button"
-            className="btn btn-neutral"
+            className="btn btn-neutral flex-1 rounded-full"
             onClick={() => setIsEditing(false)}
           >
             キャンセル

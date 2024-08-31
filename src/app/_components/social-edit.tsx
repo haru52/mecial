@@ -127,12 +127,12 @@ export function SocialEdit({
         <div className="mx-auto mt-5 flex w-full max-w-xs space-x-4">
           <input
             type="submit"
-            className="btn btn-primary flex-1"
+            className="btn btn-primary flex-1 rounded-full"
             value={isDisabled ? "保存中…" : "保存"}
             disabled={isDisabled}
           ></input>
           <button
-            className="btn flex-1"
+            className="btn flex-1 rounded-full"
             onClick={() => {
               setIsEditing(false);
             }}
