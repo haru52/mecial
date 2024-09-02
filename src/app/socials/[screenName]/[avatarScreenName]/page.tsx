@@ -65,7 +65,7 @@ export default async function Page({
             />
           ))}
       </div>
-      <h1 className="mb-0">
+      <h1 className="mb-0 mt-5">
         {avatar.user.name} @{" "}
         <Link
           href={`/socials/${avatar.social.screenName}`}

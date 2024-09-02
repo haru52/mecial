@@ -67,7 +67,7 @@ export default async function Page({
           </Link>
         )}
       </div>
-      <h1 className="mb-0">{user.name}</h1>
+      <h1 className="mb-0 mt-5">{user.name}</h1>
       <p className="mt-0">@{user.screenName}</p>
       <p>{user.introduction}</p>
       {user.url !== null && (

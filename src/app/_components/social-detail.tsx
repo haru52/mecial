@@ -61,7 +61,7 @@ export function SocialDetail({
             </div>
           ))}
       </div>
-      <h1 className="mb-0">{social.name}</h1>
+      <h1 className="mb-0 mt-5">{social.name}</h1>
       <p className="mt-0">@{social.screenName}</p>
       <p>{social.description}</p>
       {social.url && (
