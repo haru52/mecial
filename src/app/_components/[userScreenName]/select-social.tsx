@@ -33,7 +33,7 @@ export function SelectSocial({
     <div className="flex items-center">
       <div className="not-prose avatar flex-none">
         <div className="w-16 rounded-full">
-          <Link href={`/socials/${social?.screenName}`}>
+          <Link href={`/socials/${social.screenName}`}>
             <Image
               src={social.image ?? defaultSocialIconPath}
               width={500}
@@ -54,7 +54,7 @@ export function SelectSocial({
       >
         {socials.sort(sortByScreenName).map((social) => (
           <option key={social.id} value={social.id.toString()}>
-            {social.name}
+            {`${social.name}（@${social.screenName}）`}
           </option>
         ))}
       </select>

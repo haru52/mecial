@@ -82,6 +82,7 @@ export default async function Page({
           </Link>
         </p>
       )}
+      <p>{`${user.createdAt.getFullYear()}年${user.createdAt.getMonth()}月からMecialを利用しています`}</p>
       <h2>参加中のソーシャル</h2>
       <Socials
         socials={socials}

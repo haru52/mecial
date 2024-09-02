@@ -36,31 +36,33 @@ export function SocialDetail({
 
   return (
     <>
-      <div className="not-prose avatar">
-        <div className="w-24 rounded-full">
-          <Image
-            src={social.image ?? defaultSocialIconPath}
-            width={500}
-            height={500}
-            alt=""
-          />
-        </div>
-      </div>
-      <h1>{social.name}</h1>
-      <p>@{social.screenName}</p>
-      {user?.screenName != null &&
-        (avatar === null ? (
-          <div className="mt-5">
-            <JoinSocialButton social={social} />
-          </div>
-        ) : (
-          <div className="mt-5">
-            <LeaveSocialButton
-              avatarId={avatar.id}
-              socialScreenName={social.screenName}
+      <div className="flex items-end">
+        <div className="not-prose avatar mr-auto">
+          <div className="w-24 rounded-full">
+            <Image
+              src={social.image ?? defaultSocialIconPath}
+              width={500}
+              height={500}
+              alt=""
             />
           </div>
-        ))}
+        </div>
+        {user?.screenName != null &&
+          (avatar === null ? (
+            <div className="mt-5">
+              <JoinSocialButton social={social} />
+            </div>
+          ) : (
+            <div className="mt-5">
+              <LeaveSocialButton
+                avatarId={avatar.id}
+                socialScreenName={social.screenName}
+              />
+            </div>
+          ))}
+      </div>
+      <h1 className="mb-0">{social.name}</h1>
+      <p className="mt-0">@{social.screenName}</p>
       <p>{social.description}</p>
       {social.url && (
         <p>
@@ -74,6 +76,7 @@ export function SocialDetail({
           </Link>
         </p>
       )}
+      <p>{`${social.createdAt.getFullYear()}年${social.createdAt.getMonth()}月に作成されました`}</p>
       <p>
         {" "}
         <Link href={`/socials/${social.screenName}/avatars`}>

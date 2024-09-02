@@ -39,17 +39,33 @@ export default async function Page({
 
   return (
     <div className="container prose mx-auto mb-10 mt-5 px-4">
-      <div className="not-prose avatar">
-        <div className="w-24 rounded-full">
-          <Image
-            src={avatar.user.image ?? ""}
-            width={500}
-            height={500}
-            alt=""
-          />
+      <div className="flex items-end">
+        <div className="not-prose avatar mr-auto">
+          <div className="w-24 rounded-full">
+            <Image
+              src={avatar.user.image ?? ""}
+              width={500}
+              height={500}
+              alt=""
+            />
+          </div>
         </div>
+        {loginAvatar !== null &&
+          loginAvatar.id !== avatar.id &&
+          (isFollowing ? (
+            <UnfollowButton
+              followedById={loginAvatar.id}
+              followingId={avatar.id}
+              followingAvatarScreenName={avatar.user.screenName}
+            />
+          ) : (
+            <FollowButton
+              followedById={loginAvatar.id}
+              followingId={avatar.id}
+            />
+          ))}
       </div>
-      <h1>
+      <h1 className="mb-0">
         {avatar.user.name} @{" "}
         <Link
           href={`/socials/${avatar.social.screenName}`}
@@ -58,20 +74,9 @@ export default async function Page({
           {avatar.social.name}
         </Link>
       </h1>
-      <p>
+      <p className="mt-0">
         @{avatar.user.screenName}.{avatar.social.screenName}
       </p>
-      {loginAvatar !== null &&
-        loginAvatar.id !== avatar.id &&
-        (isFollowing ? (
-          <UnfollowButton
-            followedById={loginAvatar.id}
-            followingId={avatar.id}
-            followingAvatarScreenName={avatar.user.screenName}
-          />
-        ) : (
-          <FollowButton followedById={loginAvatar.id} followingId={avatar.id} />
-        ))}
       <p>{avatar.user.introduction}</p>
       {avatar.user.url !== null && avatar.user.url !== "" && (
         <p>
@@ -85,6 +90,7 @@ export default async function Page({
           </Link>
         </p>
       )}
+      <p>{`${avatar.createdAt.getFullYear()}年${avatar.createdAt.getMonth()}月に参加しました`}</p>
       <p>
         <Link
           href={`${avatar.user.screenName}/following`}
