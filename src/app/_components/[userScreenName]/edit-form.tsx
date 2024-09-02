@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import type { User } from "~/entities/user";
 import { api } from "~/trpc/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputErrorMessages } from "~/app/_components/input-error-messages";
 import clsx from "clsx";
 
@@ -27,6 +27,15 @@ export function EditForm({ user }: { user: User }) {
   const urlErrors = error?.data?.zodError?.fieldErrors.url;
   const introductionErrors = error?.data?.zodError?.fieldErrors.introduction;
   const imageErrors = error?.data?.zodError?.fieldErrors.image;
+
+  const [requiredAreFilled, setRequiredAreFilled] = useState(true);
+
+  useEffect(() => {
+    setRequiredAreFilled(
+      !!screenName?.trim() && !!name?.trim() && !!email?.trim(),
+    );
+  }, [screenName, name, email]);
+
   return (
     <form
       onSubmit={(e) => {
@@ -118,7 +127,7 @@ export function EditForm({ user }: { user: User }) {
           type="submit"
           value={isPending ? "保存中…" : "保存"}
           className="btn btn-primary btn-block rounded-full"
-          disabled={isPending}
+          disabled={!requiredAreFilled || isPending}
         />
       </div>
     </form>

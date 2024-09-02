@@ -2,7 +2,7 @@
 
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { InputErrorMessages } from "~/app/_components/input-error-messages";
 
@@ -36,6 +36,12 @@ export function CreateSocialForm() {
   if (error?.data?.zodError?.fieldErrors.description !== undefined) {
     descriptionErrors.push(...error.data.zodError.fieldErrors.description);
   }
+
+  const [requiredAreFilled, setRequiredAreFilled] = useState(false);
+
+  useEffect(() => {
+    setRequiredAreFilled(screenName.trim() !== "" && name.trim() !== "");
+  }, [screenName, name]);
 
   return (
     <>
@@ -100,7 +106,7 @@ export function CreateSocialForm() {
             type="submit"
             value={isPending ? "作成中…" : "作成"}
             className="btn btn-primary btn-block rounded-full"
-            disabled={isPending}
+            disabled={!requiredAreFilled || isPending}
           />
         </div>
       </form>
