@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { api } from "~/trpc/react";
 import { InputErrorMessages } from "./input-error-messages";
+import { screenNameRule } from "~/consts";
 
 export function SocialEdit({
   social,
@@ -53,15 +54,25 @@ export function SocialEdit({
             url: url === "" ? null : url,
           });
         }}
-        className=""
       >
         <label className="form-control mx-auto w-full max-w-xs">
-          <div className="label">
-            <span className="label-text">名前</span>
-          </div>
+          <span className="label label-text">ID</span>
           <input
             type="text"
-            placeholder="コルサント"
+            placeholder="social_id"
+            className="input input-bordered w-full max-w-xs"
+            value={screenName}
+            onChange={(e) => setScreenName(e.target.value)}
+            required
+          />
+          <span className="label label-text-alt">{screenNameRule}</span>
+          <InputErrorMessages errMsgs={screenNameErrors} />
+        </label>
+        <label className="form-control mx-auto w-full max-w-xs">
+          <span className="label label-text">名前</span>
+          <input
+            type="text"
+            placeholder="ソーシャル名"
             className="input input-bordered w-full max-w-xs"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -70,26 +81,10 @@ export function SocialEdit({
           <InputErrorMessages errMsgs={nameErrors} />
         </label>
         <label className="form-control mx-auto w-full max-w-xs">
-          <div className="label">
-            <span className="label-text">ID</span>
-          </div>
+          <span className="label label-text">アイコン画像URL</span>
           <input
             type="text"
-            placeholder="coruscant"
-            className="input input-bordered w-full max-w-xs"
-            value={screenName}
-            onChange={(e) => setScreenName(e.target.value)}
-            required
-          />
-          <InputErrorMessages errMsgs={screenNameErrors} />
-        </label>
-        <label className="form-control mx-auto w-full max-w-xs">
-          <div className="label">
-            <span className="label-text">アイコン画像URL</span>
-          </div>
-          <input
-            type="text"
-            placeholder="https://coruscant.com/coruscant.png"
+            placeholder="https://example.com/social.jpg"
             className="input input-bordered w-full max-w-xs"
             value={image}
             onChange={(e) => setImage(e.target.value)}
@@ -97,9 +92,7 @@ export function SocialEdit({
           <InputErrorMessages errMsgs={imageErrors} />
         </label>
         <label className="form-control mx-auto w-full max-w-xs">
-          <div className="label">
-            <span className="label-text">説明</span>
-          </div>
+          <span className="label label-text">説明</span>
           <textarea
             placeholder="ソーシャルの説明文。"
             className="textarea textarea-bordered h-24 w-full max-w-xs"
@@ -109,12 +102,10 @@ export function SocialEdit({
           <InputErrorMessages errMsgs={descriptionErrors} />
         </label>
         <label className="form-control mx-auto w-full max-w-xs">
-          <div className="label">
-            <span className="label-text">URL</span>
-          </div>
+          <span className="label label-text">URL</span>
           <input
             type="text"
-            placeholder="https://coruscant.com/"
+            placeholder="https://example.com/"
             className="input input-bordered w-full max-w-xs"
             value={url}
             onChange={(e) => setUrl(e.target.value)}

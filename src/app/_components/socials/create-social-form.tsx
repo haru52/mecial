@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { InputErrorMessages } from "~/app/_components/input-error-messages";
+import { screenNameRule } from "~/consts";
 
 export function CreateSocialForm() {
   const router = useRouter();
@@ -57,7 +58,7 @@ export function CreateSocialForm() {
         }}
       >
         <label className="form-control mx-auto w-full max-w-xs">
-          <span className="label">ID</span>
+          <span className="label label-text">ID</span>
           <input
             type="text"
             placeholder="social_id"
@@ -66,10 +67,11 @@ export function CreateSocialForm() {
             onChange={(e) => setScreenName(e.target.value)}
             required
           />
+          <span className="label label-text-alt">{screenNameRule}</span>
           <InputErrorMessages errMsgs={screenNameErrors} />
         </label>
         <label className="form-control mx-auto w-full max-w-xs">
-          <span className="label">名前</span>
+          <span className="label label-text">名前</span>
           <input
             type="text"
             placeholder="ソーシャル名"
@@ -81,10 +83,10 @@ export function CreateSocialForm() {
           <InputErrorMessages errMsgs={nameErrors} />
         </label>
         <label className="form-control mx-auto w-full max-w-xs">
-          <span className="label">アイコン画像URL</span>
+          <span className="label label-text">アイコン画像URL</span>
           <input
             type="text"
-            placeholder="https://example.com/icon.jpg"
+            placeholder="https://example.com/social.jpg"
             className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": imageErrors.length > 0 })}`}
             value={image ?? ""}
             onChange={(e) => setImage(e.target.value)}
@@ -92,9 +94,9 @@ export function CreateSocialForm() {
           <InputErrorMessages errMsgs={imageErrors} />
         </label>
         <label className="form-control mx-auto w-full max-w-xs">
-          <span className="label">説明</span>
+          <span className="label label-text">説明</span>
           <textarea
-            placeholder="ソーシャルの説明。"
+            placeholder="ソーシャルの説明文。"
             className={`textarea textarea-bordered w-full max-w-xs ${clsx({ "input-error": descriptionErrors.length > 0 })}`}
             value={description ?? ""}
             onChange={(e) => setDescription(e.target.value)}

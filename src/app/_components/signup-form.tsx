@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { InputErrorMessages } from "~/app/_components/input-error-messages";
 import { api } from "~/trpc/react";
+import { screenNameRule } from "~/consts";
 
 export function SignupForm() {
   const router = useRouter();
@@ -37,7 +38,7 @@ export function SignupForm() {
       }}
     >
       <label className="form-control mx-auto w-full max-w-xs">
-        <span className="label">ID</span>
+        <span className="label label-text">ID</span>
         <input
           type="text"
           placeholder="taroyamada"
@@ -46,6 +47,7 @@ export function SignupForm() {
           onChange={(e) => setScreenName(e.target.value)}
           required
         />
+        <span className="label label-text-alt">{screenNameRule}</span>
         <InputErrorMessages errMsgs={screenNameErrors} />
       </label>
       <div className="form-control mx-auto mt-7 w-full max-w-xs">

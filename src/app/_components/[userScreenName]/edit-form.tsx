@@ -6,6 +6,7 @@ import { api } from "~/trpc/react";
 import { useEffect, useState } from "react";
 import { InputErrorMessages } from "~/app/_components/input-error-messages";
 import clsx from "clsx";
+import { screenNameRule } from "~/consts";
 
 export function EditForm({ user }: { user: User }) {
   const router = useRouter();
@@ -51,7 +52,20 @@ export function EditForm({ user }: { user: User }) {
       }}
     >
       <label className="form-control mx-auto w-full max-w-xs">
-        <span className="label">名前</span>
+        <span className="label label-text">ID</span>
+        <input
+          type="text"
+          placeholder="taroyamada"
+          className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": screenNameErrors !== undefined })}`}
+          value={screenName ?? ""}
+          onChange={(e) => setScreenName(e.target.value)}
+          required
+        />
+        <span className="label label-text-alt">{screenNameRule}</span>
+        <InputErrorMessages errMsgs={screenNameErrors} />
+      </label>
+      <label className="form-control mx-auto w-full max-w-xs">
+        <span className="label label-text">名前</span>
         <input
           type="text"
           placeholder="山田 太郎"
@@ -63,19 +77,7 @@ export function EditForm({ user }: { user: User }) {
         <InputErrorMessages errMsgs={nameErrors} />
       </label>
       <label className="form-control mx-auto w-full max-w-xs">
-        <span className="label">ID</span>
-        <input
-          type="text"
-          placeholder="taroyamada"
-          className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": screenNameErrors !== undefined })}`}
-          value={screenName ?? ""}
-          onChange={(e) => setScreenName(e.target.value)}
-          required
-        />
-        <InputErrorMessages errMsgs={screenNameErrors} />
-      </label>
-      <label className="form-control mx-auto w-full max-w-xs">
-        <span className="label">メールアドレス</span>
+        <span className="label label-text">メールアドレス</span>
         <input
           type="email"
           placeholder="taroyamada@example.com"
@@ -87,7 +89,7 @@ export function EditForm({ user }: { user: User }) {
         <InputErrorMessages errMsgs={emailErrors} />
       </label>
       <label className="form-control mx-auto w-full max-w-xs">
-        <span className="label">自己紹介</span>
+        <span className="label label-text">自己紹介</span>
         <textarea
           placeholder="自己紹介文。"
           className={clsx("textarea textarea-bordered w-full max-w-xs", {
@@ -99,10 +101,10 @@ export function EditForm({ user }: { user: User }) {
         <InputErrorMessages errMsgs={emailErrors} />
       </label>
       <label className="form-control mx-auto w-full max-w-xs">
-        <span className="label">ウェブサイト</span>
+        <span className="label label-text">ウェブサイト</span>
         <input
           type="text"
-          placeholder="https://taroyamada.com"
+          placeholder="https://taroyamada.com/"
           className={clsx("input input-bordered w-full max-w-xs", {
             "input-error": urlErrors !== undefined,
           })}
@@ -112,7 +114,7 @@ export function EditForm({ user }: { user: User }) {
         <InputErrorMessages errMsgs={urlErrors} />
       </label>
       <label className="form-control mx-auto w-full max-w-xs">
-        <span className="label">アイコン画像URL</span>
+        <span className="label label-text">アイコン画像URL</span>
         <input
           type="text"
           placeholder="https://example.com/taroyamada.jpg"
