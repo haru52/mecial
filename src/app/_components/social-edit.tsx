@@ -2,7 +2,7 @@
 
 import type { SocialWithAvatarUsersAndAdministrator } from "~/entities/social";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "~/trpc/react";
 import { InputErrorMessages } from "./input-error-messages";
 import { screenNameRule } from "~/consts";
@@ -37,6 +37,12 @@ export function SocialEdit({
   const descriptionErrors =
     updateSocial.error?.data?.zodError?.fieldErrors.description;
   const urlErrors = updateSocial.error?.data?.zodError?.fieldErrors.url;
+
+  const [requiredAreFilled, setRequiredAreFilled] = useState(false);
+
+  useEffect(() => {
+    setRequiredAreFilled(screenName.trim() !== "" && name.trim() !== "");
+  }, [screenName, name]);
 
   return (
     <>
@@ -117,7 +123,7 @@ export function SocialEdit({
             type="submit"
             className="btn btn-primary flex-1 rounded-full"
             value={isDisabled ? "保存中…" : "保存"}
-            disabled={isDisabled}
+            disabled={!requiredAreFilled || isDisabled}
           ></input>
           <button
             className="btn flex-1 rounded-full"
