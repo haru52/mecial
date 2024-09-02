@@ -40,7 +40,6 @@ export function PostEditForm({
       >
         <div className="form-control">
           <textarea
-            id="content"
             name="content"
             className="textarea textarea-bordered"
             value={content}

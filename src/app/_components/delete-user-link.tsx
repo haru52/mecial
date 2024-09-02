@@ -30,11 +30,7 @@ export function DeleteUserLink() {
 
   return (
     <p className="mt-12 text-center">
-      <a
-        className="link link-error"
-        onClick={handleDeleteUser}
-        aria-disabled={deleteUser.isPending}
-      >
+      <a className="link link-error" onClick={handleDeleteUser}>
         アカウントを削除
       </a>
     </p>
