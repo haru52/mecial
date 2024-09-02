@@ -15,6 +15,7 @@ export function CreateSocialForm() {
   const { mutate, error, isPending } = api.social.create.useMutation({
     onSuccess: () => {
       router.push(`/socials/${screenName}`);
+      router.refresh();
     },
   });
   const screenNameErrors: string[] = [];
