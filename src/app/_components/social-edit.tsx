@@ -8,10 +8,8 @@ import { InputErrorMessages } from "./input-error-messages";
 
 export function SocialEdit({
   social,
-  setIsEditing,
 }: {
   social: SocialWithAvatarUsersAndAdministrator;
-  setIsEditing: (isEditing: boolean) => void;
 }) {
   const [isDisabled, setIsDisabled] = useState(false);
   const [screenName, setScreenName] = useState(social.screenName);
@@ -23,7 +21,6 @@ export function SocialEdit({
   const router = useRouter();
   const updateSocial = api.social.update.useMutation({
     onSuccess: () => {
-      setIsEditing(false);
       router.push(`/socials/${screenName}`);
       router.refresh();
     },
@@ -133,8 +130,9 @@ export function SocialEdit({
           ></input>
           <button
             className="btn flex-1 rounded-full"
-            onClick={() => {
-              setIsEditing(false);
+            onClick={(e) => {
+              e.preventDefault();
+              router.push(`/socials/${social.screenName}`);
             }}
           >
             キャンセル

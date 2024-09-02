@@ -1,8 +1,7 @@
 import { api } from "~/trpc/server";
 import { notFound } from "next/navigation";
-import { getServerAuthSession } from "~/server/auth";
 import type { Metadata } from "next";
-import { SocialDetail } from "~/app/_components/social-detail";
+import { SocialEdit } from "~/app/_components/social-edit";
 
 export const generateMetadata = async ({
   params,
@@ -23,17 +22,9 @@ export default async function Page({
       params.screenName,
     );
   if (social === null) notFound();
-  const posts = await api.post.getFullAllBySocialScreenName(params.screenName);
-  const session = await getServerAuthSession();
-  const user =
-    session === null
-      ? null
-      : await api.user.getByIdWithAvatars(session.user.id);
-  const avatar =
-    user === null ? null : await api.avatar.getMyAvatarBySocialId(social.id);
   return (
     <div className="container prose mx-auto mb-10 mt-5 px-4">
-      <SocialDetail social={social} user={user} avatar={avatar} posts={posts} />
+      <SocialEdit social={social} />
     </div>
   );
 }

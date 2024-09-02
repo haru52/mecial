@@ -18,13 +18,11 @@ export function SocialDetail({
   user,
   avatar,
   posts,
-  setIsEditing,
 }: {
   social: SocialWithAvatarUsersAndAdministrator;
   user: User | null;
   avatar: Avatar | null;
   posts: PostWithCreatedByUserAndSocial[];
-  setIsEditing: (isEditing: boolean) => void;
 }) {
   const router = useRouter();
   const deleteSocial = api.social.delete.useMutation({
@@ -79,22 +77,16 @@ export function SocialDetail({
       <p>{`${social.createdAt.getFullYear()}年${social.createdAt.getMonth()}月に作成されました`}</p>
       <p>
         {" "}
-        <Link href={`/socials/${social.screenName}/avatars`}>
+        <Link href={`/socials/${social.screenName}/avatars`} className="link">
           {social.avatars.length} 人のメンバー
         </Link>
       </p>
       {social.administratorId === user?.id && (
         <div>
-          <span
-            className="link"
-            onClick={(e) => {
-              e.preventDefault();
-              setIsEditing(true);
-            }}
-          >
+          <Link href={`/socials/${social.screenName}/edit`} className="link">
             編集
-          </span>
-          <span
+          </Link>
+          <a
             className="link ml-3"
             onClick={(e) => {
               e.preventDefault();
@@ -104,7 +96,7 @@ export function SocialDetail({
             }}
           >
             削除
-          </span>
+          </a>
         </div>
       )}
       <Posts posts={posts} />
