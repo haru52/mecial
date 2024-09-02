@@ -74,7 +74,7 @@ export function SocialDetail({
           </Link>
         </p>
       )}
-      <p>{`${social.createdAt.getFullYear()}年${social.createdAt.getMonth()}月に作成されました`}</p>
+      <p>{`${social.createdAt.getFullYear()}年${social.createdAt.getMonth() + 1}月に作成されました`}</p>
       <p>
         {" "}
         <Link href={`/socials/${social.screenName}/avatars`} className="link">

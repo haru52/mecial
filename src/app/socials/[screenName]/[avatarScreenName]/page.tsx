@@ -90,7 +90,7 @@ export default async function Page({
           </Link>
         </p>
       )}
-      <p>{`${avatar.createdAt.getFullYear()}年${avatar.createdAt.getMonth()}月に参加しました`}</p>
+      <p>{`${avatar.createdAt.getFullYear()}年${avatar.createdAt.getMonth() + 1}月に参加しました`}</p>
       <p>
         <Link
           href={`${avatar.user.screenName}/following`}
