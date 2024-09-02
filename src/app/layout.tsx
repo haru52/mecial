@@ -16,7 +16,7 @@ const notoSansJp = Noto_Sans_JP({
   variable: "--font-sans",
 });
 
-const defaultTitle = "Mecial";
+const defaultTitle = "Mecial β";
 
 export const metadata: Metadata = {
   title: {
