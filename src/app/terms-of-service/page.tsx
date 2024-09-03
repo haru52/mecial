@@ -8,7 +8,7 @@ export default function TermsOfService() {
   return (
     <div className="container prose mx-auto mb-10 mt-5 px-4">
       <h1 className="text-center">利用規約</h1>
-      <p className="text-right">2024 年 6 月 2 日</p>
+      <p className="text-right">2024 年 9 月 4 日</p>
       <ol>
         <li>当サイトは商用利用を含めすべて無料でご利用いただけます</li>
         <li>
