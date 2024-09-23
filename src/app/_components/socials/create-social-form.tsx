@@ -61,7 +61,6 @@ export function CreateSocialForm() {
           <span className="label label-text">ID</span>
           <input
             type="text"
-            placeholder="social_id"
             className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": screenNameErrors.length > 0 })}`}
             value={screenName ?? ""}
             onChange={(e) => setScreenName(e.target.value)}
@@ -74,7 +73,6 @@ export function CreateSocialForm() {
           <span className="label label-text">名前</span>
           <input
             type="text"
-            placeholder="ソーシャル名"
             className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": nameErrors.length > 0 })}`}
             value={name ?? ""}
             onChange={(e) => setName(e.target.value)}
@@ -86,7 +84,6 @@ export function CreateSocialForm() {
           <span className="label label-text">アイコン画像URL</span>
           <input
             type="text"
-            placeholder="https://example.com/social.jpg"
             className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": imageErrors.length > 0 })}`}
             value={image ?? ""}
             onChange={(e) => setImage(e.target.value)}
@@ -96,7 +93,6 @@ export function CreateSocialForm() {
         <label className="form-control mx-auto w-full max-w-xs">
           <span className="label label-text">説明</span>
           <textarea
-            placeholder="ソーシャルの説明文。"
             className={`textarea textarea-bordered w-full max-w-xs ${clsx({ "input-error": descriptionErrors.length > 0 })}`}
             value={description ?? ""}
             onChange={(e) => setDescription(e.target.value)}

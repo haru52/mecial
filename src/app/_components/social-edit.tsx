@@ -65,7 +65,6 @@ export function SocialEdit({
           <span className="label label-text">ID</span>
           <input
             type="text"
-            placeholder="social_id"
             className="input input-bordered w-full max-w-xs"
             value={screenName}
             onChange={(e) => setScreenName(e.target.value)}
@@ -78,7 +77,6 @@ export function SocialEdit({
           <span className="label label-text">名前</span>
           <input
             type="text"
-            placeholder="ソーシャル名"
             className="input input-bordered w-full max-w-xs"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -90,7 +88,6 @@ export function SocialEdit({
           <span className="label label-text">アイコン画像URL</span>
           <input
             type="text"
-            placeholder="https://example.com/social.jpg"
             className="input input-bordered w-full max-w-xs"
             value={image}
             onChange={(e) => setImage(e.target.value)}
@@ -100,7 +97,6 @@ export function SocialEdit({
         <label className="form-control mx-auto w-full max-w-xs">
           <span className="label label-text">説明</span>
           <textarea
-            placeholder="ソーシャルの説明文。"
             className="textarea textarea-bordered h-24 w-full max-w-xs"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -111,7 +107,6 @@ export function SocialEdit({
           <span className="label label-text">URL</span>
           <input
             type="text"
-            placeholder="https://example.com/"
             className="input input-bordered w-full max-w-xs"
             value={url}
             onChange={(e) => setUrl(e.target.value)}

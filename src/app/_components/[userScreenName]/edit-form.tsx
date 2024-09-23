@@ -55,7 +55,6 @@ export function EditForm({ user }: { user: User }) {
         <span className="label label-text">ID</span>
         <input
           type="text"
-          placeholder="taroyamada"
           className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": screenNameErrors !== undefined })}`}
           value={screenName ?? ""}
           onChange={(e) => setScreenName(e.target.value)}
@@ -68,7 +67,6 @@ export function EditForm({ user }: { user: User }) {
         <span className="label label-text">名前</span>
         <input
           type="text"
-          placeholder="山田 太郎"
           className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": nameErrors !== undefined })}`}
           value={name ?? ""}
           onChange={(e) => setName(e.target.value)}
@@ -80,7 +78,6 @@ export function EditForm({ user }: { user: User }) {
         <span className="label label-text">メールアドレス</span>
         <input
           type="email"
-          placeholder="taroyamada@example.com"
           className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": emailErrors !== undefined })}`}
           value={email ?? ""}
           onChange={(e) => setEmail(e.target.value)}
@@ -91,7 +88,6 @@ export function EditForm({ user }: { user: User }) {
       <label className="form-control mx-auto w-full max-w-xs">
         <span className="label label-text">自己紹介</span>
         <textarea
-          placeholder="自己紹介文。"
           className={clsx("textarea textarea-bordered w-full max-w-xs", {
             "input-error": introductionErrors !== undefined,
           })}
@@ -104,7 +100,6 @@ export function EditForm({ user }: { user: User }) {
         <span className="label label-text">ウェブサイト</span>
         <input
           type="text"
-          placeholder="https://taroyamada.com/"
           className={clsx("input input-bordered w-full max-w-xs", {
             "input-error": urlErrors !== undefined,
           })}
@@ -117,7 +112,6 @@ export function EditForm({ user }: { user: User }) {
         <span className="label label-text">アイコン画像URL</span>
         <input
           type="text"
-          placeholder="https://example.com/taroyamada.jpg"
           className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": emailErrors !== undefined })}`}
           value={image ?? ""}
           onChange={(e) => setImage(e.target.value)}
