@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { api } from "~/trpc/react";
 import { InputErrorMessages } from "./input-error-messages";
 import { screenNameRule } from "~/consts";
+import clsx from "clsx";
 
 export function SocialEdit({
   social,
@@ -30,8 +31,20 @@ export function SocialEdit({
     },
   });
 
-  const screenNameErrors =
-    updateSocial.error?.data?.zodError?.fieldErrors.screenName;
+  const screenNameErrors: string[] = [];
+  if (
+    updateSocial.error?.data?.zodError?.fieldErrors.screenName !== undefined
+  ) {
+    screenNameErrors.push(
+      ...updateSocial.error.data.zodError.fieldErrors.screenName,
+    );
+  }
+  if (
+    updateSocial.error !== null &&
+    updateSocial.error?.data?.zodError == null
+  ) {
+    screenNameErrors.push(updateSocial.error.message);
+  }
   const nameErrors = updateSocial.error?.data?.zodError?.fieldErrors.name;
   const imageErrors = updateSocial.error?.data?.zodError?.fieldErrors.image;
   const descriptionErrors =
@@ -65,7 +78,7 @@ export function SocialEdit({
           <span className="label label-text">ID</span>
           <input
             type="text"
-            className="input input-bordered w-full max-w-xs"
+            className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": screenNameErrors !== undefined && screenNameErrors.length > 0 })}`}
             value={screenName}
             onChange={(e) => setScreenName(e.target.value)}
             required
@@ -77,7 +90,7 @@ export function SocialEdit({
           <span className="label label-text">名前</span>
           <input
             type="text"
-            className="input input-bordered w-full max-w-xs"
+            className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": nameErrors !== undefined })}`}
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -88,7 +101,7 @@ export function SocialEdit({
           <span className="label label-text">アイコン画像URL</span>
           <input
             type="text"
-            className="input input-bordered w-full max-w-xs"
+            className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": imageErrors !== undefined })}`}
             value={image}
             onChange={(e) => setImage(e.target.value)}
           />
@@ -97,7 +110,7 @@ export function SocialEdit({
         <label className="form-control mx-auto w-full max-w-xs">
           <span className="label label-text">説明</span>
           <textarea
-            className="textarea textarea-bordered h-24 w-full max-w-xs"
+            className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": descriptionErrors !== undefined })}`}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
@@ -107,7 +120,7 @@ export function SocialEdit({
           <span className="label label-text">URL</span>
           <input
             type="text"
-            className="input input-bordered w-full max-w-xs"
+            className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": urlErrors !== undefined })}`}
             value={url}
             onChange={(e) => setUrl(e.target.value)}
           />

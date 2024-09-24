@@ -17,7 +17,7 @@ export const userRouter = createTRPCRouter({
       });
       const exist = existUser !== null;
       if (exist && existUser?.id !== ctx.session.user.id) {
-        throw new Error("このIDは既に使われています");
+        throw new Error("このIDはすでに使われています");
       }
       const defaultData = {
         screenName: input.screenName,

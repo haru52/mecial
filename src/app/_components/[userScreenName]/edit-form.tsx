@@ -23,7 +23,12 @@ export function EditForm({ user }: { user: User }) {
     },
   });
   const nameErrors = error?.data?.zodError?.fieldErrors.name;
-  const screenNameErrors = error?.data?.zodError?.fieldErrors.screenName;
+  const screenNameErrors: string[] = [];
+  if (error?.data?.zodError?.fieldErrors.screenName !== undefined) {
+    screenNameErrors.push(...error.data.zodError.fieldErrors.screenName);
+  }
+  if (error !== null && error?.data?.zodError == null)
+    screenNameErrors.push(error.message);
   const emailErrors = error?.data?.zodError?.fieldErrors.email;
   const urlErrors = error?.data?.zodError?.fieldErrors.url;
   const introductionErrors = error?.data?.zodError?.fieldErrors.introduction;
@@ -55,7 +60,7 @@ export function EditForm({ user }: { user: User }) {
         <span className="label label-text">ID</span>
         <input
           type="text"
-          className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": screenNameErrors !== undefined })}`}
+          className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": screenNameErrors !== undefined && screenNameErrors.length > 0 })}`}
           value={screenName ?? ""}
           onChange={(e) => setScreenName(e.target.value)}
           required

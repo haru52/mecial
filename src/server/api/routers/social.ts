@@ -80,6 +80,11 @@ export const socialRouter = createTRPCRouter({
       if (social === null) throw new Error("ソーシャルが見つかりません");
       if (social.administratorId !== ctx.session.user.id)
         throw new TRPCError({ code: "UNAUTHORIZED" });
+      const screenNameExists = await ctx.db.social.findFirst({
+        where: { screenName: input.screenName },
+      });
+      if (screenNameExists !== null && screenNameExists.id !== input.id)
+        throw new Error("このIDはすでに使われています");
       return ctx.db.social.update({
         data: {
           screenName: input.screenName,
