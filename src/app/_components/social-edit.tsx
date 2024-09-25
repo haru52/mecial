@@ -110,7 +110,7 @@ export function SocialEdit({
         <label className="form-control mx-auto w-full max-w-xs">
           <span className="label label-text">説明</span>
           <textarea
-            className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": descriptionErrors !== undefined })}`}
+            className={`textarea textarea-bordered w-full max-w-xs ${clsx({ "input-error": descriptionErrors !== undefined })}`}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
