@@ -28,19 +28,10 @@ export const postRouter = createTRPCRouter({
       });
     }),
 
-  getAllByCreatedById: publicProcedure
-    .input(z.string().uuid())
-    .query(({ ctx, input }) => {
-      return ctx.db.post.findMany({
-        orderBy: { createdAt: "desc" },
-        where: { createdBy: { id: input } },
-      });
-    }),
-
-  getFullByCreatedById: publicProcedure
+  getFullyById: publicProcedure
     .input(z.number())
-    .query(({ ctx, input }) => {
-      return ctx.db.post.findUnique({
+    .query(async ({ ctx, input }) => {
+      const post = await ctx.db.post.findUnique({
         where: { id: input },
         include: {
           createdBy: {
@@ -51,14 +42,58 @@ export const postRouter = createTRPCRouter({
           },
         },
       });
+      if (post === null) throw new TRPCError({ code: "NOT_FOUND" });
+      const belongsTo = await (async () => {
+        if (ctx.session === null) return false;
+
+        const avatar = await ctx.db.avatar.findFirst({
+          where: {
+            userId: ctx.session.user.id,
+            socialId: post.createdBy.socialId,
+          },
+        });
+        return avatar !== null;
+      })();
+      if (post.createdBy.social.isPrivate && !belongsTo) {
+        throw new TRPCError({ code: "FORBIDDEN" });
+      }
+      return post;
     }),
 
-  getFullAllByCreatedByIds: publicProcedure
+  getAllFullyByCreatedByIds: publicProcedure
     .input(z.array(z.string().uuid()))
-    .query(({ ctx, input }) => {
+    .query(async ({ ctx, input }) => {
+      const createdBies = await ctx.db.avatar.findMany({
+        where: {
+          id: { in: input },
+        },
+        include: {
+          social: true,
+        },
+      });
+      const avatars =
+        ctx.session === null
+          ? []
+          : await ctx.db.avatar.findMany({
+              select: { socialId: true },
+              where: { userId: ctx.session.user.id },
+            });
+      const filteredCreatedBies =
+        avatars.length === 0
+          ? createdBies.filter((createdBy) => !createdBy.social.isPrivate)
+          : createdBies.filter((createdBy) => {
+              return (
+                !createdBy.social.isPrivate ||
+                avatars.some((avatar) => avatar.socialId === createdBy.socialId)
+              );
+            });
       return ctx.db.post.findMany({
         orderBy: { createdAt: "desc" },
-        where: { createdBy: { id: { in: input } } },
+        where: {
+          createdBy: {
+            id: { in: filteredCreatedBies.map((createdBy) => createdBy.id) },
+          },
+        },
         include: {
           createdBy: {
             include: {
@@ -72,10 +107,26 @@ export const postRouter = createTRPCRouter({
 
   getAllByUserId: publicProcedure
     .input(z.string().uuid())
-    .query(({ ctx, input }) => {
+    .query(async ({ ctx, input }) => {
+      const socialIds = await (async () => {
+        const avatars =
+          ctx.session === null
+            ? null
+            : await ctx.db.avatar.findMany({
+                select: { socialId: true },
+                where: { userId: ctx.session.user.id },
+              });
+        return avatars === null ? [] : avatars.map((avatar) => avatar.socialId);
+      })();
       return ctx.db.post.findMany({
         orderBy: { createdAt: "desc" },
-        where: { createdBy: { userId: input } },
+        where: {
+          createdBy: { userId: input },
+          OR: [
+            { createdBy: { social: { isPrivate: false } } },
+            { createdBy: { socialId: { in: socialIds } } },
+          ],
+        },
         include: {
           createdBy: {
             include: {
@@ -87,10 +138,27 @@ export const postRouter = createTRPCRouter({
       });
     }),
 
-  search: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+  search: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    const avatars =
+      ctx.session === null
+        ? []
+        : await ctx.db.avatar.findMany({
+            select: { socialId: true, social: { select: { isPrivate: true } } },
+            where: { userId: ctx.session.user.id },
+          });
     return ctx.db.post.findMany({
       orderBy: { createdAt: "desc" },
-      where: { content: { contains: input, mode: "insensitive" } },
+      where: {
+        content: { contains: input, mode: "insensitive" },
+        OR: [
+          { createdBy: { social: { isPrivate: false } } },
+          {
+            createdBy: {
+              socialId: { in: avatars.map((avatar) => avatar.socialId) },
+            },
+          },
+        ],
+      },
       include: {
         createdBy: {
           include: {
@@ -106,13 +174,33 @@ export const postRouter = createTRPCRouter({
     .input(z.string())
     .query(async ({ ctx, input }) => {
       const user = await ctx.db.user.findUnique({
+        select: {
+          currentSocialId: true,
+          avatars: {
+            select: { socialId: true },
+          },
+        },
         where: { id: ctx.session.user.id },
       });
-      return user?.currentSocialId == null
+      if (user === null) throw new TRPCError({ code: "UNAUTHORIZED" });
+      const socialIds = user.avatars.map((avatar) => avatar.socialId);
+
+      return user.currentSocialId == null
         ? ctx.db.post.findMany({
             orderBy: { createdAt: "desc" },
             where: {
-              content: { contains: input, mode: "insensitive" },
+              content: {
+                contains: input,
+                mode: "insensitive",
+              },
+              OR: [
+                { createdBy: { social: { isPrivate: false } } },
+                {
+                  createdBy: {
+                    socialId: { in: socialIds },
+                  },
+                },
+              ],
             },
             include: {
               createdBy: {
@@ -128,6 +216,10 @@ export const postRouter = createTRPCRouter({
             where: {
               content: { contains: input, mode: "insensitive" },
               createdBy: { socialId: user.currentSocialId },
+              OR: [
+                { createdBy: { social: { isPrivate: false } } },
+                { createdBy: { socialId: { in: socialIds } } },
+              ],
             },
             include: {
               createdBy: {
@@ -140,14 +232,26 @@ export const postRouter = createTRPCRouter({
           });
     }),
 
-  getFullAllBySocialScreenName: publicProcedure
+  getAllFullyBySocialScreenName: publicProcedure
     .input(z.string())
     .query(async ({ ctx, input }) => {
       const social = await ctx.db.social.findUnique({
+        select: { id: true, isPrivate: true },
         where: { screenName: input },
       });
       if (social === null) {
         throw new Error("ソーシャルが存在しません");
+      }
+
+      const avatar =
+        ctx.session === null
+          ? null
+          : await ctx.db.avatar.findFirst({
+              select: { id: true },
+              where: { userId: ctx.session.user.id, socialId: social.id },
+            });
+      if (social.isPrivate && avatar === null) {
+        throw new TRPCError({ code: "FORBIDDEN" });
       }
       return ctx.db.post.findMany({
         orderBy: { createdAt: "desc" },

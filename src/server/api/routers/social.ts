@@ -9,19 +9,28 @@ import { ScreenName } from "~/zod/zod-schemas";
 import { TRPCError } from "@trpc/server";
 
 export const socialRouter = createTRPCRouter({
-  create: protectedProcedure.input(CreateSocial).mutation(({ ctx, input }) => {
-    return ctx.db.social.create({
-      data: {
-        screenName: input.screenName,
-        name: input.name,
-        image: input.image,
-        description: input.description,
-        url: input.url,
-        createdBy: { connect: { id: ctx.session.user.id } },
-        administrator: { connect: { id: ctx.session.user.id } },
-      },
-    });
-  }),
+  create: protectedProcedure
+    .input(CreateSocial)
+    .mutation(async ({ ctx, input }) => {
+      const screenNameExists = await ctx.db.social.findUnique({
+        where: { screenName: input.screenName },
+      });
+      if (screenNameExists !== null) {
+        throw new Error("このIDはすでに使われています");
+      }
+      return ctx.db.social.create({
+        data: {
+          screenName: input.screenName,
+          isPrivate: input.isPrivate,
+          name: input.name,
+          image: input.image,
+          description: input.description,
+          url: input.url,
+          createdBy: { connect: { id: ctx.session.user.id } },
+          administrator: { connect: { id: ctx.session.user.id } },
+        },
+      });
+    }),
 
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.db.social.findMany({

@@ -70,7 +70,7 @@ export function Home({
       setFollowingIds(getFollowsQuery.data.map((f) => f.followingId));
     }
   }, [getFollowsQuery.data]);
-  const getPostsQuery = api.post.getFullAllByCreatedByIds.useQuery([
+  const getPostsQuery = api.post.getAllFullyByCreatedByIds.useQuery([
     ...followingIds,
     avatar.id,
   ]);

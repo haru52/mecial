@@ -12,17 +12,21 @@ import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { defaultSocialIconPath } from "~/consts";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function SocialDetail({
   social,
   user,
   avatar,
   posts,
+  belongsTo,
 }: {
   social: SocialWithAvatarUsersAndAdministrator;
   user: User | null;
   avatar: Avatar | null;
   posts: PostWithCreatedByUserAndSocial[];
+  belongsTo: boolean;
 }) {
   const router = useRouter();
   const deleteSocial = api.social.delete.useMutation({
@@ -59,7 +63,12 @@ export function SocialDetail({
             </div>
           ))}
       </div>
-      <h1 className="mb-0 mt-5">{social.name}</h1>
+      <h1 className="mb-0 mt-5 flex items-center gap-2">
+        <span>{social.name}</span>
+        {social.isPrivate && (
+          <FontAwesomeIcon icon={faLock} className="h-7 w-7" />
+        )}
+      </h1>
       <p className="mt-0">@{social.screenName}</p>
       <p>{social.description}</p>
       {social.url && (
@@ -99,7 +108,18 @@ export function SocialDetail({
           </a>
         </div>
       )}
-      <Posts posts={posts} />
+      {social.isPrivate && !belongsTo ? (
+        <>
+          <p>このソーシャルのポストは非公開です</p>
+          <p>
+            @{social.screenName}
+            に参加した場合のみポストを表示できます。ソーシャルに参加するには
+            [参加] をクリックします。
+          </p>
+        </>
+      ) : (
+        <Posts posts={posts} />
+      )}
     </>
   );
 }

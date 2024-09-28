@@ -18,6 +18,7 @@ datasource db {
 model Social {
     id           Int      @id @default(autoincrement())
     screenName   String   @unique
+    isPrivate    Boolean
     name         String
     image        String?
     description  String?
