@@ -21,7 +21,7 @@
     "lint:text": "textlint . \".?*/**\"",
     "lint:prettier": "prettier --check .",
     "lint:next": "next lint",
-    "lint-markup": "markuplint \"**/*.tsx\"",
+    "lint:markup": "markuplint \"**/*.tsx\"",
     "format": "run-s --continue-on-error 'format:*'",
     "format:md": "npm run lint:md -- --fix",
     "format:text": "npm run lint:text -- --fix",
