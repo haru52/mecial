@@ -4,3 +4,4 @@ export const loginPath = "/api/auth/signin";
 export const logoutPath = "/api/auth/signout";
 export const screenNameRule =
   "半角英数字とアンダースコア（_）のみ使用できます。また、先頭は半角英字にする必要があります";
+export const notFoundMessage = "404 Not Found";

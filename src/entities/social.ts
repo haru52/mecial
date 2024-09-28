@@ -6,6 +6,7 @@ import { type AvatarWithUser } from "./avatar";
 export const Social = z.object({
   id: z.number(),
   screenName: ScreenName,
+  isPrivate: z.boolean(),
   name: z.string().min(1),
   image: IconImage.nullable(),
   description: z.string().nullable(),
@@ -34,6 +35,7 @@ export const UpdateSocial = Social.omit({
   createdById: true,
 }).partial({
   screenName: true,
+  isPrivate: true,
   name: true,
   image: true,
   description: true,

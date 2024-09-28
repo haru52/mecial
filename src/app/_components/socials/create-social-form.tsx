@@ -10,6 +10,7 @@ import { screenNameRule } from "~/consts";
 export function CreateSocialForm() {
   const router = useRouter();
   const [screenName, setScreenName] = useState("");
+  const [isPrivate, setIsPrivate] = useState(false);
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
@@ -51,12 +52,25 @@ export function CreateSocialForm() {
           e.preventDefault();
           mutate({
             screenName,
+            isPrivate,
             name,
             image: image === "" ? undefined : image,
             description: description === "" ? undefined : description,
           });
         }}
+        className="mx-auto max-w-xs"
       >
+        <div className="form-control max-w-24">
+          <label className="label cursor-pointer">
+            <span className="label-text">非公開</span>
+            <input
+              type="checkbox"
+              className="checkbox"
+              checked={isPrivate}
+              onChange={(e) => setIsPrivate(e.target.checked)}
+            />
+          </label>
+        </div>
         <label className="form-control mx-auto w-full max-w-xs">
           <span className="label label-text">ID</span>
           <input

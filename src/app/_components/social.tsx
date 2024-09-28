@@ -5,6 +5,8 @@ import { defaultSocialIconPath } from "~/consts";
 import { JoinSocialButton } from "./socials/[screenName]/join-social-button";
 import { LeaveSocialButton } from "./socials/[screenName]/leave-social-button";
 import type { Avatar } from "~/entities/avatar";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function Social({
   social,
@@ -34,7 +36,12 @@ export function Social({
               </div>
             </div>
             <div>
-              <h2 className="card-title my-0">{social.name}</h2>
+              <h2 className="card-title my-0 flex items-center gap-2">
+                <span>{social.name}</span>
+                {social.isPrivate && (
+                  <FontAwesomeIcon icon={faLock} className="h-4 w-4" />
+                )}
+              </h2>
               <p className="my-0 text-sm">@{social.screenName}</p>
             </div>
           </div>
