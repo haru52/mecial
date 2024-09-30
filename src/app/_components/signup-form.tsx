@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { InputErrorMessages } from "~/app/_components/input-error-messages";
 import { api } from "~/trpc/react";
-import { screenNameRule } from "~/consts";
+import { imageUrlRuleMessage, screenNameRule } from "~/consts";
 import type { User } from "~/entities/user";
 
 function validate(screenName: string, name: string | null) {
@@ -89,6 +89,7 @@ export function SignupForm({ user }: { user: User }) {
           value={image ?? ""}
           onChange={(e) => setImage(e.target.value)}
         />
+        <span className="label label-text-alt">{imageUrlRuleMessage}</span>
         <InputErrorMessages errMsgs={imageErrors} />
       </label>
       <div className="form-control mx-auto mt-7 w-full max-w-xs">

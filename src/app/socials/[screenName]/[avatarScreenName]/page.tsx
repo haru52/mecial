@@ -86,7 +86,7 @@ export default async function Page({
             rel="noreferrer"
             className="link link-primary no-underline hover:underline"
           >
-            {avatar.user.url}
+            {decodeURI(avatar.user.url)}
           </Link>
         </p>
       )}

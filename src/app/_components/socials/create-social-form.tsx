@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { InputErrorMessages } from "~/app/_components/input-error-messages";
-import { screenNameRule } from "~/consts";
+import { imageUrlRuleMessage, screenNameRule } from "~/consts";
 
 export function CreateSocialForm() {
   const router = useRouter();
@@ -14,6 +14,7 @@ export function CreateSocialForm() {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
+  const [url, setUrl] = useState("");
   const { mutate, error, isPending } = api.social.create.useMutation({
     onSuccess: () => {
       router.push(`/socials/${screenName}`);
@@ -33,6 +34,10 @@ export function CreateSocialForm() {
   const imageErrors: string[] = [];
   if (error?.data?.zodError?.fieldErrors.image !== undefined) {
     imageErrors.push(...error.data.zodError.fieldErrors.image);
+  }
+  const urlErrors: string[] = [];
+  if (error?.data?.zodError?.fieldErrors.url !== undefined) {
+    urlErrors.push(...error.data.zodError.fieldErrors.url);
   }
   const descriptionErrors: string[] = [];
   if (error?.data?.zodError?.fieldErrors.description !== undefined) {
@@ -55,6 +60,7 @@ export function CreateSocialForm() {
             isPrivate,
             name,
             image: image === "" ? undefined : image,
+            url: url === "" ? undefined : url,
             description: description === "" ? undefined : description,
           });
         }}
@@ -102,6 +108,7 @@ export function CreateSocialForm() {
             value={image ?? ""}
             onChange={(e) => setImage(e.target.value)}
           />
+          <span className="label label-text-alt">{imageUrlRuleMessage}</span>
           <InputErrorMessages errMsgs={imageErrors} />
         </label>
         <label className="form-control mx-auto w-full max-w-xs">
@@ -112,6 +119,16 @@ export function CreateSocialForm() {
             onChange={(e) => setDescription(e.target.value)}
           />
           <InputErrorMessages errMsgs={descriptionErrors} />
+        </label>
+        <label className="form-control mx-auto w-full max-w-xs">
+          <span className="label label-text">ウェブサイト</span>
+          <input
+            type="text"
+            className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": urlErrors.length > 0 })}`}
+            value={url ?? ""}
+            onChange={(e) => setUrl(e.target.value)}
+          />
+          <InputErrorMessages errMsgs={urlErrors} />
         </label>
         <div className="form-control mx-auto mt-7 w-full max-w-xs">
           <input

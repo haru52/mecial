@@ -6,7 +6,7 @@ import { api } from "~/trpc/react";
 import { useEffect, useState } from "react";
 import { InputErrorMessages } from "~/app/_components/input-error-messages";
 import clsx from "clsx";
-import { screenNameRule } from "~/consts";
+import { imageUrlRuleMessage, screenNameRule } from "~/consts";
 
 export function EditForm({ user }: { user: User }) {
   const router = useRouter();
@@ -80,6 +80,17 @@ export function EditForm({ user }: { user: User }) {
         <InputErrorMessages errMsgs={nameErrors} />
       </label>
       <label className="form-control mx-auto w-full max-w-xs">
+        <span className="label label-text">アイコン画像URL</span>
+        <input
+          type="text"
+          className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": emailErrors !== undefined })}`}
+          value={image ?? ""}
+          onChange={(e) => setImage(e.target.value)}
+        />
+        <span className="label label-text-alt">{imageUrlRuleMessage}</span>
+        <InputErrorMessages errMsgs={imageErrors} />
+      </label>
+      <label className="form-control mx-auto w-full max-w-xs">
         <span className="label label-text">メールアドレス</span>
         <input
           type="email"
@@ -112,16 +123,6 @@ export function EditForm({ user }: { user: User }) {
           onChange={(e) => setUrl(e.target.value)}
         />
         <InputErrorMessages errMsgs={urlErrors} />
-      </label>
-      <label className="form-control mx-auto w-full max-w-xs">
-        <span className="label label-text">アイコン画像URL</span>
-        <input
-          type="text"
-          className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": emailErrors !== undefined })}`}
-          value={image ?? ""}
-          onChange={(e) => setImage(e.target.value)}
-        />
-        <InputErrorMessages errMsgs={imageErrors} />
       </label>
       <div className="form-control mx-auto mt-7 w-full max-w-xs">
         <input

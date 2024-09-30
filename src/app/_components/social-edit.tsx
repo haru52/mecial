@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { api } from "~/trpc/react";
 import { InputErrorMessages } from "./input-error-messages";
-import { screenNameRule } from "~/consts";
+import { imageUrlRuleMessage, screenNameRule } from "~/consts";
 import clsx from "clsx";
 
 export function SocialEdit({
@@ -14,6 +14,7 @@ export function SocialEdit({
   social: SocialWithAvatarUsersAndAdministrator;
 }) {
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(social.isPrivate);
   const [screenName, setScreenName] = useState(social.screenName);
   const [name, setName] = useState(social.name);
   const [image, setImage] = useState(social.image ?? "");
@@ -67,13 +68,26 @@ export function SocialEdit({
           updateSocial.mutate({
             id: social.id,
             screenName,
+            isPrivate,
             name,
             image: image === "" ? null : image,
             description: description === "" ? null : description,
             url: url === "" ? null : url,
           });
         }}
+        className="mx-auto w-full max-w-xs"
       >
+        <div className="form-control max-w-24">
+          <label className="label cursor-pointer">
+            <span className="label-text">非公開</span>
+            <input
+              type="checkbox"
+              className="checkbox"
+              checked={isPrivate}
+              onChange={(e) => setIsPrivate(e.target.checked)}
+            />
+          </label>
+        </div>
         <label className="form-control mx-auto w-full max-w-xs">
           <span className="label label-text">ID</span>
           <input
@@ -105,6 +119,7 @@ export function SocialEdit({
             value={image}
             onChange={(e) => setImage(e.target.value)}
           />
+          <span className="label label-text-alt">{imageUrlRuleMessage}</span>
           <InputErrorMessages errMsgs={imageErrors} />
         </label>
         <label className="form-control mx-auto w-full max-w-xs">
@@ -117,7 +132,7 @@ export function SocialEdit({
           <InputErrorMessages errMsgs={descriptionErrors} />
         </label>
         <label className="form-control mx-auto w-full max-w-xs">
-          <span className="label label-text">URL</span>
+          <span className="label label-text">ウェブサイト</span>
           <input
             type="text"
             className={`input input-bordered w-full max-w-xs ${clsx({ "input-error": urlErrors !== undefined })}`}

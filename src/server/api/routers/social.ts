@@ -97,6 +97,7 @@ export const socialRouter = createTRPCRouter({
       return ctx.db.social.update({
         data: {
           screenName: input.screenName,
+          isPrivate: input.isPrivate,
           name: input.name,
           image: input.image,
           description: input.description,

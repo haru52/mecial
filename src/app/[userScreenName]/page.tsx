@@ -78,7 +78,7 @@ export default async function Page({
             rel="noreferrer"
             className="link link-primary"
           >
-            {user.url}
+            {decodeURI(user.url)}
           </Link>
         </p>
       )}

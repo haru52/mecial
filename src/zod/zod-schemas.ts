@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { screenNameRule } from "~/consts";
+import { imageUrlRuleMessage, screenNameRule } from "~/consts";
 
 export const ZodString = z.string({
   invalid_type_error: "文字列を入力してください",
@@ -16,7 +16,6 @@ export const Url = ZodString.url({ message: "URLの形式で入力してくだ�
 export const IconImage = Url.regex(
   /^https:\/\/(lh3\.googleusercontent\.com\/.+|cdn\.discordapp\.com\/avatars\/.+|(secure\.)?gravatar\.com\/avatar\/[0-9a-fA-f]{32}|i\.ibb\.co\/.+|i\.postimg\.cc\/.+).+/,
   {
-    message:
-      "以下のいずれかのサービスの画像URLを入力してください：Googleアカウント、Discordアカウント、Gravatar、ImgBB、Postimages",
+    message: imageUrlRuleMessage,
   },
 );

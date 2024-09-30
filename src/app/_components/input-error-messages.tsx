@@ -3,7 +3,7 @@ export function InputErrorMessages({
 }: {
   errMsgs: string[] | undefined;
 }) {
-  return errMsgs ? (
+  return errMsgs !== undefined && errMsgs.length > 0 ? (
     <ul className="label my-auto block">
       {errMsgs.map((errMsg, i) => (
         <li key={i} className="label-text-alt text-error">
