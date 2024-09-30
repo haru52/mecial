@@ -1,6 +1,11 @@
 import { SignupForm } from "../_components/signup-form";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "サインアップ",
+};
 
 export default async function Page() {
   const session = await getServerAuthSession();
