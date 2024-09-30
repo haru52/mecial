@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ja";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 dayjs.extend(relativeTime);
 dayjs.locale("ja");
@@ -49,10 +51,13 @@ export function Post({ post }: { post: PostWithCreatedByUserAndSocial }) {
           </Link>
           <Link
             href={avatarPath}
-            className="no-underline hover:underline"
+            className="inline-flex items-center gap-1 no-underline hover:underline"
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="my-0 text-sm">{post.createdBy.user.name}</h2>
+            {post.createdBy.social.isPrivate && (
+              <FontAwesomeIcon icon={faLock} className="h-4 w-4" />
+            )}
           </Link>
           <Link
             href={avatarPath}
