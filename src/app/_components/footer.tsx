@@ -31,7 +31,7 @@ export function Footer() {
       </nav>
       <aside>
         <p>
-          Copyright © 2024 - All right reserved by{" "}
+          Copyright © 2024-2025 - All right reserved by{" "}
           <Link
             href="https://haru52.com/"
             target="_blank"
